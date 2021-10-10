@@ -196,11 +196,11 @@ public class HRPSApp {
 								TableController.retrieveAllRoom();
 								break;
 							case 5:
-								// Retrieve and print room details by room id
+
 								TableController.retrieveOneRoom();
 								break;
 							case 6:
-								// Print all room status
+
 								TableController.retrieveRoomStatus();
 								break;
 							case 7:

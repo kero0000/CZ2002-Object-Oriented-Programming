@@ -5,26 +5,21 @@ import java.util.Date;
 public class Reservation {
 	private String reservationNum;
 	private String guestId;
-	private String roomId;
+	private String tableId;
 	private String status;
-	private Date checkInDate;
-	private Date checkOutDate;
-	private int numOfAdults;
-	private int numOfChildren;
+	private int pax;
+
 	
 	
-	public Reservation(String reservationNum, String guestId, String roomId, String status, Date checkInDate,
-			Date checkOutDate, int numOfAdults, int numOfChildren) {
+	public Reservation(String reservationNum, String guestId, String tableId, String status, int numOfPax) {
 		super();
 		this.reservationNum = reservationNum;
 		this.guestId = guestId;
-		this.roomId = roomId;
+		this.tableId = tableId;
 		this.status = status;
-		this.checkInDate = checkInDate;
-		this.checkOutDate = checkOutDate;
-		this.numOfAdults = numOfAdults;
-		this.numOfChildren = numOfChildren;
+		this.pax = numOfPax;
 	}
+
 	
 	public Reservation() {
 		super();
@@ -41,11 +36,11 @@ public class Reservation {
 	public void setGuestId(String guestId) {
 		this.guestId = guestId;
 	}
-	public String getRoomId() {
-		return roomId;
+	public String getTableId() {
+		return tableId;
 	}
-	public void setRoomId(String roomId) {
-		this.roomId = roomId;
+	public void settableId(String tableId) {
+		this.tableId = tableId;
 	}
 	public String getStatus() {
 		return status;
@@ -53,30 +48,11 @@ public class Reservation {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getCheckInDate() {
-		return checkInDate;
+	public int getNumOfPax() {
+		return this.pax;
 	}
-	public void setCheckInDate(Date checkInDate) {
-		this.checkInDate = checkInDate;
+	public void setNumOfPax(int pax) {
+		this.pax = pax;
 	}
-	public Date getCheckOutDate() {
-		return checkOutDate;
-	}
-	public void setCheckOutDate(Date checkOutDate) {
-		this.checkOutDate = checkOutDate;
-	}
-	public int getNumOfAdults() {
-		return numOfAdults;
-	}
-	public void setNumOfAdults(int numOfAdults) {
-		this.numOfAdults = numOfAdults;
-	}
-	public int getNumOfChildren() {
-		return numOfChildren;
-	}
-	public void setNumOfChildren(int numOfChildren) {
-		this.numOfChildren = numOfChildren;
-	}
-	
-	
+
 }
