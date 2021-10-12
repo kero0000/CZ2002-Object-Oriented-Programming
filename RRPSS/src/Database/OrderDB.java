@@ -23,7 +23,7 @@ public class OrderDB implements DB {
 			ArrayList<Item> items = new ArrayList<Item>();
 			
 			int orderId = Integer.valueOf(star.nextToken().trim());
-		    String roomId = star.nextToken().trim();
+		    String tableId = star.nextToken().trim();
 		    String reservationNum = star.nextToken().trim();
 		    String date = star.nextToken().trim();
 		    String status = star.nextToken().trim();
@@ -39,7 +39,7 @@ public class OrderDB implements DB {
 		    	items.add(item);
 		    }
 		    
-		    Order order = new Order(orderId, roomId, reservationNum, items, date, status, remarks);
+		    Order order = new Order(orderId, tableId, reservationNum, items, date, status, remarks);
 		    orderList.add(order);
 		}
 		System.out.println(stringArray.size() + " Order(s) Loaded.");
@@ -54,7 +54,7 @@ public class OrderDB implements DB {
 			StringBuilder st = new StringBuilder();
 			st.append(order.getOrderId());
 			st.append(SEPARATOR);
-			st.append(order.getRoomId());
+			st.append(order.gettableId());
 			st.append(SEPARATOR);
 			st.append(order.getReservationNum());
 			st.append(SEPARATOR);

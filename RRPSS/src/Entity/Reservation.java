@@ -36,7 +36,7 @@ public class Reservation {
 	public void setGuestId(String guestId) {
 		this.guestId = guestId;
 	}
-	public String getTableId() {
+	public String gettableId() {
 		return tableId;
 	}
 	public void settableId(String tableId) {

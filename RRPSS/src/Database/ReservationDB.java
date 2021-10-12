@@ -28,36 +28,16 @@ public class ReservationDB implements DB {
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
 
-			
 			String reservationNum = star.nextToken().trim();
 			String guestId = star.nextToken().trim();
-			String roomId = star.nextToken().trim();
+			String tableId = star.nextToken().trim();
 			String status = star.nextToken().trim();
-			String checkInDate = star.nextToken().trim();
-			String checkOutDate = star.nextToken().trim();
-			String numOfAdults = star.nextToken().trim();
-			String numOfChildren = star.nextToken().trim();
+			String pax_string = star.nextToken().trim();
 
-			Date cid = null;
-			try {
-				cid = sdf.parse(checkInDate);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			Date cod = null;
-			try {
-				cod = sdf.parse(checkOutDate);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			int noa = Integer.valueOf(numOfAdults);
-			int noc = Integer.valueOf(numOfChildren);
+			int pax = Integer.valueOf(pax_string);
 			
 			// create  object from file data
-			Reservation r = new Reservation(reservationNum, guestId, roomId, status, cid, cod, noa, noc);
+			Reservation r = new Reservation(reservationNum, guestId, tableId, status, pax);
 			alr.add(r);
 		}
 		return alr;
@@ -75,17 +55,11 @@ public class ReservationDB implements DB {
 			st.append(SEPARATOR);
 			st.append(r.getGuestId().trim());
 			st.append(SEPARATOR);
-			st.append(r.getRoomId().trim());
+			st.append(r.gettableId().trim());
 			st.append(SEPARATOR);
 			st.append(r.getStatus().trim());
 			st.append(SEPARATOR);
-			st.append(sdf.format(r.getCheckInDate()).trim());
-			st.append(SEPARATOR);
-			st.append(sdf.format(r.getCheckOutDate()).trim());
-			st.append(SEPARATOR);
-			st.append(String.valueOf(r.getNumOfAdults()).trim());
-			st.append(SEPARATOR);
-			st.append(String.valueOf(r.getNumOfChildren()).trim());
+			st.append(String.valueOf(r.getNumOfPax()).trim());
 			st.append(SEPARATOR);
 			alw.add(st.toString());
 		}

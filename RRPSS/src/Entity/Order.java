@@ -67,7 +67,7 @@ public class Order {
         this.orderId = orderId;
     }
     
-    public String getableId() {
+    public String gettableId() {
         return tableId;
     }
     
