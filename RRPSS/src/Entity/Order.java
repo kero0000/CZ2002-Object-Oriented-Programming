@@ -10,6 +10,7 @@ public class Order {
     private String tableId;
     private String reservationNum;
     private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<Promotion> promotions = new ArrayList<Promotion>();
     private String date;
     private String status = "Ordering";
     private String remarks = "";
@@ -122,7 +123,7 @@ public class Order {
     }
     
     public void viewOrder() {
-        System.out.println("ID   Room   Date                          Remarks                       Status   ");
+        System.out.println("ID   Table  Date                          Remarks                       Status   ");
         System.out.println(toString());
         System.out.println("=================================================================================");
         System.out.println("ID   Name                          Description                          Price(S$)");

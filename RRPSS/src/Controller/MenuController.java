@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import Entity.Item;
 import Database.MenuDB;
 
-
 public class MenuController {
 
     private static final String filename = "Menu.txt";

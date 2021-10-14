@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Reservation {
 	private String reservationNum;
+	private String date;
+	private String time;
 	private String guestId;
 	private String tableId;
 	private String status;
@@ -11,13 +13,15 @@ public class Reservation {
 
 	
 	
-	public Reservation(String reservationNum, String guestId, String tableId, String status, int numOfPax) {
+	public Reservation(String reservationNum, String guestId, String tableId, String status, int numOfPax, String date, String time) {
 		super();
 		this.reservationNum = reservationNum;
 		this.guestId = guestId;
 		this.tableId = tableId;
 		this.status = status;
 		this.pax = numOfPax;
+		this.date = date;
+		this.time = time;
 	}
 
 	
@@ -53,6 +57,19 @@ public class Reservation {
 	}
 	public void setNumOfPax(int pax) {
 		this.pax = pax;
+	}
+	
+	public String getDate() {
+		return this.date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getTime() {
+		return this.time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 }
