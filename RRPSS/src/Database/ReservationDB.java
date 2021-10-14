@@ -29,7 +29,7 @@ public class ReservationDB implements DB {
 																		// using delimiter ","
 
 			String reservationNum = star.nextToken().trim();
-			String guestId = star.nextToken().trim();
+			String customerId = star.nextToken().trim();
 			String tableId = star.nextToken().trim();
 			String status = star.nextToken().trim();
 			String pax_string = star.nextToken().trim();
@@ -37,7 +37,7 @@ public class ReservationDB implements DB {
 			int pax = Integer.valueOf(pax_string);
 			
 			// create  object from file data
-			Reservation r = new Reservation(reservationNum, guestId, tableId, status, pax);
+			Reservation r = new Reservation(reservationNum, customerId, tableId, status, pax);
 			alr.add(r);
 		}
 		return alr;
@@ -53,7 +53,7 @@ public class ReservationDB implements DB {
 			StringBuilder st = new StringBuilder();
 			st.append(r.getReservationNum().trim());
 			st.append(SEPARATOR);
-			st.append(r.getGuestId().trim());
+			st.append(r.getCustomerId().trim());
 			st.append(SEPARATOR);
 			st.append(r.gettableId().trim());
 			st.append(SEPARATOR);

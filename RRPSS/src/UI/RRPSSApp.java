@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Controller.GuestController;
+import Controller.CustomerController;
 import Controller.MenuController;
 import Controller.OrderController;
 import Controller.ReservationController;
@@ -62,45 +62,45 @@ public class HRPSApp {
 					System.out.println("\n==================================================");
 					System.out.println(" Restaurant Management: ");
 					System.out.println("==================================================");
-					System.out.println("(1) Guest Details Management\t(2) Reservations");
+					System.out.println("(1) Customer Details Management\t(2) Reservations");
 					System.out.println("(3) Back");
 					restaurant_mgt_choice = sc.nextInt();
 					switch (restaurant_mgt_choice) {
 					case 1:
-						int guest_mgt_choice;
+						int Customer_mgt_choice;
 						do {
 							System.out.println("\n==================================================");
-							System.out.println(" Guest Details Management: ");
+							System.out.println(" Customer Details Management: ");
 							System.out.println("==================================================");
-							System.out.println("(1) Create Guest\t(2) Update Guest");
-							System.out.println("(3) Remove Guest\t(4) View Guests");
-							System.out.println("(5) Search Guest\t(6) Back");
-							guest_mgt_choice = sc.nextInt();
-							switch (guest_mgt_choice) {
+							System.out.println("(1) Create Customer\t(2) Update Customer");
+							System.out.println("(3) Remove Customer\t(4) View Customers");
+							System.out.println("(5) Search Customer\t(6) Back");
+							Customer_mgt_choice = sc.nextInt();
+							switch (Customer_mgt_choice) {
 							case 1:
-								// Create new guest function
-								GuestController.createGuest();
+								// Create new Customer function
+								CustomerController.createCustomer();
 								break;
 							case 2:
-								GuestController.updateGuestById();
+								CustomerController.updateCustomerById();
 								break;
 							case 3:
-								GuestController.deleteGuestById();
+								CustomerController.deleteCustomerById();
 								break;
 							case 4:
-								GuestController.retrieveAllGuest();
+								CustomerController.retrieveAllCustomer();
 								break;
 							case 5:
-								GuestController.retrieveGuestbyId();
+								CustomerController.retrieveCustomerbyId();
 								break;
 							case 6:
-								guest_mgt_choice = 7;
+								Customer_mgt_choice = 7;
 								break;
 							default:
 								System.out.println("Please enter a valid option.");
-								guest_mgt_choice = 0;
+								Customer_mgt_choice = 0;
 							}
-						} while (guest_mgt_choice < 7);
+						} while (Customer_mgt_choice < 7);
 
 						break;
 					case 2:

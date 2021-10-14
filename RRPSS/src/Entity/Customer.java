@@ -1,29 +1,29 @@
 package Entity;//hello world
 
-public class Guest {
-	private String guestId;
+public class Customer {
+	private String customerId;
 	private String Name;
 	private String phoneNumber;
 	private boolean isMember;
 
 
-	public Guest() {
+	public Customer() {
 		
 	}
 	
-	public Guest(String guestId,String Name,String phoneNumber, boolean isMember) {
-		this.guestId = guestId;
+	public Customer(String customerId,String Name,String phoneNumber, boolean isMember) {
+		this.customerId = customerId;
 		this.Name = Name;
 		this.phoneNumber = phoneNumber;
 		this.isMember = isMember;
 	}
 
-	public String getGuestId() {
-		return guestId;
+	public String getCustomerId() {
+		return customerId;
 	}
 
-	public void setGuestId(String guestId) {
-		this.guestId = guestId;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getName() {

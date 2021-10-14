@@ -6,17 +6,17 @@ public class Reservation {
 	private String reservationNum;
 	private Date date;
 	private String time;
-	private String guestId;
+	private String customerId;
 	private String tableId;
 	private String status;
 	private int pax;
 
 	
 	
-	public Reservation(String reservationNum, String guestId, String tableId, String status, int numOfPax, Date date, String time) {
+	public Reservation(String reservationNum, String customerId, String tableId, String status, int numOfPax, Date date, String time) {
 		super();
 		this.reservationNum = reservationNum;
-		this.guestId = guestId;
+		this.customerId = customerId;
 		this.tableId = tableId;
 		this.status = status;
 		this.pax = numOfPax;
@@ -34,11 +34,11 @@ public class Reservation {
 	public void setReservationNum(String reservationNum) {
 		this.reservationNum = reservationNum;
 	}
-	public String getGuestId() {
-		return guestId;
+	public String getCustomerId() {
+		return customerId;
 	}
-	public void setGuestId(String guestId) {
-		this.guestId = guestId;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	public String gettableId() {
 		return tableId;
