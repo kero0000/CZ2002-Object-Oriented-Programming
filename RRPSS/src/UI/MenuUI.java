@@ -1,5 +1,7 @@
 package UI;
 
+//TODO: create promotion changing functions 
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Item;
@@ -27,7 +29,9 @@ public class MenuUI {
 			System.out.println(" Menu item Management: ");
 			System.out.println("==================================================");
 			System.out.println("(1) Create Menu item\t(2) Update Menu item");
-			System.out.println("(3) Remove Menu item\t(4) Back");
+			System.out.println("(3) Remove Menu item\t(4) Create promotion package item");
+			System.out.println("(5) Update promotion package item\t(6) Remove promotion package item");
+			System.out.println("(7) Back");
             choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -38,8 +42,16 @@ public class MenuUI {
                     break;
                 case 3:
                 	removeIn();
-                    break;
+                    break;                 
                 case 4:
+                	createPromotion();
+                	break;
+                case 5:
+                	updatePromotion();
+                case 6:
+                	removePromotion();
+                	break;
+                case 7: // Back
                     break;
                 default:
                 	System.out.println("Please enter a valid option!");
@@ -47,7 +59,7 @@ public class MenuUI {
             }
         } while (choice < 4);
     }
-
+    
     public void createIn() {
         String itemName = "";
         String itemDesc = "";

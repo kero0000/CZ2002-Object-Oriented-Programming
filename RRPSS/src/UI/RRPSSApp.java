@@ -172,36 +172,36 @@ public class HRPSApp {
 							System.out.println("\n==================================================");
 							System.out.println(" Table Management: ");
 							System.out.println("==================================================");
-							System.out.println("(1) Create Table\t\t\t(2) Update Room details");
+							System.out.println("(1) Create Table\t\t\t(2) Update Table details");
 							System.out.println("(3) Update Table Status\t\t(4) View All Table details");
 							System.out.println("(5) View a Table detail\t\t(6) View All Table Status");
 							System.out.println("(7) Back");
 							table_mgt_choice = sc.nextInt();
 							switch (table_mgt_choice) {
 							case 1:
-								// Create Room
-								TableController.retrieveAllRoom();
-								TableController.createRoom();
+								// Create table
+								TableController.retrieveAllTable();
+								TableController.createTable();
 								break;
 							case 2:
-								// Retrieve room and update by room id
-								TableController.updateRoom();
+								// Retrieve table and update by table id
+								TableController.updateTable();
 								break;
 							case 3:
-								// Retrieve room and update room status only by room id
-								TableController.updateRoomStatusOnly();
+								// Retrieve table and update table status only by table id
+								TableController.updateTableStatusOnly();
 								break;
 							case 4:
 								// Retrieve and print all room details
-								TableController.retrieveAllRoom();
+								TableController.retrieveAllTable();
 								break;
 							case 5:
 
-								TableController.retrieveOneRoom();
+								TableController.retrieveOneTable();
 								break;
 							case 6:
 
-								TableController.retrieveRoomStatus();
+								TableController.retrievetableStatus();
 								break;
 							case 7:
 								table_mgt_choice = 8;
@@ -271,21 +271,23 @@ public class HRPSApp {
 		OrderController.getInstance().savetoDB();
 		sc.close();
 	}
+	
+	// this is to remove reservation after a certain period of time has passed
 	static class checkExpired extends TimerTask {
         public void run() {
-            //copy code here
+
         	String fileName = "Reservation.txt";
         	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     		Date today = new Date();
     		Date cid;
     		ArrayList<Reservation> reservationList = ReservationController.retrieveReservation();
     		for (int i = 0; i < reservationList.size(); i++) {
-    			cid = reservationList.get(i).getCheckInDate();
+    			cid = reservationList.get(i).getDate();
     			if (cid.before(today) && reservationList.get(i).getStatus().equalsIgnoreCase("CONFIRMED")) {
     				reservationList.get(i).setStatus("EXPIRED");
-    				// change room status to vacant
-    				String roomId = reservationList.get(i).getRoomId();
-    				TableController.updateTableStatus(roomId, "VACANT");
+    				// change table status to vacant
+    				String tableId = reservationList.get(i).gettableId();
+    				TableController.updateTableStatus(tableId, "VACANT");
     			}
     		}
     		// Write Reservation records to file

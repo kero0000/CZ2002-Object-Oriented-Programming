@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Reservation {
 	private String reservationNum;
-	private String date;
+	private Date date;
 	private String time;
 	private String guestId;
 	private String tableId;
@@ -13,7 +13,7 @@ public class Reservation {
 
 	
 	
-	public Reservation(String reservationNum, String guestId, String tableId, String status, int numOfPax, String date, String time) {
+	public Reservation(String reservationNum, String guestId, String tableId, String status, int numOfPax, Date date, String time) {
 		super();
 		this.reservationNum = reservationNum;
 		this.guestId = guestId;
@@ -59,10 +59,10 @@ public class Reservation {
 		this.pax = pax;
 	}
 	
-	public String getDate() {
+	public Date getDate() {
 		return this.date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public String getTime() {
