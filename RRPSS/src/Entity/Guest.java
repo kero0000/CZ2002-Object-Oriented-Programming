@@ -1,4 +1,4 @@
-package Entity;//test2
+package Entity;//test3
 
 public class Guest {
 	private String guestId;
