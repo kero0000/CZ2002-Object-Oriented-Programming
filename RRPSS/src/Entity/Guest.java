@@ -50,5 +50,7 @@ public class Guest {
 	public void setisMember(boolean isMember) {
 		this.isMember = isMember;
 	}
+	
+	//testing GitHub commit (Adi)
 
 } 
