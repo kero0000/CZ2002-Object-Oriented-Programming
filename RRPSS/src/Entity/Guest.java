@@ -1,4 +1,4 @@
-package Entity;//test3
+package Entity;//hello world
 
 public class Guest {
 	private String guestId;
