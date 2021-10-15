@@ -32,7 +32,7 @@ public class MenuUI {
 			System.out.println("(3) Remove Menu item\t(4) Create promotion package item");
 			System.out.println("(5) Update promotion package item\t(6) Remove promotion package item");
 			System.out.println("(7) Back");
-            choice = sc.nextInt();
+            choice = Integer.valueOf(sc.nextLine());
             switch (choice) {
                 case 1:
                 	createIn();
@@ -48,6 +48,7 @@ public class MenuUI {
                 	break;
                 case 5:
                 	updatePromotion();
+                	break;
                 case 6:
                 	removePromotion();
                 	break;

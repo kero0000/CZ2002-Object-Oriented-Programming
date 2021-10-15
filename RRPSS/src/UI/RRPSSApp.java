@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Controller.CustomerController;
+import Controller.StaffController;
 import Controller.MenuController;
 import Controller.OrderController;
 import Controller.ReservationController;
@@ -18,7 +18,7 @@ import Controller.TableController;
 import Database.ReservationDB;
 import Entity.Reservation;
 
-public class HRPSApp {
+public class RRPSSApp {
 
 	public static void main(String[] args) throws IOException, ParseException {
 		// TODO Auto-generated method stub
@@ -62,45 +62,45 @@ public class HRPSApp {
 					System.out.println("\n==================================================");
 					System.out.println(" Restaurant Management: ");
 					System.out.println("==================================================");
-					System.out.println("(1) Customer Details Management\t(2) Reservations");
+					System.out.println("(1) Staff Details Management\t(2) Reservations");
 					System.out.println("(3) Back");
 					restaurant_mgt_choice = sc.nextInt();
 					switch (restaurant_mgt_choice) {
 					case 1:
-						int Customer_mgt_choice;
+						int Staff_mgt_choice;
 						do {
 							System.out.println("\n==================================================");
-							System.out.println(" Customer Details Management: ");
+							System.out.println(" Staff Details Management: ");
 							System.out.println("==================================================");
-							System.out.println("(1) Create Customer\t(2) Update Customer");
-							System.out.println("(3) Remove Customer\t(4) View Customers");
-							System.out.println("(5) Search Customer\t(6) Back");
-							Customer_mgt_choice = sc.nextInt();
-							switch (Customer_mgt_choice) {
+							System.out.println("(1) Create Staff\t(2) Update Staff");
+							System.out.println("(3) Remove Staff\t(4) View Staffs");
+							System.out.println("(5) Search Staff\t(6) Back");
+							Staff_mgt_choice = sc.nextInt();
+							switch (Staff_mgt_choice) {
 							case 1:
-								// Create new Customer function
-								CustomerController.createCustomer();
+								// Create new Staff function
+								StaffController.createStaff();
 								break;
 							case 2:
-								CustomerController.updateCustomerById();
+								StaffController.updateStaffById();
 								break;
 							case 3:
-								CustomerController.deleteCustomerById();
+								StaffController.deleteStaffById();
 								break;
 							case 4:
-								CustomerController.retrieveAllCustomer();
+								StaffController.retrieveAllStaff();
 								break;
 							case 5:
-								CustomerController.retrieveCustomerbyId();
+								StaffController.retrieveStaffbyId();
 								break;
 							case 6:
-								Customer_mgt_choice = 7;
+								Staff_mgt_choice = 7;
 								break;
 							default:
 								System.out.println("Please enter a valid option.");
-								Customer_mgt_choice = 0;
+								Staff_mgt_choice = 0;
 							}
-						} while (Customer_mgt_choice < 7);
+						} while (Staff_mgt_choice < 7);
 
 						break;
 					case 2:
