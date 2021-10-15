@@ -77,7 +77,7 @@ public class TableController {
 			System.out.println("(5) 10 pax");
 			
 			tableType = sc.nextLine();
-			if (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")) {
+			if (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")&& !tableType.equals("5")) {
 				System.out.println("Please select a valid option.");
 			} else {
 				switch (tableType) {
@@ -88,10 +88,13 @@ public class TableController {
 						table.settableType("4 pax");
 						break;
 					case "3":
-						room.settableType("6 pax");
+						table.settableType("6 pax");
 						break;
 					case "4":
-						room.settableType("8 pax");
+						table.settableType("8 pax");
+						break;
+					case "5":
+						table.settableType("10 pax");
 						break;
 				}
 				System.out.println("HELLO");

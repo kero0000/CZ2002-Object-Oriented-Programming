@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Controller.GuestController;
+import Controller.StaffController;
 import Controller.MenuController;
 import Controller.OrderController;
 import Controller.ReservationController;
@@ -18,7 +18,7 @@ import Controller.TableController;
 import Database.ReservationDB;
 import Entity.Reservation;
 
-public class HRPSApp {
+public class RRPSSApp {
 
 	public static void main(String[] args) throws IOException, ParseException {
 		// TODO Auto-generated method stub
@@ -62,45 +62,45 @@ public class HRPSApp {
 					System.out.println("\n==================================================");
 					System.out.println(" Restaurant Management: ");
 					System.out.println("==================================================");
-					System.out.println("(1) Guest Details Management\t(2) Reservations");
+					System.out.println("(1) Staff Details Management\t(2) Reservations");
 					System.out.println("(3) Back");
 					restaurant_mgt_choice = sc.nextInt();
 					switch (restaurant_mgt_choice) {
 					case 1:
-						int guest_mgt_choice;
+						int Staff_mgt_choice;
 						do {
 							System.out.println("\n==================================================");
-							System.out.println(" Guest Details Management: ");
+							System.out.println(" Staff Details Management: ");
 							System.out.println("==================================================");
-							System.out.println("(1) Create Guest\t(2) Update Guest");
-							System.out.println("(3) Remove Guest\t(4) View Guests");
-							System.out.println("(5) Search Guest\t(6) Back");
-							guest_mgt_choice = sc.nextInt();
-							switch (guest_mgt_choice) {
+							System.out.println("(1) Create Staff\t(2) Update Staff");
+							System.out.println("(3) Remove Staff\t(4) View Staffs");
+							System.out.println("(5) Search Staff\t(6) Back");
+							Staff_mgt_choice = sc.nextInt();
+							switch (Staff_mgt_choice) {
 							case 1:
-								// Create new guest function
-								GuestController.createGuest();
+								// Create new Staff function
+								StaffController.createStaff();
 								break;
 							case 2:
-								GuestController.updateGuestById();
+								StaffController.updateStaffById();
 								break;
 							case 3:
-								GuestController.deleteGuestById();
+								StaffController.deleteStaffById();
 								break;
 							case 4:
-								GuestController.retrieveAllGuest();
+								StaffController.retrieveAllStaff();
 								break;
 							case 5:
-								GuestController.retrieveGuestbyId();
+								StaffController.retrieveStaffbyId();
 								break;
 							case 6:
-								guest_mgt_choice = 7;
+								Staff_mgt_choice = 7;
 								break;
 							default:
 								System.out.println("Please enter a valid option.");
-								guest_mgt_choice = 0;
+								Staff_mgt_choice = 0;
 							}
-						} while (guest_mgt_choice < 7);
+						} while (Staff_mgt_choice < 7);
 
 						break;
 					case 2:

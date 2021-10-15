@@ -29,7 +29,7 @@ public class ReservationDB implements DB {
 			
 
 			String reservationNum = star.nextToken().trim();
-			String guestId = star.nextToken().trim();
+			String customerId = star.nextToken().trim();
 			String tableId = star.nextToken().trim();
 			String date = star.nextToken().trim();
 			String status = star.nextToken().trim();
@@ -46,7 +46,11 @@ public class ReservationDB implements DB {
 			int pax = Integer.valueOf(pax_string);
 			
 			// create  object from file data
+<<<<<<< HEAD
 			Reservation r = new Reservation(reservationNum, guestId, tableId,  status, pax_string, Date,  time);
+=======
+			Reservation r = new Reservation(reservationNum, customerId, tableId, status, pax);
+>>>>>>> branch 'master' of https://github.com/kero0000/RRPSS.git
 			alr.add(r);
 		}
 		return alr;
@@ -62,7 +66,7 @@ public class ReservationDB implements DB {
 			StringBuilder st = new StringBuilder();
 			st.append(r.getReservationNum().trim());
 			st.append(SEPARATOR);
-			st.append(r.getGuestId().trim());
+			st.append(r.getCustomerId().trim());
 			st.append(SEPARATOR);
 			st.append(sdf.format(r.getDate()).trim());
 			st.append(SEPARATOR);
