@@ -180,7 +180,7 @@ public class RRPSSApp {
 							switch (table_mgt_choice) {
 							case 1:
 								// Create table
-								TableController.retrieveAllTable();
+								TableController.retrieveAllTable(); // print out all the current records of table
 								TableController.createTable();
 								break;
 							case 2:
@@ -201,7 +201,7 @@ public class RRPSSApp {
 								break;
 							case 6:
 
-								TableController.retrievetableStatus();
+								TableController.retrieveTableStatus();
 								break;
 							case 7:
 								table_mgt_choice = 8;

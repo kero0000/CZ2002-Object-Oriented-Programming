@@ -19,7 +19,7 @@ public class TableDB implements DB{
 	public ArrayList read(String fileName) throws IOException {
 
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
-		ArrayList alr = new ArrayList();// to store Guest data
+		ArrayList alr = new ArrayList();// to store customer data
 
 		for (int i = 0; i < stringArray.size(); i++) {
 

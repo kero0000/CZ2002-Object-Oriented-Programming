@@ -12,7 +12,6 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import Database.ReadinFile;
 import Database.TableDB;
 import Entity.Table;
@@ -30,13 +29,9 @@ public class TableController {
 	public static void createTable() throws IOException {
 		String tableId = "";
 		String tableType = "";
-		String tableStatus = "";
-		
+		String tableStatus = "";		
 		String regExp = "[0-9]+([.][0-9]{2})";
-		String tableRegExp = "[0][2-7][-][0][1-8]";
-		String digit = "\\d+";
-		String alpha = "[a-zA-Z.*\\s+.]+";
-		String tableIdDigit = "\\d+\\-";
+		String tableRegExp = "[0][2-7]";
 		
 		Pattern pattern = Pattern.compile(regExp);
 		Pattern tableIdPattern = Pattern.compile(tableRegExp);
@@ -47,15 +42,14 @@ public class TableController {
 		
 		// Setting Table Id
 		do {
-			System.out.println("Please enter Table ID(E.g 02-04):");
-			System.out.println("*Format xx-yy where xx is Floor Number and yy is Room Number.");
+			System.out.println("Please enter Table ID(E.g 02):");
 			System.out.println("*Table number from 01 - 05");
 			
 			tableId = sc.nextLine();
 			Matcher matcher = tableIdPattern.matcher(tableId); 
 			if(tableId.length() != 2 || !matcher.matches()) {
 				tableId = "";
-				System.out.println("You have entered a invalid Table Id. Please try again. (E.g. 02-04)");
+				System.out.println("You have entered a invalid Table Id. Please try again. (E.g. 02)");
 			}else {
 				table.settableId(tableId);
 				checktableId = retrieveTable(table);
@@ -99,58 +93,52 @@ public class TableController {
 				}
 				System.out.println("HELLO");
 			}
-		} while (!roomType.equals("1") && !roomType.equals("2") && !roomType.equals("3") && !roomType.equals("4"));
+		} while (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")&& !tableType.equals("5"));
 		
 		
-		// Setting Room Status
+		// Setting Table Status
 		do {
-			System.out.println("Please enter Room Status: ");
+			System.out.println("Please enter Table Status: ");
 			System.out.println("(1) Vacant");
 			System.out.println("(2) Reserved");
 			System.out.println("(3) Occupied");
-			System.out.println("(4) Under Maintenance");
-			roomStatus = sc.nextLine();
+			tableStatus = sc.nextLine();
 
-			if (!roomStatus.equals("1") && !roomStatus.equals("2") && !roomStatus.equals("3")) {
+			if (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3")) {
 				System.out.println("Please select a valid option.");
 			} else {
-				switch (roomStatus) {
+				switch (tableStatus) {
 					case "1":
-						room.setRoomStatus("VACANT");
+						table.settableStatus("VACANT");
 						break;
 					case "2":
-						room.setRoomStatus("RESERVED");
+						table.settableStatus("RESERVED");
 						break;
 					case "3":
-						room.setRoomStatus("OCCUPIED");
+						table.settableStatus("OCCUPIED");
 						break;
 				}
 			}
-		} while (!roomStatus.equals("1") && !roomStatus.equals("2") && !roomStatus.equals("3"));
+		} while (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3"));
 		
-		
-		
-
-		RoomDB roomDB = new RoomDB();
-		ArrayList al = roomDB.read(fileName);
-		al.add(room);
+		TableDB tableDB = new TableDB();
+		ArrayList al = tableDB.read(fileName);
+		al.add(table);
 		
 		try {
 			// Write Room records to file
-			roomDB.save(fileName, al);
+			tableDB.save(fileName, al);
 
-			System.out.println("You have successfully created a new room! ");
+			System.out.println("You have successfully created a new table! ");
 
 		} catch (IOException e) {
 			System.out.println("IOException > " + e.getMessage());
 		}
-		
 	}
 	
 	/**
-	 * Update Room Details by using roomId
+	 * Update Table Details by using tableId
 	 * @throws IOException 
-	 * 
 	 */
 	public static void updateTable() throws IOException {
 		Scanner sc = new Scanner(System.in);
@@ -161,595 +149,323 @@ public class TableController {
 		// To be used for data validation
 		
 		String regExp = "[0-9]+([.][0-9]{2})";
-		String roomRegExp = "[0][2-7][-][0][1-8]";
-		String digit = "\\d+";
-		String alpha = "[a-zA-Z.*\\s+.]+";
+		String tableRegExp = "[0][2-7]";
 		
 		Pattern pattern = Pattern.compile(regExp);
-		Pattern roomIdPattern = Pattern.compile(roomRegExp);
+		Pattern tableIdPattern = Pattern.compile(tableRegExp);
 		
-		retrieveAllRoom();
+		retrieveAllTable(); // print out all the current tables and attributes
 		System.out.println("");
-		Room updateRoom = new Room();
-		updateRoom = retrieveRoomDetails();
-		System.out.println("\nPlease choose guest details to update \n(1) Room Type \n(2) Bed Type "
-				+ "\n(3) View Type \n(4) Room Status \n(5) Room Rate \n(6) Wifi Enabled \n(7) Room Smoking Status \n(8) All details");
+		Table updateTable = new Table();
+		updateTable = retrieveTableDetails(); // assign a current table to variable updateTable
+		System.out.println("\nPlease choose Table details to update \n(1) Table Type \n"
+				+ "(2) Table Status \n(3) All details");
 		option = sc.nextInt();
 		sc.nextLine();
 		
 		switch(option) {
 			case 1:
-				// Room Type
+				// Table Type
 				do {
-					System.out.println("Please enter a new Room Type:");
-					System.out.println("(1) Single");
-					System.out.println("(2) Double");
-					System.out.println("(3) Deluxe");
-					System.out.println("(4) VIP Suite");
-					roomType = sc.nextLine();
+					System.out.println("Please enter a new Table Type:");
+					System.out.println("(1) 2 pax");
+					System.out.println("(2) 4 pax");
+					System.out.println("(3) 6 pax");
+					System.out.println("(4) 8 pax");
+					System.out.println("(5) 10 pax");
+					tableType = sc.nextLine();
 	
-					if (!roomType.equals("1") && !roomType.equals("2") && !roomType.equals("3") && !roomType.equals("4")) {
+					if (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")&& !tableType.equals("5")) {
 						System.out.println("Please select a valid option.");
 					} else {
-						switch (roomType) {
+						switch (tableType) {
 							case "1":
-								updateRoom.setRoomType("Single Room");
+								updateTable.settableType("2 pax");
 								break;
 							case "2":
-								updateRoom.setRoomType("Double Room");
+								updateTable.settableType("4 pax");
 								break;
 							case "3":
-								updateRoom.setRoomType("Deluxe Room");
+								updateTable.settableType("6 pax");
 								break;
 							case "4":
-								updateRoom.setRoomType("VIP Suite");
+								updateTable.settableType("8 pax");
+								break;
+							case "5":
+								updateTable.settableType("10 pax");
 								break;
 						}
 					}
-				} while (!roomType.equals("1") && !roomType.equals("2") && !roomType.equals("3") && !roomType.equals("4"));
+				} while (!tableType.equals("1") && !tableType.equals("2")&& !tableType.equals("3") && !tableType.equals("4") && !tableType.equals("5"));
 				break;
+				
 			case 2:
-				// Bed Type
-				do {
-					System.out.println("Please enter a Bed Type: ");
-					System.out.println("(1) Single Bed");
-					System.out.println("(2) Double Bed");
-					System.out.println("(3) Super Single Bed");
-					System.out.println("(4) Queen Bed");
-					System.out.println("(5) King Bed");
-					bedType = sc.nextLine();
-	
-					if (!bedType.equals("1") && !bedType.equals("2") && !bedType.equals("3") && !bedType.equals("4")&& !bedType.equals("5")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (bedType) {
-							case "1":
-								updateRoom.setBedType("Single Bed");
-								break;
-							case "2":
-								updateRoom.setBedType("Double Bed");
-								break;
-							case "3":
-								updateRoom.setBedType("Super Single Bed");
-								break;
-							case "4":
-								updateRoom.setBedType("Queen Bed");
-								break;
-							case "5":
-								updateRoom.setBedType("King Bed");
-								break;
-						}
-					}
-				} while (!bedType.equals("1") && !bedType.equals("2") && !bedType.equals("3") && !bedType.equals("4") && !bedType.equals("5"));
-				break;
-			case 3:
-				// View Type
-				do {
-					System.out.println("Please enter View Type: ");
-					System.out.println("(1) Sea View");
-					System.out.println("(2) City View");
-					System.out.println("(3) No View");
-					viewType = sc.nextLine();
-	
-					if (!viewType.equals("1") && !viewType.equals("2") && !viewType.equals("3")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (viewType) {
-							case "1":
-								updateRoom.setViewType("Sea View");
-								break;
-							case "2":
-								updateRoom.setViewType("City View");
-								break;
-							case "3":
-								updateRoom.setViewType("No View");
-								break;
-						}
-					}
-				} while (!viewType.equals("1") && !viewType.equals("2") && !viewType.equals("3"));
-				break;
-			case 4:
 				// Room Status
 				do {
-					System.out.println("Please enter Room Status: ");
+					System.out.println("Please enter Table Status: ");
 					System.out.println("(1) Vacant");
 					System.out.println("(2) Reserved");
 					System.out.println("(3) Occupied");
-					System.out.println("(4) Under Maintenance");
-					roomStatus = sc.nextLine();
+					tableStatus = sc.nextLine();
 	
-					if (!roomStatus.equals("1") && !roomStatus.equals("2") && !roomStatus.equals("3")&& !roomStatus.equals("4")) {
+					if (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3")) {
 						System.out.println("Please select a valid option.");
 					} else {
-						switch (roomStatus) {
+						switch (tableStatus) {
 							case "1":
-								updateRoom.setRoomStatus("VACANT");
+								updateTable.settableStatus("VACANT");
 								break;
 							case "2":
-								updateRoom.setRoomStatus("RESERVED");
+								updateTable.settableStatus("RESERVED");
 								break;
 							case "3":
-								updateRoom.setRoomStatus("OCCUPIED");
-								break;
-							case "4":
-								updateRoom.setRoomStatus("UNDER MAINTENANCE");
+								updateTable.settableStatus("OCCUPIED");
 								break;
 						}
 					}
-				} while (!roomStatus.equals("1") && !roomStatus.equals("2") && !roomStatus.equals("3") && !roomStatus.equals("4"));
+				} while (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3"));
 				break;
-			case 5:
-				// Room Rate
+			case 3:	
+				// Table Type
 				do {
-					System.out.println("Please enter Room Rate(E.g. 154.40):");
-					System.out.println("*Enter amount in 2 decimal places.");
-					roomRate = sc.nextLine();
-					
-					// Regex check if input is in price format.
-					Matcher matcher = pattern.matcher(roomRate); 
-					if(matcher.matches()) {
-						Float checkPrice = Float.parseFloat(roomRate);
-						if(checkPrice>0.0) {
-							updateRoom.setRoomRate(roomRate);
-						}else {
-							System.out.println("Please enter a positive room rate.");
-						}
-					}else {
-						roomRate = "";
-						System.out.println("Please enter a valid rate in 2 decimal places.");
-					}
-				} while (roomRate.equals(""));
-				break;
-			case 6:
-				// Wifi Enabled
-				do {
-					System.out.println("Please select if Wifi is enabled in the room: ");
-					System.out.println("(1) Enabled");
-					System.out.println("(2) Not enabled");
-					wifiEnabled = sc.nextLine();
+					System.out.println("Please enter a new Table Type:");
+					System.out.println("(1) 2 pax");
+					System.out.println("(2) 4 pax");
+					System.out.println("(3) 6 pax");
+					System.out.println("(4) 8 pax");
+					System.out.println("(5) 10 pax");
+					tableType = sc.nextLine();
 	
-					if (!wifiEnabled.equals("1") && !wifiEnabled.equals("2")) {
+					if (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")&& !tableType.equals("5")) {
 						System.out.println("Please select a valid option.");
 					} else {
-						switch (wifiEnabled) {
+						switch (tableType) {
 							case "1":
-								updateRoom.setWifiEnabled("Enabled");
+								updateTable.settableType("2 pax");
 								break;
 							case "2":
-								updateRoom.setWifiEnabled("Not enabled");
-								break;
-						}
-					}
-				} while (!wifiEnabled.equals("1") && !wifiEnabled.equals("2"));
-				break;
-			case 7:
-				// Smoking Status
-				do {
-					System.out.println("Please select if Smoking is allowed in the room: ");
-					System.out.println("(1) Allowed");
-					System.out.println("(2) Not allowed");
-					smokingStatus = sc.nextLine();
-	
-					if (!smokingStatus.equals("1") && !smokingStatus.equals("2")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (smokingStatus) {
-							case "1":
-								updateRoom.setSmokingStatus("Allowed");
-								break;
-							case "2":
-								updateRoom.setSmokingStatus("Not allowed");
-								break;
-						}
-					}
-				} while (!smokingStatus.equals("1") && !smokingStatus.equals("2"));
-				break;
-			case 8:
-				// Room Type
-				do {
-					System.out.println("Please enter a new Room Type: ");
-					System.out.println("(1) Single");
-					System.out.println("(2) Double");
-					System.out.println("(3) Deluxe");
-					System.out.println("(4) VIP Suite");
-					roomType = sc.nextLine();
-	
-					if (!roomType.equals("1") && !roomType.equals("2") && !roomType.equals("3") && !roomType.equals("4")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (roomType) {
-							case "1":
-								updateRoom.setRoomType("Single Room");
-								break;
-							case "2":
-								updateRoom.setRoomType("Double Room");
+								updateTable.settableType("4 pax");
 								break;
 							case "3":
-								updateRoom.setRoomType("Deluxe Room");
+								updateTable.settableType("6 pax");
 								break;
 							case "4":
-								updateRoom.setRoomType("VIP Suite");
-								break;
-						}
-					}
-				} while (!roomType.equals("1") && !roomType.equals("2") && !roomType.equals("3") && !roomType.equals("4"));
-				
-				// Bed Type
-				do {
-					System.out.println("Please enter a Bed Type: ");
-					System.out.println("(1) Single Bed");
-					System.out.println("(2) Double Bed");
-					System.out.println("(3) Super Single Bed");
-					System.out.println("(4) Queen Bed");
-					System.out.println("(5) King Bed");
-					bedType = sc.nextLine();
-	
-					if (!bedType.equals("1") && !bedType.equals("2") && !bedType.equals("3") && !bedType.equals("4")&& !bedType.equals("5")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (bedType) {
-							case "1":
-								updateRoom.setBedType("Single Bed");
-								break;
-							case "2":
-								updateRoom.setBedType("Double Bed");
-								break;
-							case "3":
-								updateRoom.setBedType("Super Single Bed");
-								break;
-							case "4":
-								updateRoom.setBedType("Queen Bed");
+								updateTable.settableType("8 pax");
 								break;
 							case "5":
-								updateRoom.setBedType("King Bed");
+								updateTable.settableType("10 pax");
 								break;
 						}
 					}
-				} while (!bedType.equals("1") && !bedType.equals("2") && !bedType.equals("3") && !bedType.equals("4")&& !bedType.equals("5"));
-				
-				// View Type
-				do {
-					System.out.println("Please enter View Type: ");
-					System.out.println("(1) Sea View");
-					System.out.println("(2) City View");
-					System.out.println("(3) No View");
-					viewType = sc.nextLine();
-	
-					if (!viewType.equals("1") && !viewType.equals("2") && !viewType.equals("3")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (viewType) {
-							case "1":
-								updateRoom.setViewType("Sea View");
-								break;
-							case "2":
-								updateRoom.setViewType("City View");
-								break;
-							case "3":
-								updateRoom.setViewType("No View");
-								break;
-						}
-					}
-				} while (!viewType.equals("1") && !viewType.equals("2") && !viewType.equals("3"));
-				
-				
+				} while (!tableType.equals("1") && !tableType.equals("2")&& !tableType.equals("3") && !tableType.equals("4") && !tableType.equals("5"));
+
 				// Room Status
 				do {
-					System.out.println("Please enter Room Status: ");
+					System.out.println("Please enter Table Status: ");
 					System.out.println("(1) Vacant");
 					System.out.println("(2) Reserved");
 					System.out.println("(3) Occupied");
-					System.out.println("(4) Under Maintenance");
-					roomStatus = sc.nextLine();
+					tableStatus = sc.nextLine();
 	
-					if (!roomStatus.equals("1") && !roomStatus.equals("2") && !roomStatus.equals("3")&& !roomStatus.equals("4")) {
+					if (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3")) {
 						System.out.println("Please select a valid option.");
 					} else {
-						switch (roomStatus) {
+						switch (tableStatus) {
 							case "1":
-								updateRoom.setRoomStatus("VACANT");
+								updateTable.settableStatus("VACANT");
 								break;
 							case "2":
-								updateRoom.setRoomStatus("RESERVED");
+								updateTable.settableStatus("RESERVED");
 								break;
 							case "3":
-								updateRoom.setRoomStatus("OCCUPIED");
-								break;
-							case "4":
-								updateRoom.setRoomStatus("UNDER MAINTENANCE");
+								updateTable.settableStatus("OCCUPIED");
 								break;
 						}
 					}
-				} while (!roomStatus.equals("1") && !roomStatus.equals("2") && !roomStatus.equals("3")&& !roomStatus.equals("4"));
+				} while (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3"));
 				
-				// Room Rate
-				do {
-					System.out.println("Please enter Room Rate(E.g. 154.40):");
-					System.out.println("*Enter amount in 2 decimal places.");
-					roomRate = sc.nextLine();
-					
-					// Regex check if input is in price format.
-					Matcher matcher = pattern.matcher(roomRate); 
-					if(matcher.matches()) {
-						Float checkPrice = Float.parseFloat(roomRate);
-						if(checkPrice>0.0) {
-							updateRoom.setRoomRate(roomRate);
-						}else {
-							roomRate = "";
-							System.out.println("Please enter a positive room rate.");
-						}
-					}else {
-						roomRate = "";
-						System.out.println("Please enter a valid rate in 2 decimal places.");
-					}
-				} while (roomRate.equals(""));
-				
-				// Wifi Enabled
-				do {
-					System.out.println("Please select if Wifi is enabled in the room: ");
-					System.out.println("(1) Enabled");
-					System.out.println("(2) Not enabled");
-					wifiEnabled = sc.nextLine();
-	
-					if (!wifiEnabled.equals("1") && !wifiEnabled.equals("2")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (wifiEnabled) {
-							case "1":
-								updateRoom.setWifiEnabled("Enabled");
-								break;
-							case "2":
-								updateRoom.setWifiEnabled("Not enabled");
-								break;
-						}
-					}
-				} while (!wifiEnabled.equals("1") && !wifiEnabled.equals("2"));
-				
-				// Smoking Status
-				do {
-					System.out.println("Please select if Smoking is allowed in the room: ");
-					System.out.println("(1) Allowed");
-					System.out.println("(2) Not allowed");
-					smokingStatus = sc.nextLine();
-	
-					if (!smokingStatus.equals("1") && !smokingStatus.equals("2")) {
-						System.out.println("Please select a valid option.");
-					} else {
-						switch (smokingStatus) {
-							case "1":
-								updateRoom.setSmokingStatus("Allowed");
-								break;
-							case "2":
-								updateRoom.setSmokingStatus("Not allowed");
-								break;
-						}
-					}
-				} while (!smokingStatus.equals("1") && !smokingStatus.equals("2"));
-				
-				break;
 		}
 		
 		try{
-			ArrayList alr = retrieveRoom();
+			ArrayList alr = retrieveTable(); // alr is the arraylist of all table records
 			for (int i = 0; i < alr.size(); i++) {
-				Room searchRoom = (Room) alr.get(i);
+				Table searchTable = (Table) alr.get(i); // searchTable is an instance of each table in record so can compare below
 
-				if(updateRoom.getRoomId().equals(searchRoom.getRoomId())) {
-					alr.set(i, updateRoom);
+				if(updateTable.gettableId().equals(searchTable.gettableId())) {// replace the desired table record with the updateTable 
+					alr.set(i, updateTable);
 				}
 			}
-			// Write Room records to file
-			RoomDB roomDB = new RoomDB();
-			roomDB.save(fileName, alr);
+			// Write Table records to file
+			TableDB tableDB = new TableDB();
+			tableDB.save(fileName, alr);
 
-			System.out.println("Room details has been successfully updated!");
+			System.out.println("Table details has been successfully updated!");
 		} catch (
 
-		IOException e)
-
-		{
+		IOException e){
 			System.out.println("IOException > " + e.getMessage());
 		}
 	}
 	
 	/**
-	 * Update Room Status only by using roomId
+	 * Update Table Status only by using tableId
 	 * @throws IOException 
 	 * 
 	 */
-	public static void updateRoomStatusOnly() throws IOException {
+	public static void updateTableStatusOnly() throws IOException {
 		String newStatus;
-		String roomId;
-		RoomController.retrieveRoomStatus();
+		String tableId;
+		TableController.retrieveTableStatus();
 		Scanner sc = new Scanner(System.in);
-		Room room = new Room();
-		Room checkRoomId = new Room();
+		Table table = new Table();
+		Table checkTableId = new Table();
 		Boolean checker = false;
 		
 		String digit = "\\d+";
 		String alpha = "[a-zA-Z.*\\s+.]+";
 		
 		do {
-			System.out.println("Please enter a Room Id for updating(E.g 02-01):");
-			roomId = sc.nextLine();
+			System.out.println("Please enter a Table Id for updating(E.g 02):");
+			tableId = sc.nextLine();
 			
-			room.setRoomId(roomId);
-			checkRoomId = retrieveRoom(room);
-			if(checkRoomId == null) {
-				System.out.println("Room Id does not exist.");
+			table.settableId(tableId);
+			checkTableId = retrieveTable(table);
+			if(checkTableId == null) {
+				System.out.println("Table Id does not exist.");
 			}
 			
-		} while (checkRoomId != null && checker == true);
+		} while (checkTableId != null && checker == true);
 		
 		do {
-			System.out.println("Please enter Room Status: ");
+			System.out.println("Please enter Table Status: ");
 			System.out.println("(1) Vacant");
 			System.out.println("(2) Reserved");
 			System.out.println("(3) Occupied");
-			System.out.println("(4) Under Maintenance");
 			newStatus = sc.nextLine();
 
-			if (!newStatus.equals("1") && !newStatus.equals("2") && !newStatus.equals("3")&& !newStatus.equals("4")) {
+			if (!newStatus.equals("1") && !newStatus.equals("2") && !newStatus.equals("3")) {
 				System.out.println("Please select a valid option.");
 			} else {
 				switch (newStatus) {
 					case "1":
-						checkRoomId.setRoomStatus("VACANT");
+						checkTableId.settableStatus("VACANT");
 						break;
 					case "2":
-						checkRoomId.setRoomStatus("RESERVED");
+						checkTableId.settableStatus("RESERVED");
 						break;
 					case "3":
-						checkRoomId.setRoomStatus("OCCUPIED");
-						break;
-					case "4":
-						checkRoomId.setRoomStatus("UNDER MAINTENANCE");
+						checkTableId.settableStatus("OCCUPIED");
 						break;
 				}
 			}
 		} while (newStatus.equals("") || !newStatus.matches(digit));
 		
 		try{
-			ArrayList alr = retrieveRoom();
+			ArrayList alr = retrieveTable(); // alr is list of all current tables
 			for (int i = 0; i < alr.size(); i++) {
-				Room searchRoom = (Room) alr.get(i);
-				if(checkRoomId.getRoomId().equals(searchRoom.getRoomId())) {
-					alr.set(i, checkRoomId);
+				Table searchTable = (Table) alr.get(i);
+				if(checkTableId.gettableId().equals(searchTable.gettableId())) {
+					alr.set(i, checkTableId);
 				}
 			}
-			// Write Room records to file
-			RoomDB roomDB = new RoomDB();
-			roomDB.save(fileName, alr);
+			// Write table records to file
+			TableDB tableDB = tableDB = new TableDB();
+			tableDB.save(fileName, alr);
 
-			System.out.println("Room Status has been successfully updated!");
+			System.out.println("Table Status has been successfully updated!");
 		} catch (
 
-		IOException e)
-
-		{
+		IOException e){
 			System.out.println("IOException > " + e.getMessage());
 		}
 	}
-	
 	/**
-	 * Update Room Status only by using roomId
+	 * Update table Status only by using tableId
 	 * @throws IOException
-	 * @param roomId
-	 * 				Specifies the roomId
+	 * @param tableId
+	 * 				Specifies the tableId
 	 * @param status
-	 * 				Specifies the status of the room
+	 * 				Specifies the status of the table
 	 * @return Boolean value
 	 */
-	public static Boolean updateRoomStatus(String roomId, String status) {
-		Room room = new Room();
-		Room checkRoomId = new Room();
+	public static Boolean updateTableStatus(String tableId, String status) {
+		Table table = new Table();
+		Table checkTableId = new Table();
 		Boolean checker = false;
 		
 		do {
-			room.setRoomId(roomId);
-			checkRoomId = retrieveRoom(room);
-			if(checkRoomId == null) {
-				System.out.println("Room ID does not exist.");
+			table.settableId(tableId);
+			checkTableId = retrieveTable(table);
+			if(checkTableId == null) {
+				System.out.println("Table ID does not exist.");
 			}
 			
-		} while (checkRoomId != null && checker == true);
+		} while (checkTableId != null && checker == true);
 		
 		
 		try{
-			ArrayList alr = retrieveRoom();
+			ArrayList alr = retrieveTable();
 			for (int i = 0; i < alr.size(); i++) {
-				Room searchRoom = (Room) alr.get(i);
-				if(checkRoomId.getRoomId().equals(searchRoom.getRoomId())) {
-						checkRoomId.setRoomStatus(status);
-						alr.set(i, checkRoomId);
+				Table searchTable = (Table) alr.get(i);
+				if(checkTableId.gettableId().equals(searchTable.gettableId())) {
+						checkTableId.settableStatus(status);
+						alr.set(i, checkTableId);
 				}
 			}
-			// Write Room records to file
-			RoomDB roomDB = new RoomDB();
-			roomDB.save(fileName, alr);
+			// Write table records to file
+			TableDB tableDB = new TableDB();
+			tableDB.save(fileName, alr);
 			checker = true;
-			System.out.println("Room Status has been successfully updated!");
+			System.out.println("Table Status has been successfully updated!");
 		} catch (
 
-		IOException e)
-
-		{
+		IOException e){
 			System.out.println("IOException > " + e.getMessage());
 		}
 		return checker;
 	}
 	
 	/**
-	 * Retrieval of all room details
+	 * Retrieval of all table details
 	 * @throws IOException
-	 *
 	 */
-	public static void retrieveAllRoom() throws IOException {
+	public static void retrieveAllTable() throws IOException {
 
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
 
 		System.out.println("\n==================================================");
-		System.out.println(" Room Details ");
+		System.out.println(" Table Details ");
 		System.out.println("==================================================");
-		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-15s %-12s %-13s %-13s %-10s", "RoomID", "Room Type", "Bed Type", "View Type", "Room Status", "Room Rate(S$)", "Room Floor","Room Number","Wifi Status","Smoking Status");
+		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-15s %-12s %-13s %-13s %-10s", "tableID", "Table Type", "Table Status");
 	    System.out.println();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			// get individual 'fields' of the string separated by SEPARATOR
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
-
-			String roomId = star.nextToken().trim();
-			String roomType = star.nextToken().trim();
-			String bedType = star.nextToken().trim();
-			String viewType = star.nextToken().trim();
-			String roomStatus = star.nextToken().trim();
-			String roomRate = star.nextToken().trim();
-			String roomFloor = star.nextToken().trim();
-			String roomNumber = star.nextToken().trim();
-			String wifiEnabled = star.nextToken().trim();
-			String smokingStatus = star.nextToken().trim();
-
-			
-			System.out.printf("%-8s %-13s %-18s %-11s %-19s %-15s %-12s %-13s %-13s %-10s", roomId, roomType, bedType, viewType, roomStatus, roomRate,roomFloor,roomNumber,wifiEnabled,smokingStatus);
+			String tableId = star.nextToken().trim();
+			String tableType = star.nextToken().trim();
+			String tableStatus = star.nextToken().trim();
+	
+			System.out.printf("%-8s %-13s %-18s %-11s %-19s %-15s %-12s %-13s %-13s %-10s", tableId, tableType, tableStatus);
 			System.out.println("");
 		}
 	}
 	
 	/**
-	 * Retrieval of specific room's details.
+	 * Retrieval of specific table's details.
 	 * @throws IOException
 	 * @param room
-	 *            Parameter to search for room details.
+	 *            Parameter to search for table details.
 	 *            
-	 * @return Room if found else return null.
+	 * @return Table if found else return null.
 	 */
 	public static Table retrieveTable(Table table) {
 		ArrayList alr = retrieveTable();
 		for (int i = 0; i < alr.size(); i++) {
 			Table searchTable = (Table) alr.get(i);
 
-			if (Table.getTableId().equals(searchTable.getTableId())) {
+			if (table.gettableId().equals(searchTable.gettableId())) {
 				table = searchTable;
 				return table;
 			}
@@ -762,12 +478,12 @@ public class TableController {
 	 * 
 	 * @return ArrayList of all table.
 	 */
-	public static ArrayList retrieveRoom() {
+	public static ArrayList retrieveTable() {
 		ArrayList alr = null;
 		try {
-			// read file containing Room records
-			RoomDB roomDB = new RoomDB();
-			alr = roomDB.read(fileName);
+			// read file containing Table records
+			TableDB tableDB = new TableDB();
+			alr = tableDB.read(fileName);
 
 		} catch (IOException e) {
 			System.out.println("IOException > " + e.getMessage());
@@ -776,51 +492,51 @@ public class TableController {
 	}
 
 	/**
-     * Retrieval of room's details by roomId.
+     * Retrieval of table's details by tableId.
      * 
-     * @return room details.
+     * @return table details.
      */
-    public static Room retrieveRoomDetails() {
-        String roomId;
+    public static Table retrieveTableDetails() {
+        String tableId;
         Scanner sc = new Scanner(System.in);
-        ArrayList alr = retrieveRoom();
-        Room room = null;
+        ArrayList alr = retrieveTable();
+        Table table = null;
         do {
-            System.out.println("Please enter Room Id (E.g 02-01): ");
-            roomId = sc.nextLine();
+            System.out.println("Please enter Table Id (E.g 01-05): ");
+            tableId = sc.nextLine();
 
             for (int i = 0; i < alr.size(); i++) {
-                Room searchRoom = (Room) alr.get(i);
+                Table searchTable = (Table) alr.get(i);
 
-                if (searchRoom.getRoomId().equalsIgnoreCase(roomId)) {
-                    room = searchRoom;
+                if (searchTable.gettableId().equalsIgnoreCase(tableId)) {
+                    table = searchTable;
                 }
             }
 
-            if (room == null) {
-                System.out.println("Room Id does not exist.");
+            if (table == null) {
+                System.out.println("Table Id does not exist.");
             }
 
-        } while (room == null);
+        } while (table == null);
 
-        return room;
+        return table;
     }
 	
 	/**
-	 * Retrieval of room details
+	 * Retrieval of table details
 	 * @throws IOException
 	 */
-	public static void retrieveOneRoom() throws IOException {
+	public static void retrieveOneTable() throws IOException {
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
 		Scanner sc = new Scanner(System.in);
-		String checkRoomId;
-		System.out.print("Enter the Room Id: ");
-		checkRoomId = sc.nextLine();
+		String checkTableId;
+		System.out.print("Enter the Table Id: ");
+		checkTableId = sc.nextLine();
 		
 		System.out.println("\n==================================================");
-		System.out.println(" Room Details ");
+		System.out.println(" Table Details ");
 		System.out.println("==================================================");
-		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", "roomId", "roomType", "bedType", "viewType", "roomStatus","roomRate","roomFloor","roomNumber","wifiEnabled","smokingStatus");
+		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", "tableId", "tableType", "tableStatus");
 	    System.out.println();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -828,26 +544,16 @@ public class TableController {
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
 
-			String roomId = star.nextToken().trim();
-			String roomType = star.nextToken().trim();
-			String bedType = star.nextToken().trim();
-			String viewType = star.nextToken().trim();
-			String roomStatus = star.nextToken().trim();
-			String roomRate = star.nextToken().trim();
-			String roomFloor = star.nextToken().trim();
-			String roomNumber = star.nextToken().trim();
-			String wifiEnabled = star.nextToken().trim();
-			String smokingStatus = star.nextToken().trim();
-
+			String tableId = star.nextToken().trim();
+			String tableType = star.nextToken().trim();
+			String tableStatus = star.nextToken().trim();
 			
-			if(roomId.contains(checkRoomId)) {
-				System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", roomId, roomType, bedType, viewType, roomStatus, roomRate,roomFloor,roomNumber,wifiEnabled,smokingStatus);
+			if(tableId.contains(checkTableId)) {
+				System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", tableId, tableType, tableStatus);
 				System.out.println("");
 			}
 		}
 	}
-	
-	
 	/**
 	 * Retrieval of room type by using roomId
 	 * @throws IOException
@@ -868,7 +574,6 @@ public class TableController {
 			String roomId = star.nextToken().trim();
 			String roomType = star.nextToken().trim();
 
-			
 			if(roomId.contains(id)) {
 				type = roomType;
 			}
@@ -877,19 +582,19 @@ public class TableController {
 	}
 
 	/**
-	 * Retrieval of room details by using roomId
+	 * Retrieval of table details by using tableId
 	 * @throws IOException
-	 * @param checkRoomId
-	 *            Parameter to search for room details.
+	 * @param checkTableId
+	 *            Parameter to search for table details.
 	 */
-	public static void retrieveOneRoom(String checkRoomId) throws IOException {
+	public static void retrieveOneTable(String checkTableId) throws IOException {
 
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
 		
 		System.out.println("\n==================================================");
-		System.out.println(" Room Details ");
+		System.out.println(" Table Details ");
 		System.out.println("==================================================");
-		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", "roomId", "roomType", "bedType", "viewType", "roomStatus","roomRate","roomFloor","roomNumber","wifiEnabled","smokingStatus");
+		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", "tableId", "tableType","tableStatus");
 	    System.out.println();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -897,43 +602,35 @@ public class TableController {
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
 
-			Room room = new Room();
-			room.setRoomId(star.nextToken().trim());
-			room.setRoomType(star.nextToken().trim());
-			room.setBedType(star.nextToken().trim());
-			room.setViewType(star.nextToken().trim());
-			room.setRoomStatus(star.nextToken().trim());
-			room.setRoomRate(star.nextToken().trim());
-			room.setRoomFloor(star.nextToken().trim());
-			room.setRoomNumber(star.nextToken().trim());
-			room.setWifiEnabled(star.nextToken().trim());
-			room.setSmokingStatus(star.nextToken().trim());
+			Table table = new Table();
+			table.settableId(star.nextToken().trim());
+			table.settableType(star.nextToken().trim());
+			table.settableStatus(star.nextToken().trim());
+
 
 			
-			if(room.getRoomId().contains(checkRoomId)) {
-				System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", room.getRoomId(), room.getRoomType(), room.getBedType(), room.getViewType(), room.getRoomStatus(), room.getRoomRate(), room.getRoomFloor(), room.getRoomNumber(), room.getWifiEnabled(), room.getSmokingStatus());
+			if(table.gettableId().contains(checkTableId)) {
+				System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", table.gettableId(), table.gettableType(), table.gettableStatus());
 				System.out.println("");
 			}
 		}
 	}
 	
 	/**
-	 * Retrieval of all room's status
+	 * Retrieval of all table's status
 	 * @throws IOException
 	 * 
 	 */
-	public static void retrieveRoomStatus() throws IOException {
+	public static void retrieveTableStatus() throws IOException {
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
 		String vacantString = "";
 		String occupiedString = "";
 		String reservedString = "";
-		String maintenanceString = "";
 		int countVacant = 0;
 		int countOccupied = 0;
 		int countReserved = 0;
-		int countMaintenance = 0;
 		System.out.println("\n==================================================");
-		System.out.println(" All Room Status ");
+		System.out.println(" All Table Status ");
 		System.out.println("==================================================");
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -941,45 +638,31 @@ public class TableController {
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
 
-			String roomId = star.nextToken().trim();
-			String roomType = star.nextToken().trim();
-			String bedType = star.nextToken().trim();
-			String viewType = star.nextToken().trim();
-			String roomStatus = star.nextToken().trim();
-			String roomRate = star.nextToken().trim();
-			String roomFloor = star.nextToken().trim();
-			String roomNumber = star.nextToken().trim();
-			String wifiEnabled = star.nextToken().trim();
-			String smokingStatus = star.nextToken().trim();
+			String tableId = star.nextToken().trim();
+			String tableType = star.nextToken().trim();
+			String tableStatus = star.nextToken().trim();
 
-			if(roomStatus.contentEquals("VACANT")) {
+			if(tableStatus.contentEquals("VACANT")) {
 				if(vacantString.equals("")) {
-					vacantString = roomFloor + "-" + roomNumber;
+					vacantString = tableId;
 				}else {
-					vacantString = vacantString + ", " + roomFloor + "-" + roomNumber;
+					vacantString = vacantString + ", " + tableId;
 				}
 				countVacant += 1;
-			}else if(roomStatus.contentEquals("OCCUPIED")) {
+			}else if(tableStatus.contentEquals("OCCUPIED")) {
 				if(occupiedString.equals("")) {
-					occupiedString = roomFloor + "-" + roomNumber;
+					occupiedString = tableId;
 				}else {
-					occupiedString = occupiedString + ", " + roomFloor + "-" + roomNumber;
+					occupiedString = occupiedString + ", " + tableId;
 				}
 				countOccupied += 1;
-			}else if(roomStatus.contentEquals("RESERVED")) {
+			}else if(tableStatus.contentEquals("RESERVED")) {
 				if(reservedString.equals("")) {
-					reservedString = roomFloor + "-" + roomNumber;
+					reservedString = tableId;
 				}else {
-					reservedString = reservedString + ", " + roomFloor + "-" + roomNumber;
+					reservedString = reservedString + ", " + tableId;
 				}
 				countReserved += 1;
-			}else if(roomStatus.contentEquals("UNDER MAINTENANCE")) {
-				if(maintenanceString.equals("")) {
-					maintenanceString = roomFloor + "-" + roomNumber;
-				}else {
-					maintenanceString = maintenanceString + ", " + roomFloor + "-" + roomNumber;
-				}
-				countMaintenance += 1;
 			}
 		}
 		
@@ -989,76 +672,63 @@ public class TableController {
 		System.out.println("\t\tRooms: " + occupiedString);
 		System.out.println("\nReserved(" + countReserved + "): ");
 		System.out.println("\t\tRooms: " + reservedString);
-		System.out.println("\nUnder Maintenance(" + countMaintenance + "): ");
-		System.out.println("\t\tRooms: " + maintenanceString);
 		System.out.println("");
 	}
 	
 	/**
-	 * Formatting of room id into readable format
-	 * @param roomList
-	 * 				An ArrayList of Room to search
-	 * @param roomType
-	 * 				String room type used to search for room details
+	 * Formatting of table id into readable format
+	 * @param tableList
+	 * 				An ArrayList of Table to search
+	 * @param tableType
+	 * 				String table type used to search for table details
 	 */
-	public static void formatPrintRooms(ArrayList<Room> roomList, String roomType) {
-		System.out.print("\t\tRooms: ");
-		ArrayList<String> roomTypeList = new ArrayList<String>();
-		for(int i = 0; i < roomList.size(); i++) {
-			if(roomList.get(i).getRoomType().equals(roomType)) {
-				roomTypeList.add(roomList.get(i).getRoomId());
+	public static void formatPrintTables(ArrayList<Table> tableList, String tableType) {
+		System.out.print("\t\ttable: ");
+		ArrayList<String> tableTypeList = new ArrayList<String>();
+		for(int i = 0; i < tableList.size(); i++) {
+			if(tableList.get(i).gettableType().equals(tableType)) {
+				tableTypeList.add(tableList.get(i).gettableId());
 			}
 		}
-		String toPrint = String.join(", ", roomTypeList);
+		String toPrint = String.join(", ", tableTypeList);
 		System.out.println(toPrint);
 	}
 
 	/**
-	 * Retrieve a list of room ids by room type and bed type
+	 * Retrieve a list of table ids by table type
 	 * @throws IOException
 	 * 
 	 * @param inputRoomType
-	 * 					String input of room type used to search for room
-	 * @param inputBedTyped
-	 * 					String input of bed type used to search for room
-	 * 
-	 * @return An array of Room
+	 * 					String input of table type used to search for table
+
+	 * @return An array of Table
 	 * 					
 	 */
-	public static ArrayList<Room> retrieveRoomIdByTypes(String inputRoomType, String inputBedType) throws IOException {
+	public static ArrayList<Table> retrieveTableIdByType(String inputTableType) throws IOException {
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
-		ArrayList<Room> roomIdList = new ArrayList<Room>();
+		ArrayList<Table> tableIdList = new ArrayList<Table>();
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			// get individual 'fields' of the string separated by SEPARATOR
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
+			Table table = new Table();
+			table.settableId(star.nextToken().trim());
+			table.settableType(star.nextToken().trim());
+			table.settableStatus(star.nextToken().trim());
 
 			
-			Room room = new Room();
-			room.setRoomId(star.nextToken().trim());
-			room.setRoomType(star.nextToken().trim());
-			room.setBedType(star.nextToken().trim());
-			room.setViewType(star.nextToken().trim());
-			room.setRoomStatus(star.nextToken().trim());
-			room.setRoomRate(star.nextToken().trim());
-			room.setRoomFloor(star.nextToken().trim());
-			room.setRoomNumber(star.nextToken().trim());
-			room.setWifiEnabled(star.nextToken().trim());
-			room.setSmokingStatus(star.nextToken().trim());
-			
-			if(room.getRoomType().equals(inputRoomType) && room.getBedType().equals(inputBedType)) {
-				roomIdList.add(room);
+			if(table.gettableType().equals(inputTableType)) {
+				tableIdList.add(table);
 			}
 		}
 		
-		return roomIdList;
+		return tableIdList;
 	}
 	
-	
 	/**
-	 * Retrieve a list of room ids by room type
+	 * Retrieve a list of table ids by table type
 	 * @throws IOException
 	 * 
 	 * @param inputRoomType
@@ -1067,9 +737,9 @@ public class TableController {
 	 * @return An array of Room
 	 * 					
 	 */
-	public static ArrayList<Room> retrieveRoomIdByRoomType(String inputRoomType) throws IOException {
+	public static ArrayList<Table> retrieveTableIdByTableType(String inputTableType) throws IOException {
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
-		ArrayList<Room> roomIdList = new ArrayList<Room>();
+		ArrayList<Table> tableIdList = new ArrayList<Table>();
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -1077,25 +747,17 @@ public class TableController {
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
 
+			Table table = new Table();
+			table.settableId(star.nextToken().trim());
+			table.settableType(star.nextToken().trim());
+			table.settableStatus(star.nextToken().trim());
 			
-			Room room = new Room();
-			room.setRoomId(star.nextToken().trim());
-			room.setRoomType(star.nextToken().trim());
-			room.setBedType(star.nextToken().trim());
-			room.setViewType(star.nextToken().trim());
-			room.setRoomStatus(star.nextToken().trim());
-			room.setRoomRate(star.nextToken().trim());
-			room.setRoomFloor(star.nextToken().trim());
-			room.setRoomNumber(star.nextToken().trim());
-			room.setWifiEnabled(star.nextToken().trim());
-			room.setSmokingStatus(star.nextToken().trim());
-			
-			if(room.getRoomType().equals(inputRoomType)) {
-				roomIdList.add(room);
+			if(table.gettableType().equals(inputTableType)) {
+				tableIdList.add(table);
 			}
 		}
 		
-		return roomIdList;
+		return tableIdList;
 	}
 
 	/**
@@ -1107,19 +769,19 @@ public class TableController {
 	 * @return A String of room status
 	 * 					
 	 */
-	public static String retrieveRoomStatus(String retrieveRoomId) {
+	public static String retrieveTableStatus(String retrieveTableId) {
 
-		Room room = new Room();
-		Room checkRoomId = new Room();
+		Table table = new Table();
+		Table checkTableId = new Table();
 		
-		room.setRoomId(retrieveRoomId);
-		checkRoomId = retrieveRoom(room);
-		if(checkRoomId == null) {
-			System.out.println("Room Id does not exist.");
+		table.settableId(retrieveTableId);
+		checkTableId = retrieveTable(table);
+		if(checkTableId == null) {
+			System.out.println("Table Id does not exist.");
 			return null;
 		}
 		
-		return checkRoomId.getRoomStatus();
+		return checkTableId.gettableStatus();
 	}
 	
 	/**
@@ -1128,136 +790,70 @@ public class TableController {
 	 * 
 	 * @return An ArrayList of string
 	 */
-	public static ArrayList<String> retrieveAllAvailableRoomTypes() throws IOException {
+	public static ArrayList<String> retrieveAllAvailableTableTypes() throws IOException {
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
-		ArrayList<Room> roomList = new ArrayList<Room>();
+		ArrayList<Table> tableList = new ArrayList<Table>();
 		ArrayList<String> vacantList = new ArrayList<String>();
 		
 		String vacantString = "";
-		int vacantSingle = 0;
-		int vacantDouble = 0;
-		int vacantDeluxe = 0;
-		int vacantVIP = 0;
-		int singleTotal = 0;
-		int doubleTotal = 0;
-		int deluxeTotal = 0;
-		int vipTotal = 0;
+		int vacant2pax = 0;
+		int vacant4pax = 0;
+		int vacant6pax = 0;
+		int vacant8pax = 0;
+		int vacant10pax = 0;
+		int pax2Total = 0;
+		int pax4Total = 0;
+		int pax6Total = 0;
+		int pax8Total = 0;
+		int pax10Total = 0;
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
 			// get individual 'fields' of the string separated by SEPARATOR
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
 																		// using delimiter ","
-			Room room = new Room();
-			room.setRoomId(star.nextToken().trim());
-			room.setRoomType(star.nextToken().trim());
-			room.setBedType(star.nextToken().trim());
-			room.setViewType(star.nextToken().trim());
-			room.setRoomStatus(star.nextToken().trim());
-			room.setRoomRate(star.nextToken().trim());
-			room.setRoomFloor(star.nextToken().trim());
-			room.setRoomNumber(star.nextToken().trim());
-			room.setWifiEnabled(star.nextToken().trim());
-			room.setSmokingStatus(star.nextToken().trim());
-
+			Table table = new Table();
+			table.settableId(star.nextToken().trim());
+			table.settableType(star.nextToken().trim());
+			table.settableStatus(star.nextToken().trim());
 			
-			if(room.getRoomType().equals("Single Room")) {
-				singleTotal += 1;
-				if(room.getRoomStatus().contentEquals("VACANT")) {
-					vacantSingle += 1;
+			if(table.gettableType().equals("2 pax")) {
+				pax2Total += 1;
+				if(table.gettableStatus().contentEquals("VACANT")) {
+					vacant2pax += 1;
 				}
 			}
-			if(room.getRoomType().equals("Double Room")) {
-				doubleTotal += 1;
-				if(room.getRoomStatus().contentEquals("VACANT")) {
-					vacantDouble += 1;
+			if(table.gettableType().equals("4 pax")) {
+				pax4Total += 1;
+				if(table.gettableStatus().contentEquals("VACANT")) {
+					vacant4pax += 1;
 				}
 			}
-			if(room.getRoomType().equals("Deluxe Room")) {
-				deluxeTotal += 1;
-				if(room.getRoomStatus().contentEquals("VACANT")) {
-					vacantDeluxe += 1;
+			if(table.gettableType().equals("6 pax")) {
+				pax6Total += 1;
+				if(table.gettableStatus().contentEquals("VACANT")) {
+					vacant6pax += 1;
 				}
 			}
-			if(room.getRoomType().equals("VIP Suite")) {
-				vipTotal += 1;
-				if(room.getRoomStatus().contentEquals("VACANT")) {
-					vacantVIP += 1;
+			if(table.gettableType().equals("8 pax")) {
+				pax8Total += 1;
+				if(table.gettableStatus().contentEquals("VACANT")) {
+					vacant8pax += 1;
+				}
+			}
+			if(table.gettableType().equals("10 pax")) {
+				pax10Total += 1;
+				if(table.gettableStatus().contentEquals("VACANT")) {
+					vacant10pax += 1;
 				}
 			}
 		}
-		vacantList.add(String.valueOf(vacantSingle));
-		vacantList.add(String.valueOf(vacantDouble));
-		vacantList.add(String.valueOf(vacantDeluxe));
-		vacantList.add(String.valueOf(vacantVIP));
+		vacantList.add(String.valueOf(vacant2pax));
+		vacantList.add(String.valueOf(vacant4pax));
+		vacantList.add(String.valueOf(vacant6pax));
+		vacantList.add(String.valueOf(vacant8pax));
+		vacantList.add(String.valueOf(vacant10pax));
 		return vacantList;
 	}
 	
-	/**
-	 * Retrieve and calculate the number of available bed types
-	 * @throws IOException
-	 * @param option
-	 * 					String input of room type
-	 * 
-	 * @return An ArrayList of string
-	 */
-	public static ArrayList<String> retrieveBedTypes(String option) throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
-		ArrayList<Room> roomList = new ArrayList<Room>();
-		ArrayList<String> roomOption = new ArrayList<String>(Arrays.asList("Single Room", 
-                "Double Room", 
-                "Deluxe Room",
-                "VIP Suite"));
-		ArrayList<String> bedList = new ArrayList<String>();
-		
-		String vacantString = "";
-		int singleBed = 0;
-		int doubleBed = 0;
-		int superSingleBed = 0;
-		int queenBed = 0;
-		int kingBed = 0;
-
-		for (int i = 0; i < stringArray.size(); i++) {
-			String st = (String) stringArray.get(i);
-			// get individual 'fields' of the string separated by SEPARATOR
-			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
-																		// using delimiter ","
-			Room room = new Room();
-			room.setRoomId(star.nextToken().trim());
-			room.setRoomType(star.nextToken().trim());
-			room.setBedType(star.nextToken().trim());
-			room.setViewType(star.nextToken().trim());
-			room.setRoomStatus(star.nextToken().trim());
-			room.setRoomRate(star.nextToken().trim());
-			room.setRoomFloor(star.nextToken().trim());
-			room.setRoomNumber(star.nextToken().trim());
-			room.setWifiEnabled(star.nextToken().trim());
-			room.setSmokingStatus(star.nextToken().trim());
-
-			
-			if(room.getRoomType().equals(roomOption.get(Integer.parseInt(option)-1))) {
-				if(room.getBedType().contentEquals("Single Bed")) {
-					singleBed += 1;
-				}
-				if(room.getBedType().contentEquals("Double Bed")) {
-					doubleBed += 1;
-				}
-				if(room.getBedType().contentEquals("Super Single Bed")) {
-					superSingleBed += 1;
-				}
-				if(room.getBedType().contentEquals("Queen Bed")) {
-					queenBed += 1;
-				}
-				if(room.getBedType().contentEquals("King Bed")) {
-					kingBed += 1;
-				}
-			}
-		}
-		bedList.add(String.valueOf(singleBed));
-		bedList.add(String.valueOf(doubleBed));
-		bedList.add(String.valueOf(superSingleBed));
-		bedList.add(String.valueOf(queenBed));
-		bedList.add(String.valueOf(kingBed));
-		return bedList;
-	}
 }
