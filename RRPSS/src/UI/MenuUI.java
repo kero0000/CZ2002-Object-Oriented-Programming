@@ -35,13 +35,13 @@ public class MenuUI {
             choice = Integer.valueOf(sc.nextLine());
             switch (choice) {
                 case 1:
-                	createIn();
+                	createMenuItem();
                     break;
                 case 2:
-                	updateIn();
+                	updateMenuItem();
                     break;
                 case 3:
-                	removeIn();
+                	removeMenuItem();
                     break;                 
                 case 4:
                 	createPromotion();
@@ -61,19 +61,19 @@ public class MenuUI {
         } while (choice < 4);
     }
     
-    public void createIn() {
+    public void createMenuItem() {
         String itemName = "";
         String itemDesc = "";
         double price = 0.0;
         int itemType = -1;
         sc.nextLine();
-        System.out.println("Enter item name:");
+        System.out.println("Enter item name:");							//Input itemName
         itemName = sc.nextLine();
-        System.out.println("Enter item description:");
+        System.out.println("Enter item description:");					//Input itemDesc
         itemDesc = sc.nextLine();
         do {
 		    try {
-		    	System.out.println("Enter item price:");
+		    	System.out.println("Enter item price:");				//Input itemPrice > $0.00
 		        price = sc.nextDouble();
 		    	if(price <= 0.0) System.out.printf("Invalid input! ");
 		    } catch (InputMismatchException e) {
@@ -82,8 +82,8 @@ public class MenuUI {
 		    sc.nextLine();
 		} while (price <= 0.0);
         do {
-		    try {
-		    	System.out.println("Enter type (0 - Appetizer, 1 - Main Course, 2 - Beverages):");
+		    try {														//Input type of menuItem
+		    	System.out.println("Enter type (0 - Main Course, 1 - Drink, 2 - Dessert):");
 		        itemType = sc.nextInt();
 		    	if(itemType != 0 && itemType != 1 && itemType != 2) System.out.printf("Invalid input! ");
 		    } catch (InputMismatchException e) {
@@ -97,7 +97,7 @@ public class MenuUI {
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
     
-    private void updateIn() {
+    private void updateMenuItem() {
         int itemId = -1;
         do {
 		    try {
@@ -139,7 +139,7 @@ public class MenuUI {
 		} while (price <= 0.0);
         do {
 		    try {
-		    	System.out.println("Enter type (0 - Appetizer, 1 - Main Course, 2 - Beverages):");
+		    	System.out.println("Enter type (0 - Main Course, 1 - Drink, 2 - Dessert):");
 		        itemType = sc.nextInt();
 		    	if(itemType != 0 && itemType != 1 && itemType != 2) System.out.printf("Invalid input! ");
 		    } catch (InputMismatchException e) {
@@ -150,7 +150,7 @@ public class MenuUI {
         MenuController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
     
-    public void removeIn() {
+    public void removeMenuItem() {
         int itemId = -1;
         do {
 		    try {

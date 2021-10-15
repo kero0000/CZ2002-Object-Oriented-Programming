@@ -15,11 +15,7 @@ public class MenuController {
         items = new ArrayList<Item>();
     }
 
-    /**
-	 * Creating new instance of menu controller
-	 * 
-	 * @return menucontroller instance
-	 */
+	//Creating new instance of menu controller
     public static MenuController retrieveInstance() {
         if (instance == null) {
             instance = new MenuController();
@@ -29,24 +25,18 @@ public class MenuController {
     
     /**
 	 * Retrieval of food menu item
-	 * 
-	 * @param itemId
-	 * 				Specifies the item id to retrieve item
-	 * 
-	 * @return Item if found. Else will return null
+	 * @param itemId		Specifies the item id to retrieve item
 	 */
     public Item retrieveItem(int itemID) {
         for (Item item : items) {
-            if (item.getItemId() == itemID) return item;
+            if (item.getItemId() == itemID) return item;	//Return Item if found
         }
-        return null;
+        return null;										//Else return null
     }
     
     /**
 	 * Creation of food menu item
-	 * 
-	 * @param item
-	 * 				Specifies the item to be created
+	 * @param item			Specifies the item to be created
 	 */
     public void createItem(Item item) {
         items.add(item);
@@ -55,9 +45,7 @@ public class MenuController {
 
     /**
 	 * Deletion of food menu item
-	 * 
-	 * @param item
-	 * 				Specifies the item
+	 * @param item			Specifies the item
 	 */
     public void deleteItem(Item item) {
         items.remove(item);
@@ -66,9 +54,7 @@ public class MenuController {
 
     /**
 	 * Formatting to print food menu item
-	 * 
-	 * @param item
-	 * 				Specifies the item
+	 * @param item			Specifies the item
 	 */
     public void printItem(Item item) {
         System.out.println(item.toString());
@@ -76,17 +62,11 @@ public class MenuController {
     
     /**
 	 * Deletion of food menu item
-	 * 
-	 * @param itemID
-	 * 				Specifies the item id
-	 * @param itemName
-	 * 				Specifies the item name
-	 * @param itemDesc
-	 * 				Specifies the item description
-	 * @param price
-	 * 				Specifies the item price
-	 * @param itemType
-	 * 				Specifies the item type
+	 * @param itemID		Specifies the item id
+	 * @param itemName		Specifies the item name
+	 * @param itemDesc		Specifies the item description
+	 * @param price			Specifies the item price
+	 * @param itemType		Specifies the item type
 	 */
     public void updateItem(int itemID, String itemName, String itemDesc, double price, int itemType) {
         Item item = null;
@@ -102,34 +82,26 @@ public class MenuController {
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is updated.");
         OrderController.getInstance().updateItemInOrders(item);
     }
-    
-    /**
-	 * Formating to print menu
-	 * 
-	 */
+    //Formatting to print menu
     public void displayMenu() {
         System.out.println("ID   Name                          Description                          Price(S$)");
-		System.out.println("====================================Appetizer====================================");	
+		System.out.println("===================================Main Course===================================");	
         for (Item item : items) {
             if (item.getType() == 0)
                 System.out.println(item.toString());
         }
-        System.out.println("===================================Main Course===================================");
+        System.out.println("======================================Drink======================================");
         for (Item item : items) {
             if (item.getType() == 1)
                 System.out.println(item.toString());
         }
-        System.out.println("====================================Beverages====================================");
+        System.out.println("=====================================Dessert=====================================");
         for (Item item : items) {
             if (item.getType() == 2)
                 System.out.println(item.toString());
         }
     }
-    
-    /**
-	 * Checking of food item id
-	 * 
-	 */
+    //Checking of food item ID
     public void checkID() {
     	int id = 1;
 		if(items!=null) {
@@ -139,11 +111,7 @@ public class MenuController {
 		}
 		Item.setIdCount(id+1);
     }
-
-    /**
-	 * Retrieval of all items
-	 * 
-	 */
+    //Retrieval of all items
     public void loadinDB() {
     	MenuDB menudb = new MenuDB();
         try {
@@ -153,11 +121,7 @@ public class MenuController {
 			e.printStackTrace();
 		}
     }
-    
-    /**
-	 * Saving of all items
-	 * 
-	 */
+    //Saving of all items
     public void savetoDB() {
     	MenuDB menudb = new MenuDB();
         try {
