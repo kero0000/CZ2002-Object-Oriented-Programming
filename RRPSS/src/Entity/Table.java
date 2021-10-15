@@ -30,7 +30,7 @@ public class Table {
 		return tableType;
 	}
 
-	public void setRoomType(String tableType) {
+	public void settableType(String tableType) {
 		this.tableType = tableType;
 	}
 
