@@ -61,7 +61,7 @@ public class TableController {
 				checktableId = retrieveTable(table);
 				if(checktableId != null) {
 					tableId = "";
-					System.out.println("The Room Id you already exist. Please enter another Table Id.");
+					System.out.println("The Table Id you already exist. Please enter another Table Id.");
 				}
 			}
 		} while (tableId.equals(""));
