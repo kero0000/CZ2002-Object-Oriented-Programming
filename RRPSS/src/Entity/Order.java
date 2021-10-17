@@ -123,20 +123,30 @@ public class Order {
     }
     
     public void viewOrder() {
-        System.out.println("ID   Table  Date                          Remarks                       Status   ");
-        System.out.println(toString());
+        System.out.println("                                      RRPSS                                      ");
+        //System.out.println(toString());
         System.out.println("=================================================================================");
-        System.out.println("ID   Name                          Description                          Price(S$)");
+        System.out.println("Date: " + date);
+        System.out.println("Table: " + tableId);
+        System.out.println("Reservation No: + reservationNum");
+        System.out.println("ID                                 Description                          Price(S$)");
         System.out.println("=================================================================================");
         for (Item item : items) {
         	System.out.println(item.toString());
         }
         System.out.println("=================================================================================");
+        System.out.println("                                                              Subtotal:");
+        System.out.println("                                                              Taxes   :");
+        System.out.println("=================================================================================");
+        System.out.println("                                                              Total   :");
+        System.out.println("=================================================================================");
+        System.out.println("*                         Thank you for dining with us!                         *");
+        System.out.println("=================================================================================");
     }
     
     public String toString() {
 
-        return (String.format("%-5d%-7s%-30s%-30s%-10s", orderId, tableId, date, remarks, status));
+        return (String.format("%-5d%-30s%-10s", orderId, remarks, status));
     }
 
 }
