@@ -3,10 +3,10 @@ package Entity;
 public class Staff {
 	private String name;
 	private String gender;
-	private int employeeId;
+	private String employeeId;
 	private String jobTitle;
 	
-	public Staff(String name, String gender, String jobTitle, int employeeId) {
+	public Staff(String name, String gender, String jobTitle, String employeeId) {
 		this.name = name;
 		this.gender = gender;
 		this.jobTitle = jobTitle;
@@ -25,7 +25,7 @@ public class Staff {
 		return jobTitle;
 	}
 	
-	public int getEmployeeId() {
+	public String getEmployeeId() {
 		return employeeId;
 	}
 	
@@ -41,7 +41,7 @@ public class Staff {
 		this.jobTitle = jobTitle;
 	}
 	
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
 }

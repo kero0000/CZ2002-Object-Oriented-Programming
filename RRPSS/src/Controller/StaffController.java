@@ -52,10 +52,10 @@ public class StaffController {
 	 * @parameter employeeID Specifies the employeeId to 
 	 * get staff's info
 	 */
-	public Staff getStaff(int employeeId) {
+	public Staff getStaff(String employeeId) {
 		for(Staff staff :  staffList) {
     		if(staffList.size() != 0 && 
-    				staff.getEmployeeId() == employeeId)
+    				staff.getEmployeeId().equals(employeeId))
     			return staff;
     	}
 		return null;

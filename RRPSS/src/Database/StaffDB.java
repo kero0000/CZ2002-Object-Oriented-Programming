@@ -21,7 +21,7 @@ public class StaffDB implements DB {
 			
 			StringTokenizer star = new StringTokenizer(st, SEPARATOR);
 			
-			int employeeId = Integer.valueOf(star.nextToken().trim());
+			String employeeId = star.nextToken().trim();
 			String name = star.nextToken().trim();
 			String gender = star.nextToken().trim();
 			String jobTitle = star.nextToken().trim();
