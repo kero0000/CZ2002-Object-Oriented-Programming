@@ -172,44 +172,32 @@ public class RRPSSApp {
 							System.out.println("\n==================================================");
 							System.out.println(" Table Management: ");
 							System.out.println("==================================================");
-							System.out.println("(1) Create Table\t\t\t(2) Update Table details");
-							System.out.println("(3) Update Table Status\t\t(4) View All Table details");
-							System.out.println("(5) View a Table detail\t\t(6) View All Table Status");
-							System.out.println("(7) Back");
+							System.out.println("(1) Update Table details");
+							System.out.println("(2) Update Table Status\t\t(3) View All Table details");
+							System.out.println("(4) Back");
 							table_mgt_choice = sc.nextInt();
 							switch (table_mgt_choice) {
+
 							case 1:
-								// Create table
-								TableController.retrieveAllTable(); // print out all the current records of table
-								TableController.createTable();
-								break;
-							case 2:
 								// Retrieve table and update by table id
 								TableController.updateTable();
 								break;
-							case 3:
+							case 2:
 								// Retrieve table and update table status only by table id
 								TableController.updateTableStatusOnly();
 								break;
-							case 4:
-								// Retrieve and print all room details
+							case 3:
+								// Retrieve and print all Table details
 								TableController.retrieveAllTable();
 								break;
-							case 5:
-
-								TableController.retrieveOneTable();
-								break;
-							case 6:
-
-								TableController.retrieveTableStatus();
-								break;
-							case 7:
+							case 4:
 								table_mgt_choice = 8;
 								break;
 
 							default:
 								System.out.println("Please enter a valid option.");
 								table_mgt_choice = 0;
+								}while (table_mgt_choice < 8);
 							}
 
 						} while (table_mgt_choice < 8);

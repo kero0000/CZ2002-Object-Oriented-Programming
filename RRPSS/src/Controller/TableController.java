@@ -1,4 +1,5 @@
 package Controller;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,125 +22,7 @@ public class TableController {
 	
 	public static final String SEPARATOR = "|";
 	private static String fileName = "Table.txt";
-	
-	/**
-	 * Creation of new Table
-	 * @throws IOException 
-	 */
-	public static void createTable() throws IOException {
-		String tableId = "";
-		String tableType = "";
-		String tableStatus = "";		
-		String regExp = "[0-9]+([.][0-9]{2})";
-		String tableRegExp = "[0][2-7]";
-		
-		Pattern pattern = Pattern.compile(regExp);
-		Pattern tableIdPattern = Pattern.compile(tableRegExp);
-		
-		Table table = new Table();
-		Table checktableId = new Table();
-		Scanner sc = new Scanner(System.in);
-		
-		// Setting Table Id
-		do {
-			System.out.println("Please enter Table ID(E.g 02):");
-			System.out.println("*Table number from 01 - 05");
-			
-			tableId = sc.nextLine();
-			Matcher matcher = tableIdPattern.matcher(tableId); 
-			if(tableId.length() != 2 || !matcher.matches()) {
-				tableId = "";
-				System.out.println("You have entered a invalid Table Id. Please try again. (E.g. 02)");
-			}else {
-				table.settableId(tableId);
-				checktableId = retrieveTable(table);
-				if(checktableId != null) {
-					tableId = "";
-					System.out.println("The Table Id you already exist. Please enter another Table Id.");
-				}
-			}
-		} while (tableId.equals(""));
-		
-		
-		// Setting Table Type
-		do {
-			System.out.println("Please enter Table Type: ");
-			System.out.println("(1) 2 pax");
-			System.out.println("(2) 4 pax");
-			System.out.println("(3) 6 pax");
-			System.out.println("(4) 8 pax");
-			System.out.println("(5) 10 pax");
-			
-			tableType = sc.nextLine();
-			if (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")&& !tableType.equals("5")) {
-				System.out.println("Please select a valid option.");
-			} else {
-				switch (tableType) {
-					case "1":
-						table.settableType("2 pax");
-						break;
-					case "2":
-						table.settableType("4 pax");
-						break;
-					case "3":
-						table.settableType("6 pax");
-						break;
-					case "4":
-						table.settableType("8 pax");
-						break;
-					case "5":
-						table.settableType("10 pax");
-						break;
-				}
-				System.out.println("HELLO");
-			}
-		} while (!tableType.equals("1") && !tableType.equals("2") && !tableType.equals("3") && !tableType.equals("4")&& !tableType.equals("5"));
-		
-		
-		// Setting Table Status
-		do {
-			System.out.println("Please enter Table Status: ");
-			System.out.println("(1) Vacant");
-			System.out.println("(2) Reserved");
-			System.out.println("(3) Occupied");
-			tableStatus = sc.nextLine();
 
-			if (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3")) {
-				System.out.println("Please select a valid option.");
-			} else {
-				switch (tableStatus) {
-					case "1":
-						table.settableStatus("VACANT");
-						break;
-					case "2":
-						table.settableStatus("RESERVED");
-						break;
-					case "3":
-						table.settableStatus("OCCUPIED");
-						break;
-				}
-			}
-		} while (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3"));
-		
-		TableDB tableDB = new TableDB();
-		ArrayList al = tableDB.read(fileName);
-		al.add(table);
-		
-		try {
-			// Write Room records to file
-			tableDB.save(fileName, al);
-
-			System.out.println("You have successfully created a new table! ");
-
-		} catch (IOException e) {
-			System.out.println("IOException > " + e.getMessage());
-		}
-	}
-	
-	/**
-	 * Update Table Details by using tableId
-	 * @throws IOException 
-	 */
 	public static void updateTable() throws IOException {
 		Scanner sc = new Scanner(System.in);
 		String tableType;
@@ -259,7 +142,7 @@ public class TableController {
 					}
 				} while (!tableType.equals("1") && !tableType.equals("2")&& !tableType.equals("3") && !tableType.equals("4") && !tableType.equals("5"));
 
-				// Room Status
+
 				do {
 					System.out.println("Please enter Table Status: ");
 					System.out.println("(1) Vacant");
@@ -436,7 +319,7 @@ public class TableController {
 		System.out.println("\n==================================================");
 		System.out.println(" Table Details ");
 		System.out.println("==================================================");
-		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-15s %-12s %-13s %-13s %-10s", "tableID", "Table Type", "Table Status");
+		System.out.printf("%-8s %-13s %-19s", "tableID", "Table Type", "Table Status");
 	    System.out.println();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -447,7 +330,7 @@ public class TableController {
 			String tableType = star.nextToken().trim();
 			String tableStatus = star.nextToken().trim();
 	
-			System.out.printf("%-8s %-13s %-18s %-11s %-19s %-15s %-12s %-13s %-13s %-10s", tableId, tableType, tableStatus);
+			System.out.printf("%-8s %-13s %-19s", tableId, tableType, tableStatus);
 			System.out.println("");
 		}
 	}
@@ -536,7 +419,7 @@ public class TableController {
 		System.out.println("\n==================================================");
 		System.out.println(" Table Details ");
 		System.out.println("==================================================");
-		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", "tableId", "tableType", "tableStatus");
+		System.out.printf("%-8s %-13s %-19s", "tableId", "tableType", "tableStatus");
 	    System.out.println();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -549,7 +432,7 @@ public class TableController {
 			String tableStatus = star.nextToken().trim();
 			
 			if(tableId.contains(checkTableId)) {
-				System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", tableId, tableType, tableStatus);
+				System.out.printf("%-8s %-13s %-19s ", tableId, tableType, tableStatus);
 				System.out.println("");
 			}
 		}
@@ -561,7 +444,7 @@ public class TableController {
 	 *            Parameter to search for room details and retrieve room type
 	 * @return type
 	 */
-	public static String retrieveRoomType(String id) throws IOException {
+	public static String retrieveTableType(String id) throws IOException {
 		String type = null;
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
 
@@ -594,7 +477,7 @@ public class TableController {
 		System.out.println("\n==================================================");
 		System.out.println(" Table Details ");
 		System.out.println("==================================================");
-		System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", "tableId", "tableType","tableStatus");
+		System.out.printf("%-8s %-13s %-19s", "tableId", "tableType","tableStatus");
 	    System.out.println();
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -610,7 +493,7 @@ public class TableController {
 
 			
 			if(table.gettableId().contains(checkTableId)) {
-				System.out.printf("%-8s %-13s %-18s %-11s %-19s %-10s %-11s %-12s %-13s %-10s", table.gettableId(), table.gettableType(), table.gettableStatus());
+				System.out.printf("%-8s %-13s %-19s", table.gettableId(), table.gettableType(), table.gettableStatus());
 				System.out.println("");
 			}
 		}
@@ -694,16 +577,7 @@ public class TableController {
 		System.out.println(toPrint);
 	}
 
-	/**
-	 * Retrieve a list of table ids by table type
-	 * @throws IOException
-	 * 
-	 * @param inputRoomType
-	 * 					String input of table type used to search for table
 
-	 * @return An array of Table
-	 * 					
-	 */
 	public static ArrayList<Table> retrieveTableIdByType(String inputTableType) throws IOException {
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
 		ArrayList<Table> tableIdList = new ArrayList<Table>();
