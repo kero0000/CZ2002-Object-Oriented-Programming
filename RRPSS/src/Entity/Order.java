@@ -12,10 +12,12 @@ import Controller.StaffController;
 public class Order {
 	private static final double GST = 1.07;
 	private static final double SC = 1.10;
+	private static final double DISCOUNT = 0.1;
 	private static int idCount = 1;
-	private String employeeId;
     private int orderId;
     private String tableId;
+	private String employeeId;
+	private String membership;
     private String reservationNum;
     private ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<Promotion> promotions = new ArrayList<Promotion>();
@@ -25,7 +27,7 @@ public class Order {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
 	StaffController staffs = new StaffController();
 
-	public Order(String tableId, String employeeId, ArrayList<Item> items, String status, String remarks){
+	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items, String status, String remarks){
         this.orderId = idCount;
         this.items = items;
         Calendar c = Calendar.getInstance();
@@ -35,13 +37,15 @@ public class Order {
         this.remarks = remarks;
         this.tableId = tableId;
         this.employeeId = employeeId;
+        this.membership = membership;
         idCount++;
     }
     
-    public Order(int orderId, String tableID, String employeeId, String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
+    public Order(int orderId, String tableID, String employeeId, String membership, String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
         this.orderId = orderId;
         this.tableId = tableID;
         this.employeeId = employeeId;
+        this.membership = membership;
         this.reservationNum = reservationNum;
         this.items = items;
         this.date = date;
@@ -50,9 +54,10 @@ public class Order {
         idCount = orderId+1;//ADDED TO CHECK //removed on left
     }
     
-    public Order(String tableId,String employeeId){
+    public Order(String tableId,String employeeId, String membership){
         this.orderId = idCount;
         this.employeeId = employeeId;
+        this.membership = membership;
         Calendar c = Calendar.getInstance();
         String d = sdf.format(c.getTime());
         this.date = d;
@@ -141,14 +146,31 @@ public class Order {
         return false;
     }
     
-    public double subTotal(){
+    public String getMembership() {
+    	return membership;
+    }
+    
+    public void setMembership(String membership) {
+    	this.membership = membership;
+    }
+    
+    public double subTotal() {
     	double currentTotal = 0;
     	for(Item item : items) {
     		currentTotal += item.getPrice();	
     	}
-    	return currentTotal;
+    	if(membership.equalsIgnoreCase("yes"))
+    		return currentTotal - discount();
+    	else
+    		return currentTotal;
     }
     
+    public double discount() {
+    	double currentTotal= subTotal();
+    	
+    	return currentTotal * DISCOUNT;
+    }
+      
     public double taxes(){
     	double tax = 0;	
     	tax = subTotal() * GST * SC;
@@ -174,8 +196,12 @@ public class Order {
         	System.out.println(item.toString());
         }
         System.out.println("=================================================================================");
+        if(membership.equalsIgnoreCase("yes"))
+        System.out.println("Discount:														        "+ toCurrency(discount()));
         System.out.println("Subtotal:														        "+ toCurrency(subTotal()));
+       
         System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));
+       
         System.out.println("=================================================================================");
         System.out.println("Total:                                                                 	"+ toCurrency(totalPrice()));
         System.out.println("=================================================================================");

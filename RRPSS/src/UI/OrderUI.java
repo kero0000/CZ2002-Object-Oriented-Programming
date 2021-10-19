@@ -80,13 +80,17 @@ public class OrderUI {
     	String tableId;
         String remarks;
         String employeeId;
+        String membership;
         System.out.println("Enter table number:");
         tableId = sc.nextLine();
         System.out.println("Enter staff identification number:");
         employeeId = sc.nextLine();
+        System.out.println("Enter membership status:");
+        membership = sc.nextLine().toLowerCase();
         System.out.println("");
+        
         OrderController.getInstance().checkID();
-        Order order = new Order(tableId,StaffController.retrieveInstance().getStaff(employeeId));
+        Order order = new Order(tableId,employeeId, membership);
         try {
 			Reservation r = ReservationController.retrieveReservationByTableId(tableId);
 			if(r == null) {

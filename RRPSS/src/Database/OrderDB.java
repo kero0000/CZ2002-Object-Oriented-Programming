@@ -25,6 +25,7 @@ public class OrderDB implements DB {
 			int orderId = Integer.valueOf(star.nextToken().trim());
 		    String tableId = star.nextToken().trim();
 		    String employeeId = star.nextToken().trim();
+		    String membership = star.nextToken().trim();
 		    String reservationNum = star.nextToken().trim();
 		    String date = star.nextToken().trim();
 		    String status = star.nextToken().trim();
@@ -58,6 +59,9 @@ public class OrderDB implements DB {
 			st.append(order.gettableId());
 			st.append(SEPARATOR);
 			st.append(order.getStaffId());
+			st.append(SEPARATOR);
+			st.append(order.getMembership());
+			st.append(SEPARATOR);
 			st.append(order.getReservationNum());
 			st.append(SEPARATOR);
 			st.append(order.getDate());
