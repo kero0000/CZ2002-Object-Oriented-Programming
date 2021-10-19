@@ -1,0 +1,4 @@
+01|Alex Jones|Male|Cook
+02|Patrice Jones|Female|Manager
+03|Jackson Jones|Male|Waiter
+04|Lame Jones|Male|Waiter

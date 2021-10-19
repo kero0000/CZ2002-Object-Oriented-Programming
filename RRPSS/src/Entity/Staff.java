@@ -28,4 +28,20 @@ public class Staff {
 	public int getEmployeeId() {
 		return employeeId;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+	
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
 }
