@@ -50,7 +50,5 @@ public class Customer {
 	public void setisMember(boolean isMember) {
 		this.isMember = isMember;
 	}
-	
-	//testing GitHub commit (Adi)
 
 } 
