@@ -107,7 +107,7 @@ public class OrderController{
     public void displayOrder(int orderID) {
         Order order;
         order = retrieveOrder(orderID);
-        order.viewOrder();
+        order.viewInvoice();
     }
     
     /**

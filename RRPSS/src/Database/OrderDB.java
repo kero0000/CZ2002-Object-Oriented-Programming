@@ -24,6 +24,7 @@ public class OrderDB implements DB {
 			
 			int orderId = Integer.valueOf(star.nextToken().trim());
 		    String tableId = star.nextToken().trim();
+		    String employeeId = star.nextToken().trim();
 		    String reservationNum = star.nextToken().trim();
 		    String date = star.nextToken().trim();
 		    String status = star.nextToken().trim();
@@ -32,14 +33,14 @@ public class OrderDB implements DB {
 		    while(star.hasMoreTokens()) {
 		    	int itemID = Integer.valueOf(star.nextToken().trim());
 		    	String name = star.nextToken().trim();
-		    	String desc = star.nextToken().trim();
+		    	String desc = star.nextToken().trim();	
 		    	double price = Double.valueOf(star.nextToken().trim());
 		    	int type = Integer.valueOf(star.nextToken().trim());
 		    	Item item = new Item(itemID, name, desc, price, type);
 		    	items.add(item);
 		    }
 		    
-		    Order order = new Order(orderId, tableId, reservationNum, items, date, status, remarks);
+		    Order order = new Order(orderId, tableId, employeeId, reservationNum, items, date, status, remarks, staffId);
 		    orderList.add(order);
 		}
 		System.out.println(stringArray.size() + " Order(s) Loaded.");
@@ -56,6 +57,7 @@ public class OrderDB implements DB {
 			st.append(SEPARATOR);
 			st.append(order.gettableId());
 			st.append(SEPARATOR);
+			st.append(order.getStaffId());
 			st.append(order.getReservationNum());
 			st.append(SEPARATOR);
 			st.append(order.getDate());

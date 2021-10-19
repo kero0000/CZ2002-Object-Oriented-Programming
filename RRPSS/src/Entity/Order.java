@@ -7,14 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
+import Controller.StaffController;
 
 public class Order {
 	private static final double GST = 1.07;
 	private static final double SC = 1.10;
 	private static int idCount = 1;
-	private String staffId;
-	private String staffName;
+	private String employeeId;
     private int orderId;
     private String tableId;
     private String reservationNum;
@@ -24,8 +23,9 @@ public class Order {
     private String status = "Ordering";
     private String remarks = "";
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
+	StaffController staffs = new StaffController();
 
-    public Order(String tableId, ArrayList<Item> items, String status, String remarks, String staffId){
+	public Order(String tableId, String employeeId, ArrayList<Item> items, String status, String remarks){
         this.orderId = idCount;
         this.items = items;
         Calendar c = Calendar.getInstance();
@@ -34,14 +34,14 @@ public class Order {
         this.status = status;
         this.remarks = remarks;
         this.tableId = tableId;
-        this.staffId = staffId;
+        this.employeeId = employeeId;
         idCount++;
     }
     
-    public Order(int orderId, String tableID, String staffId,String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
+    public Order(int orderId, String tableID, String employeeId, String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
         this.orderId = orderId;
         this.tableId = tableID;
-        this.staffId = staffId;
+        this.employeeId = employeeId;
         this.reservationNum = reservationNum;
         this.items = items;
         this.date = date;
@@ -50,8 +50,9 @@ public class Order {
         idCount = orderId+1;//ADDED TO CHECK //removed on left
     }
     
-    public Order(String tableId){
+    public Order(String tableId,String employeeId){
         this.orderId = idCount;
+        this.employeeId = employeeId;
         Calendar c = Calendar.getInstance();
         String d = sdf.format(c.getTime());
         this.date = d;
@@ -119,6 +120,13 @@ public class Order {
         this.remarks = remarks;
     }
     
+    public String getStaffId() {
+    	return employeeId;
+    }
+    
+    public void setStaffId(String employeeId) {
+    	this.employeeId = employeeId;
+    }
     public void addItem(Item item) {
         this.items.add(item);
     }
@@ -152,13 +160,14 @@ public class Order {
     	return total;
     }
     
-    public void viewOrder() {
+    public void viewInvoice() {
         System.out.println("                                      RRPSS                                      ");
         //System.out.println(toString());
         System.out.println("=================================================================================");
         System.out.println("Date: " + date);
         System.out.println("Table: " + tableId);
         System.out.println("Reservation No: + reservationNum");
+        System.out.println("Attended By:"+ employeeId + " "+ StaffController.retrieveInstance().getStaff(employeeId).getName());
         System.out.println("ID                                 Description                          Price(S$)");
         System.out.println("=================================================================================");
         for (Item item : items) {
@@ -178,7 +187,7 @@ public class Order {
 
         return (String.format("%-5d%-30s%-10s", orderId, remarks, status));
     }
-    public String toCurrency(double amt) {
+    private String toCurrency(double amt) {
     	Locale locale = new Locale("en-SG", "SG");      
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
         DecimalFormat decimalFormat = ((DecimalFormat) currencyFormat); //explicit downcast 

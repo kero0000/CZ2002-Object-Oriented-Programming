@@ -7,10 +7,11 @@ import java.util.Scanner;
 import Entity.Item;
 import Entity.Order;
 import Entity.Reservation;
+import Controller.StaffController;
 import Controller.MenuController;
 import Controller.OrderController;
 import Controller.ReservationController;
-//test
+
 public class OrderUI {
     public static OrderUI instance = null;
     Scanner sc = new Scanner(System.in);
@@ -78,11 +79,14 @@ public class OrderUI {
     	sc = new Scanner(System.in);
     	String tableId;
         String remarks;
+        String employeeId;
         System.out.println("Enter table number:");
         tableId = sc.nextLine();
+        System.out.println("Enter staff identification number:");
+        employeeId = sc.nextLine();
         System.out.println("");
         OrderController.getInstance().checkID();
-        Order order = new Order(tableId);
+        Order order = new Order(tableId,StaffController.retrieveInstance().getStaff(employeeId));
         try {
 			Reservation r = ReservationController.retrieveReservationByTableId(tableId);
 			if(r == null) {
@@ -112,7 +116,7 @@ public class OrderUI {
     	sc = new Scanner(System.in);
     	int input;
         int id;
-    	order.viewOrder();
+    	order.viewInvoice();
         do {
         	System.out.println("Please Choose a option to Continue:");
             System.out.println("(1) Add item");
@@ -222,7 +226,7 @@ public class OrderUI {
 					input = 0;
             }
             OrderController.getInstance().updateOrder(order);
-            order.viewOrder();
+            order.viewInvoice();
         } while (input < 5);
         OrderController.getInstance().savetoDB();
     }
@@ -276,7 +280,7 @@ public class OrderUI {
         		    sc.nextLine();
         		} while (orderID <= 0);
         		Order order = OrderController.getInstance().retrieveOrder(orderID);
-        		if (order != null) order.viewOrder();
+        		if (order != null) order.viewInvoice();
         		else System.out.println("Order does not exist!");
         	} else {
         		System.out.println("Enter Table ID:");
@@ -284,7 +288,7 @@ public class OrderUI {
         		ArrayList<Order> orderList = OrderController.getInstance().retrieveOrderList(tableID);
         		if (orderList != null) {
         			for (Order order : orderList) {
-        				order.viewOrder();
+        				order.viewInvoice();
         				System.out.println();
         			}
         		}
@@ -292,4 +296,5 @@ public class OrderUI {
         	}
        } else System.out.println("No order made yet!");
     }
+    
 }
