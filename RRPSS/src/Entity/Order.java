@@ -1,11 +1,20 @@
 package Entity;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+
 
 public class Order {
+	private static final double GST = 1.07;
+	private static final double SC = 1.10;
 	private static int idCount = 1;
+	private String staffId;
+	private String staffName;
     private int orderId;
     private String tableId;
     private String reservationNum;
@@ -14,9 +23,9 @@ public class Order {
     private String date;
     private String status = "Ordering";
     private String remarks = "";
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
-    
-    public Order(String tableId, ArrayList<Item> items, String status, String remarks){
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
+
+    public Order(String tableId, ArrayList<Item> items, String status, String remarks, String staffId){
         this.orderId = idCount;
         this.items = items;
         Calendar c = Calendar.getInstance();
@@ -25,12 +34,14 @@ public class Order {
         this.status = status;
         this.remarks = remarks;
         this.tableId = tableId;
+        this.staffId = staffId;
         idCount++;
     }
     
-    public Order(int orderId, String tableID, String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
+    public Order(int orderId, String tableID, String staffId,String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
         this.orderId = orderId;
         this.tableId = tableID;
+        this.staffId = staffId;
         this.reservationNum = reservationNum;
         this.items = items;
         this.date = date;
@@ -122,6 +133,25 @@ public class Order {
         return false;
     }
     
+    public double subTotal(){
+    	double currentTotal = 0;
+    	for(Item item : items) {
+    		currentTotal += item.getPrice();	
+    	}
+    	return currentTotal;
+    }
+    
+    public double taxes(){
+    	double tax = 0;	
+    	tax = subTotal() * GST * SC;
+    	return tax;
+    }
+    public double totalPrice() {
+    	double total = 0;
+    	total = subTotal() + taxes();
+    	return total;
+    }
+    
     public void viewOrder() {
         System.out.println("                                      RRPSS                                      ");
         //System.out.println(toString());
@@ -135,10 +165,10 @@ public class Order {
         	System.out.println(item.toString());
         }
         System.out.println("=================================================================================");
-        System.out.println("                                                              Subtotal:");
-        System.out.println("                                                              Taxes   :");
+        System.out.println("Subtotal:														        "+ toCurrency(subTotal()));
+        System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));
         System.out.println("=================================================================================");
-        System.out.println("                                                              Total   :");
+        System.out.println("Total:                                                                 	"+ toCurrency(totalPrice()));
         System.out.println("=================================================================================");
         System.out.println("*                         Thank you for dining with us!                         *");
         System.out.println("=================================================================================");
@@ -148,5 +178,16 @@ public class Order {
 
         return (String.format("%-5d%-30s%-10s", orderId, remarks, status));
     }
-
+    public String toCurrency(double amt) {
+    	Locale locale = new Locale("en-SG", "SG");      
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
+        DecimalFormat decimalFormat = ((DecimalFormat) currencyFormat); //explicit downcast 
+        		
+        DecimalFormatSymbols currencySymbol = decimalFormat.getDecimalFormatSymbols();
+        
+        currencySymbol.setCurrencySymbol("");   //remove symbol
+        decimalFormat.setDecimalFormatSymbols(currencySymbol);  //remove symbol
+        
+        return (currencyFormat.format(amt));
+    }
 }
