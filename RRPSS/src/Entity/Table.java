@@ -17,7 +17,6 @@ public class Table {
 
 	}
 
-
 	public String gettableId() {
 		return tableId;
 	}
