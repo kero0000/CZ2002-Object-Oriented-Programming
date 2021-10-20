@@ -66,7 +66,7 @@ public class MenuUI {
         String itemDesc = "";
         double price = 0.0;
         int itemType = -1;
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Enter item name:");							//Input itemName
         itemName = sc.nextLine();
         System.out.println("Enter item description:");					//Input itemDesc
