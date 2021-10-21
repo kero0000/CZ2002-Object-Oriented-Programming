@@ -24,6 +24,7 @@ public class Order {
     private String date;
     private String status = "Ordering";
     private String remarks = "";
+    private double totalprice;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
 	StaffController staffs = new StaffController();
 
@@ -177,9 +178,9 @@ public class Order {
     	return tax;
     }
     public double totalPrice() {
-    	double total = 0;
-    	total = subTotal() + taxes();
-    	return total;
+    	this.totalprice = 0;
+    	totalprice = subTotal() + taxes();
+    	return totalprice;
     }
     
     public void viewInvoice() {
