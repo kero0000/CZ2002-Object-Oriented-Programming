@@ -17,6 +17,7 @@ import Controller.ReservationController;
 import Controller.TableController;
 import Database.ReservationDB;
 import Entity.Reservation;
+import Entity.Staff;
 
 public class RRPSSApp {
 
@@ -32,7 +33,7 @@ public class RRPSSApp {
         Date time = calendar.getTime();
         timer.schedule(new checkExpired(), time);
 		MenuController.retrieveInstance().loadinDB();
-		OrderController.getInstance().loadinDB();
+		OrderController.retrieveInstance().loadinDB();
 
 		int main_menu_choice;
 		Scanner sc = new Scanner(System.in);
@@ -169,10 +170,10 @@ public class RRPSSApp {
 								System.out.println("Please enter a valid option.");
 								table_mgt_choice = 0;
 								}while (table_mgt_choice < 8);
-							}
 
-						} while (table_mgt_choice < 8);
 
+						}
+					}while (admin_choice < 4);
 						break;
 					case 2:
 
@@ -223,10 +224,72 @@ public class RRPSSApp {
 				break;
 				
 			case 5 :
+				break;
+				
+			case 6:
+				break;
+				
+			case 7:
+				int staff_management_choice;
+				StaffController staffManager = new StaffController();
+				staffManager.loadFromDB();
+				do{	
+					System.out.println("\n=================================================="
+										+"\n Staff Management" 
+										+"\n=================================================="
+										+"\n (1) Display All Employees"
+										+"\n (2) Add a new Hire"
+										+"\n (3) Remove an employee"
+										+"\n (4) Check employee's information"
+										+"\n (5) Update employee's job"
+										);
+					staff_management_choice = Integer.valueOf(sc.nextLine());
+					switch (staff_management_choice) {
+					
+
+					case 1:
+						staffManager.displayStaff();
+						break;
+						
+					case 2:
+						System.out.println("Enter employee's name:");
+						String employeeName = sc.nextLine();
+						System.out.println("Enter employee's gender:");
+						String employeeGender = sc.nextLine();
+						System.out.println("Enter employee's Job:");
+						String employeeJob = sc.nextLine();
+						staffManager.addStaff(employeeName, employeeGender, employeeJob);
+						break;
+						
+					case 3:
+						System.out.println("Enter the ID of the employee to be removed:");
+						String employeeId = sc.nextLine();
+						staffManager.removeStaff(employeeId);
+						break;
+						
+					case 4:
+						System.out.println("Enter the ID of the employee to be checked:");
+						String employeeId = sc.nextLine();
+						Staff employee = staffManager.getStaff(employeeIdk);
+						break;
+					
+					case 5:
+						System.out.println("Enter the ID of the employee to be updated:");
+						String employeeId = sc.nextLine();
+						System.out.println("Enter the new job the employee will be holding:");
+						String employeeJob = sc.nextLine();
+						Staff employee = staffManager.getStaff(employeeId);
+						employee.setJobTitle(employeeJob);
+						break;
+					default:
+						System.out.println("Please enter a valid option.");
+					}
+				}while(staff_management_choice < 6);
+				break;	
 			default:
 				System.out.println("Please enter a valid option.");
 				main_menu_choice = 0;
-			}
+			
 		} while (main_menu_choice < 7);
 		MenuController.retrieveInstance().savetoDB();
 		OrderController.getInstance().savetoDB();

@@ -58,6 +58,7 @@ public class StaffController {
     				staff.getEmployeeId().equals(employeeId))
     			return staff;
     	}
+		System.out.println("Employee no. "+ employeeId + " doesn't exists or wrong ID entered");
 		return null;
 	}
 	
@@ -68,14 +69,15 @@ public class StaffController {
 			employeeId = "01";
 		}
 		else {
-			if(staffList.size() < 9)
-				employeeId =  "0" + String.valueOf(staffList.size() + 1);
+			int Id = Integer.valueOf(staffList.get(staffList.size()-1).getEmployeeId())+1;
+			if(Id < 10)
+				employeeId = "0" + String.valueOf(Id);
 			else
-				employeeId =  String.valueOf(staffList.size() + 1);
+				employeeId = String.valueOf(Id);
 		}		
 		
 		staffList.add(new Staff(name,gender,jobTitle,employeeId));
-		System.out.println("New Staff " + staffList.get(Integer.valueOf(employeeId)-1).getName() + " added");
+		System.out.println("New Staff " + getStaff(employeeId).getName() + " added");
 		saveToDB();
 	}
 	
@@ -85,14 +87,30 @@ public class StaffController {
 			System.out.println("There're no employees currently");
 			return;
 		}
-		try {
-			staffList.get(Integer.valueOf(employeeId)-1);
-		}catch(Exception e) {
-			System.out.println("Employee no. "+ employeeId + " doesn't exists or wrong Id input");
+		else if(!(getStaff(employeeId) instanceof Staff)){
 			return;
 		}
-		staffList.remove(Integer.valueOf(employeeId)-1);
-		System.out.println("Employee no. " + employeeId + " has been succesfully removed");
-		saveToDB();		
+			
+		else {		
+			staffList.remove(getStaff(employeeId));
+			System.out.println("Employee no. " + employeeId + " has been succesfully removed");
+			saveToDB();		
+		}
+	}
+	
+	public void displayStaff() {
+		if(staffList.isEmpty()) {
+			System.out.println("There're no employees currently");
+			return;
+		}
+		else {
+			System.out.println("=================================================="
+								+ "\n Employee List"
+								+ "==================================================");
+			for(Staff staff: staffList) {
+				System.out.println(staff);
+				System.out.println("");
+			}
+		}		
 	}
 }
