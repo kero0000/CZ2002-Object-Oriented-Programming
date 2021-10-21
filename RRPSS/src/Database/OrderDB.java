@@ -41,7 +41,7 @@ public class OrderDB implements DB {
 		    	items.add(item);
 		    }
 		    
-		    Order order = new Order(orderId, tableId, employeeId, reservationNum, items, date, status, remarks, staffId);
+		    Order order = new Order(orderId, tableId, employeeId, membership, reservationNum, items, date, status, remarks);
 		    orderList.add(order);
 		}
 		System.out.println(stringArray.size() + " Order(s) Loaded.");
