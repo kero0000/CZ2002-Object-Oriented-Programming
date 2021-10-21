@@ -25,16 +25,16 @@ public class StaffController {
 		}
     }
     
-  /*Save all staffs to DB
+   //Save all staffs to DB
     public void saveToDB() {
     	StaffDB staffdb = new StaffDB();
         try {
-			staffdb.save(filename, items);
+			staffdb.save(filename, staffList);
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}		
-    }*/
+    }
     
     /**
 	 * Creating new instance of staff controller
@@ -59,5 +59,40 @@ public class StaffController {
     			return staff;
     	}
 		return null;
-	}  
+	}
+	
+	// add staff to database
+	public void addStaff(String name, String gender, String jobTitle) {
+		String employeeId;
+		if(staffList.isEmpty()) {
+			employeeId = "01";
+		}
+		else {
+			if(staffList.size() < 9)
+				employeeId =  "0" + String.valueOf(staffList.size() + 1);
+			else
+				employeeId =  String.valueOf(staffList.size() + 1);
+		}		
+		
+		staffList.add(new Staff(name,gender,jobTitle,employeeId));
+		System.out.println("New Staff " + staffList.get(Integer.valueOf(employeeId)-1).getName() + " added");
+		saveToDB();
+	}
+	
+	// remove staff from database
+	public void removeStaff(String employeeId) {
+		if(staffList.isEmpty()) {
+			System.out.println("There're no employees currently");
+			return;
+		}
+		try {
+			staffList.get(Integer.valueOf(employeeId)-1);
+		}catch(Exception e) {
+			System.out.println("Employee no. "+ employeeId + " doesn't exists or wrong Id input");
+			return;
+		}
+		staffList.remove(Integer.valueOf(employeeId)-1);
+		System.out.println("Employee no. " + employeeId + " has been succesfully removed");
+		saveToDB();		
+	}
 }
