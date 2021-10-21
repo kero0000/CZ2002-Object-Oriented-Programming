@@ -1,10 +1,7 @@
 01|Alex Jones|Male|Cook|
-02|Patrice Jones|Female|Manager|
-03|Jackson Jones|Male|Waiter|
-04|Dennis Jones|F|Cleaner|
 05|Pe Jones|M|Cleaner|
 06|Un Jones|M|Server|
 07|Mea Jones|F|Sous Chef|
 08|Lola Jones|F|Waiter|
 09|Maxwe Jones|M|Cashier|
-10|Ope Jones|M|Head Chef|
+10|E Jones|M|Chef|

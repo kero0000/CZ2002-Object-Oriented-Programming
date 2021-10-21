@@ -24,7 +24,7 @@ public class OrderController{
 	 * 
 	 * @return ordercontroller instance
 	 */
-    public static OrderController getInstance() {
+    public static OrderController retrieveInstance() {
         if (instance == null) {
             instance = new OrderController();
         }
