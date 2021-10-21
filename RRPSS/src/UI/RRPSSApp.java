@@ -38,12 +38,12 @@ public class RRPSSApp {
 		Scanner sc = new Scanner(System.in);
 		do {
 
-			System.out.println("\n _    _ _____  _____   _____ ");
+			System.out.println("\n _  _ _ _____  _____   _____ ");
 			System.out.println("| |  | |  __ \\|  __ \\ / ____|");
 			System.out.println("| |__| | |__) | |__) | (___  ");
 			System.out.println("|  __  |  _  /|  ___/ \\___ \\ ");
 			System.out.println("| |  | | | \\ \\| |     ____) |");
-			System.out.println("|_|  |_|_|  \\_\\_|    |_____/    v1.0");
+			System.out.println("|_|  |_|_|  \\_\\_|    |_____/    ");
 
 			System.out.println("==================================================");
 			System.out.println(" Please select one of the following functions: ");
@@ -68,9 +68,10 @@ public class RRPSSApp {
 					System.out.println("\n==================================================");
 					System.out.println(" Restaurant");
 					System.out.println("==================================================");
-					System.out.println("(1) Create Reservation\t(2)Update Reservations");
-					System.out.println("(3) Remove reservation");
-					System.out.println("(4) Back")
+					System.out.println("(1) Create Reservations");
+					System.out.println("(2) Check Reservations");
+					System.out.println("(3) Remove Reservations");
+					System.out.println("(4) Back");
 					restaurant_mgt_choice = sc.nextInt();
 					switch (restaurant_mgt_choice) {
 					
