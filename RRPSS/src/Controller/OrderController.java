@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -104,26 +105,17 @@ public class OrderController{
 	 * @param orderID
 	 * 				Specifies the order id to retrieve order
 	 */
-    public void displayOrder(int orderID) {
+    public void printOrderInvoice(int orderID) {
         Order order;
         order = retrieveOrder(orderID);
         order.viewInvoice();
+     // call tablecontroller.updateTableStatus to vacant
     }
     
-    /**
-	 * Retrieval of order size
-	 * 
-	 */
-    public final int displayOrder() {
-        Set<Integer> s = new HashSet<>();
-        for (Order order : orderList) {
-            int i = order.getOrderId();
-            if (!s.contains(i)) {
-                s.add(i);
-            }
-        }
-        return orderList.size();
+    public void displayOrder() {
+    	//view order
     }
+    
     
     /**
 	 * Updating of items in orders
@@ -186,5 +178,6 @@ public class OrderController{
 		}
 		
     }
+    
 
 }

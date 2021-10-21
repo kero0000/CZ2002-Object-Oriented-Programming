@@ -48,8 +48,14 @@ public class RRPSSApp {
 			System.out.println("==================================================");
 			System.out.println(" Please select one of the following functions: ");
 			System.out.println("==================================================");
-			System.out.println("(1) Restaurant Management\t\t(2) Administration");
-			System.out.println("(3) Sales Revenue Report end of day\t(4) Save and exit");
+			System.out.println("(1) Reservation");
+			System.out.println("(2) Table");
+			System.out.println("(3) Menu");
+			System.out.println("(4) Order");
+			System.out.println("(5) Promotion Deals"); // eugene 
+			System.out.println("(6) Generate Sales Report");
+			System.out.println("(7) Staff");
+			System.out.println("(8) Save and exit");
 
 			System.out.println("\nEnter your choice:");
 			main_menu_choice = sc.nextInt();
@@ -60,50 +66,15 @@ public class RRPSSApp {
 				int restaurant_mgt_choice;
 				do {
 					System.out.println("\n==================================================");
-					System.out.println(" Restaurant Management: ");
+					System.out.println(" Restaurant");
 					System.out.println("==================================================");
-					System.out.println("(1) Staff Details Management\t(2) Reservations");
-					System.out.println("(3) Back");
+					System.out.println("(1) Create Reservation\t(2)Update Reservations");
+					System.out.println("(3) Remove reservation");
+					System.out.println("(4) Back")
 					restaurant_mgt_choice = sc.nextInt();
 					switch (restaurant_mgt_choice) {
+					
 					case 1:
-						int Staff_mgt_choice;
-						do {
-							System.out.println("\n==================================================");
-							System.out.println(" Staff Details Management: ");
-							System.out.println("==================================================");
-							System.out.println("(1) Create Staff\t(2) Update Staff");
-							System.out.println("(3) Remove Staff\t(4) View Staffs");
-							System.out.println("(5) Search Staff\t(6) Back");
-							Staff_mgt_choice = sc.nextInt();
-							switch (Staff_mgt_choice) {
-							case 1:
-								// Create new Staff function
-								StaffController.createStaff();
-								break;
-							case 2:
-								StaffController.updateStaffById();
-								break;
-							case 3:
-								StaffController.deleteStaffById();
-								break;
-							case 4:
-								StaffController.retrieveAllStaff();
-								break;
-							case 5:
-								StaffController.retrieveStaffbyId();
-								break;
-							case 6:
-								Staff_mgt_choice = 7;
-								break;
-							default:
-								System.out.println("Please enter a valid option.");
-								Staff_mgt_choice = 0;
-							}
-						} while (Staff_mgt_choice < 7);
-
-						break;
-					case 2:
 
 						int reservation_choice;
 						do {
@@ -250,6 +221,8 @@ public class RRPSSApp {
 				System.out.println("Saving all data... Program terminating ..."); // Save "database into file"
 				main_menu_choice = 7;
 				break;
+				
+			case 5 :
 			default:
 				System.out.println("Please enter a valid option.");
 				main_menu_choice = 0;
