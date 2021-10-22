@@ -242,7 +242,7 @@ public class RRPSSApp {
 										+"\n (3) Remove an employee"
 										+"\n (4) Check employee's information"
 										+"\n (5) Update employee's job"
-										);
+										+"\n (6) Exit");
 					staff_management_choice = Integer.valueOf(sc.nextLine());
 					switch (staff_management_choice) {
 					
@@ -269,22 +269,25 @@ public class RRPSSApp {
 						
 					case 4:
 						System.out.println("Enter the ID of the employee to be checked:");
-						String employeeId = sc.nextLine();
-						Staff employee = staffManager.getStaff(employeeIdk);
+						String checkId = sc.nextLine();
+						Staff employee = staffManager.getStaff(checkId);
 						break;
 					
 					case 5:
 						System.out.println("Enter the ID of the employee to be updated:");
-						String employeeId = sc.nextLine();
+						String updateId = sc.nextLine();
 						System.out.println("Enter the new job the employee will be holding:");
-						String employeeJob = sc.nextLine();
-						Staff employee = staffManager.getStaff(employeeId);
-						employee.setJobTitle(employeeJob);
+						String employeeNewJob = sc.nextLine();
+						Staff employeeUpdate = staffManager.getStaff(updateId);
+						employeeUpdate.setJobTitle(employeeNewJob);
+						break;
+					case 6:
+						staff_management_choice = 7;
 						break;
 					default:
 						System.out.println("Please enter a valid option.");
 					}
-				}while(staff_management_choice < 6);
+				}while(staff_management_choice < 7);
 				break;	
 			default:
 				System.out.println("Please enter a valid option.");
