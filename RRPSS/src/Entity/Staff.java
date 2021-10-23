@@ -44,4 +44,8 @@ public class Staff {
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
+	@Override
+	public String toString() {
+		return employeeId + ":" + name + "| " + gender + "| " + jobTitle + "| " ; 
+	}
 }
