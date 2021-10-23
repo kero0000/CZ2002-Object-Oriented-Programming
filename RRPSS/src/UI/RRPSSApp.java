@@ -126,7 +126,7 @@ public class RRPSSApp {
 				break;
 			
 			case 3:
-				//MENU STUFF HERE
+				UI.MenuUI.getInstance().displayOptions();
 				break;
 				
 			case 4:
