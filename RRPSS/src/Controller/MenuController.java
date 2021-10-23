@@ -41,6 +41,7 @@ public class MenuController {
     public void createItem(Item item) {
         items.add(item);
         checkID();
+        this.savetoDB();
     }
 
     /**
@@ -50,6 +51,7 @@ public class MenuController {
     public void deleteItem(Item item) {
         items.remove(item);
         checkID();
+        this.savetoDB();
     }
 
     /**
@@ -78,7 +80,7 @@ public class MenuController {
         if (price > 0.0) item.setPrice(price);
         else System.out.println("Item price cannot be negative nor zero! Original price was kept.");
         if (itemType >= 0 && itemType <= 2) item.setType(itemType);
-        else System.out.println("Item type must be either 0, 1 or 2! Original type was kept.");
+        else System.out.println("Item type must be either 0, 1, 2 or 3! Original type was kept.");
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is updated.");
         //OrderController.getInstance().updateItemInOrders(item);
     }
@@ -98,6 +100,11 @@ public class MenuController {
         System.out.println("=====================================Dessert=====================================");
         for (Item item : items) {
             if (item.getType() == 2)
+                System.out.println(item.toString());
+        }
+        System.out.println("====================================Promotions====================================");
+        for (Item item : items) {
+            if (item.getType() == 3)
                 System.out.println(item.toString());
         }
     }

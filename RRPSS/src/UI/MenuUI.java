@@ -61,7 +61,7 @@ public class MenuUI {
                 	System.out.println("Please enter a valid option!");
 					choice = 0;
             }
-        } while (choice < 4);
+        } while (choice < 7);
     }
     
     public void createMenuItem() {
@@ -178,7 +178,7 @@ public class MenuUI {
         String promoName = "";
         String promoDesc = "";
         double price = 0.0;
-        int itemType = -1;
+        int itemType = 3;
         //sc.nextLine();
         System.out.println("Enter promo name:");						//Input itemName
         promoName = sc.nextLine();
@@ -194,14 +194,13 @@ public class MenuUI {
 		    }
 		    sc.nextLine();
 		} while (price <= 0.0);
-        
         MenuController.retrieveInstance().checkID();
         Item item = new Item(promoName, promoDesc, price, itemType);
         MenuController.retrieveInstance().createItem(item);
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
     private void updatePromotion() {
-        int itemId = -1;
+        int itemId = 3;
         do {
 		    try {
 		    	System.out.println("Enter item ID to be updated:");
@@ -221,7 +220,7 @@ public class MenuUI {
         }
     }
     public void removePromotion() {
-        int itemId = -1;
+        int itemId = 3;
         do {
 		    try {
 		    	System.out.println("Enter item ID to be removed: ");
