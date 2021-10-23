@@ -28,9 +28,12 @@ public class MenuUI {
             System.out.println("\n==================================================");
 			System.out.println(" Menu item Management: ");
 			System.out.println("==================================================");
-			System.out.println("(1) Create Menu item\t(2) Update Menu item");
-			System.out.println("(3) Remove Menu item\t(4) Create promotion package item");
-			System.out.println("(5) Update promotion package item\t(6) Remove promotion package item");
+			System.out.println("(1) Create Menu item");
+			System.out.println("(2) Update Menu item");
+			System.out.println("(3) Remove Menu item");
+			System.out.println("(4) Create promotion package item");
+			System.out.println("(5) Update promotion package item");
+			System.out.println("(6) Remove promotion package item");
 			System.out.println("(7) Back");
             choice = Integer.valueOf(sc.nextLine());
             switch (choice) {
@@ -170,5 +173,71 @@ public class MenuUI {
             System.out.println("Item does not exist!");
         }
     }
-
+    
+    public void createPromotion() {
+        String promoName = "";
+        String promoDesc = "";
+        double price = 0.0;
+        int itemType = -1;
+        //sc.nextLine();
+        System.out.println("Enter promo name:");						//Input itemName
+        promoName = sc.nextLine();
+        System.out.println("Enter promo description:");					//Input itemDesc
+        promoDesc = sc.nextLine();
+        do {
+		    try {
+		    	System.out.println("Enter item price:");				//Input itemPrice > $0.00
+		        price = sc.nextDouble();
+		    	if(price <= 0.0) System.out.printf("Invalid input! ");
+		    } catch (InputMismatchException e) {
+		    	System.out.printf("Invalid input! ");
+		    }
+		    sc.nextLine();
+		} while (price <= 0.0);
+        
+        MenuController.retrieveInstance().checkID();
+        Item item = new Item(promoName, promoDesc, price, itemType);
+        MenuController.retrieveInstance().createItem(item);
+        System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
+    }
+    private void updatePromotion() {
+        int itemId = -1;
+        do {
+		    try {
+		    	System.out.println("Enter item ID to be updated:");
+		        itemId = sc.nextInt();
+		    	if(itemId <= 0) System.out.printf("Invalid input! ");
+		    } catch (InputMismatchException e) {
+		    	System.out.printf("Invalid input! ");
+		    }
+		    sc.nextLine();
+		} while (itemId <= 0);
+        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        if (item != null) {
+            MenuController.retrieveInstance().printItem(item);
+            doUpdate(itemId);
+        } else {
+            System.out.println("Item does not exist!");
+        }
+    }
+    public void removePromotion() {
+        int itemId = -1;
+        do {
+		    try {
+		    	System.out.println("Enter item ID to be removed: ");
+		        itemId = sc.nextInt();
+		    	if(itemId <= 0) System.out.printf("Invalid input! ");
+		    } catch (InputMismatchException e) {
+		    	System.out.printf("Invalid input! ");
+		    }
+		    sc.nextLine();
+		} while (itemId <= 0);
+        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        if (item != null) {
+            MenuController.retrieveInstance().deleteItem(item);
+            System.out.println("Item has been removed.");
+        } else {
+            System.out.println("Item does not exist!");
+        }
+    }
 }

@@ -80,7 +80,7 @@ public class MenuController {
         if (itemType >= 0 && itemType <= 2) item.setType(itemType);
         else System.out.println("Item type must be either 0, 1 or 2! Original type was kept.");
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is updated.");
-        OrderController.getInstance().updateItemInOrders(item);
+        //OrderController.getInstance().updateItemInOrders(item);
     }
     //Formatting to print menu
     public void displayMenu() {
