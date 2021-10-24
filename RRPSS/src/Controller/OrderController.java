@@ -5,9 +5,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import Entity.Item;
 import Entity.Order;
+import Entity.Item;
 import Database.OrderDB;
+
 
 public class OrderController{
     
@@ -19,11 +20,6 @@ public class OrderController{
     	orderList = new ArrayList<Order>();
     }
 
-    /**
-	 * Creating new instance of order controller
-	 * 
-	 * @return ordercontroller instance
-	 */
     public static OrderController retrieveInstance() {
         if (instance == null) {
             instance = new OrderController();
@@ -31,33 +27,20 @@ public class OrderController{
         return instance;
     }
     
-    /**
-	 * Creating new order item
-	 * 
-	 */
     public void createOrderItem(Order order, int itemId) {
         Item item = MenuController.retrieveInstance().retrieveItem(itemId);
         if (item != null) order.addItem(item);
         else System.out.println("This item does not exist");
     }
 
-    /**
-	 * Updating order
-	 * 
-	 */
     public void updateOrder(Order order) {
         orderList.remove(order);
         checkID(); 
         orderList.add(order);
     }
 
-    /**
-	 * Delete order
-	 * 
-	 * @param order
-	 * 				Specifies the order to be deleted
-	 */
-    public void deleteOrder(Order order) {
+
+    public void deleteOrder(Order order) { // for when order is empty so can just delete
     	int id = order.getOrderId(); 
     	if(id == (Order.getIdCount()-1))	
     		Order.setIdCount(id); 
@@ -65,14 +48,7 @@ public class OrderController{
         checkID(); 
     }
     
-    /**
-	 * Retrieval of order
-	 * 
-	 * @param orderID
-	 * 				Specifies the order id to retrieve order
-	 * 
-	 * @return Order if found. Else will return null
-	 */
+
     public Order retrieveOrder(int orderID) {
         for (Order order : orderList) {
             if (order.getOrderId() == orderID)
@@ -81,14 +57,7 @@ public class OrderController{
         return null;
     }
     
-    /**
-	 * Retrieval of order list by room id
-	 * 
-	 * @param roomID
-	 * 				Specifies the room id to retrieve order
-	 * 
-	 * @return An ArrayList of order if found. Else will return null
-	 */
+
     public ArrayList<Order> retrieveOrderList(String tableID) {
     	ArrayList<Order> ol = new ArrayList<Order>();
     	for (Order order : orderList) {
@@ -99,12 +68,7 @@ public class OrderController{
     	else return null;
     }
 
-    /**
-	 * Format printing of orders by order id
-	 * 
-	 * @param orderID
-	 * 				Specifies the order id to retrieve order
-	 */
+
     public void printOrderInvoice(int orderID) {
         Order order;
         order = retrieveOrder(orderID);
@@ -112,17 +76,12 @@ public class OrderController{
      // call tablecontroller.updateTableStatus to vacant
     }
     
-    public void displayOrder() {
-    	//view order
+    public void displayOrder(int orderID) {
+    	Order order;
+        order = retrieveOrder(orderID);
+        order.viewInvoice();
     }
     
-    
-    /**
-	 * Updating of items in orders
-	 * 
-	 * @param item
-	 * 				Specifies the item to update
-	 */
     public void updateItemInOrders(Item item) {
         for (Order order : orderList) {
             ArrayList<Item> items = order.getItems();
@@ -150,10 +109,7 @@ public class OrderController{
 		Order.setIdCount(id+1);
     }
 
-    /**
-	 * Retrieval of all orders
-	 * 
-	 */
+
     public void loadinDB() {
     	OrderDB orderdb = new OrderDB();
         try {
@@ -164,10 +120,7 @@ public class OrderController{
 		}
     }
     
-    /**
-	 * Saving of all orders
-	 * 
-	 */
+
     public void savetoDB() {
     	OrderDB orderdb = new OrderDB();
         try {

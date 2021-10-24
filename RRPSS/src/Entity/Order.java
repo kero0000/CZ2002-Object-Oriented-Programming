@@ -1,6 +1,7 @@
 package Entity;
 
 import java.text.DecimalFormat;
+
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import Controller.StaffController;
+
 
 public class Order {
 	private static final double GST = 1.07;
@@ -20,29 +22,25 @@ public class Order {
 	private String membership;
     private String reservationNum;
     private ArrayList<Item> items = new ArrayList<Item>();
-    private ArrayList<Promotion> promotions = new ArrayList<Promotion>();
+
     private String date;
-    private String status = "Ordering";
-    private String remarks = "";
     private double totalprice;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
 	StaffController staffs = new StaffController();
 
-	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items, String status, String remarks){
+	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items){
         this.orderId = idCount;
         this.items = items;
         Calendar c = Calendar.getInstance();
         String d = sdf.format(c.getTime());
         this.date = d;
-        this.status = status;
-        this.remarks = remarks;
         this.tableId = tableId;
         this.employeeId = employeeId;
         this.membership = membership;
         idCount++;
     }
     
-    public Order(int orderId, String tableID, String employeeId, String membership, String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
+    public Order(int orderId, String tableID, String employeeId, String membership, String reservationNum, ArrayList<Item> items, String date){
         this.orderId = orderId;
         this.tableId = tableID;
         this.employeeId = employeeId;
@@ -50,8 +48,6 @@ public class Order {
         this.reservationNum = reservationNum;
         this.items = items;
         this.date = date;
-        this.status = status;
-        this.remarks = remarks;
         idCount = orderId+1;//ADDED TO CHECK //removed on left
     }
     
@@ -110,21 +106,6 @@ public class Order {
         this.date = date;
     }
 
-    public String getStatus() {
-        return status;
-    }
-    
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-    
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
     
     public String getStaffId() {
     	return employeeId;
@@ -161,7 +142,7 @@ public class Order {
     		currentTotal += item.getPrice();	
     	}
     	if(membership.equalsIgnoreCase("yes"))
-    		return currentTotal - discount();
+    		return currentTotal - DISCOUNT;
     	else
     		return currentTotal;
     }
@@ -184,6 +165,7 @@ public class Order {
     }
     
     public void viewInvoice() {
+    	StaffController.retrieveInstance().loadFromDB();
         System.out.println("                                      RRPSS                                      ");
         //System.out.println(toString());
         System.out.println("=================================================================================");
@@ -199,7 +181,7 @@ public class Order {
         System.out.println("=================================================================================");
         if(membership.equalsIgnoreCase("yes"))
         System.out.println("Discount:														        "+ toCurrency(discount()));
-        System.out.println("Subtotal:														        "+ toCurrency(subTotal()));
+        System.out.println("Subtotal:						"+ toCurrency(subTotal()));
        
         System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));
        
@@ -212,7 +194,7 @@ public class Order {
     
     public String toString() {
 
-        return (String.format("%-5d%-30s%-10s", orderId, remarks, status));
+        return (String.format("%-5d%-30s%-10s", orderId));
     }
     private String toCurrency(double amt) {
     	Locale locale = new Locale("en-SG", "SG");      
