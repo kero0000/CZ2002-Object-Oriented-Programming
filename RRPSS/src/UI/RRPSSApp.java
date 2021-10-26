@@ -131,6 +131,7 @@ public class RRPSSApp {
 				
 			case 4:
 				//ORDER STUFF HERE
+				UI.OrderUI.getInstance().displayOptions();
 				break;
 				
 			case 5 :

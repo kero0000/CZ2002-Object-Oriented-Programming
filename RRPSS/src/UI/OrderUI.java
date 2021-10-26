@@ -62,6 +62,7 @@ public class OrderUI {
                 	viewOrder();
                     break;
                 case 5:
+                	OrderController.retrieveInstance().loadinDB();
                     break; // MUST go back to mainUI and invoke OrderController.savetoDB() to save changes made to Order.txt
                 default:
                 	System.out.println("Please enter a valid option!");
