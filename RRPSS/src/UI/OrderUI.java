@@ -30,9 +30,14 @@ public class OrderUI {
             System.out.println("\n==================================================");
 			System.out.println(" Table Orders: ");
 			System.out.println("==================================================");
-			System.out.println("(1) Create Order\t(2) Update Order");
-			System.out.println("(3) Remove Order\t(4) View Order");
-			System.out.println("(5) Back");
+			System.out.println("(1) Create Order");
+			System.out.println("(2) Update Order");
+			System.out.println("(3) Remove Order");
+			System.out.println("(4) View Order");
+			System.out.println("(5) Print Order Invoice (confirms payment for this order.)");
+			
+			System.out.println("(6) Back");
+			
             choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -62,7 +67,11 @@ public class OrderUI {
                 	viewOrder();
                     break;
                 case 5:
-                	OrderController.retrieveInstance().loadinDB();
+                	printOrderInvoice();
+                	System.out.println("\nPrinted order invoice. Order is considered paid.\n\n");
+                    break; 
+                    
+                case 6:
                     break; // MUST go back to mainUI and invoke OrderController.savetoDB() to save changes made to Order.txt
                 default:
                 	System.out.println("Please enter a valid option!");
@@ -176,22 +185,52 @@ public class OrderUI {
         else System.out.println("Order does not exist!");
     }
 
-    public void viewOrder() {
-    	sc = new Scanner(System.in);
-    	int orderID = -1;
-                do {
-        		    try {
-        		    	System.out.print("Enter Order ID:");
-        		        orderID = sc.nextInt();
-        		    	if(orderID <= 0) System.out.printf("Invalid input! ");
-        		    } catch (InputMismatchException e) {
-        		    	System.out.printf("Invalid input! ");
-        		    }
-        		    sc.nextLine();
-        		} while (orderID <= 0);
-        		Order order = OrderController.retrieveInstance().retrieveOrder(orderID);
-        		if (order != null) order.viewInvoice();
-        		else System.out.println("Order does not exist!");
-        	} 
+	public void viewOrder() {
+		sc = new Scanner(System.in);
+		int orderID = -1;
+		do {
+			try {
+				System.out.print("Enter Order ID:");
+				orderID = sc.nextInt();
+				if (orderID <= 0)
+					System.out.printf("Invalid input! ");
+			} catch (InputMismatchException e) {
+				System.out.printf("Invalid input! ");
+			}
+			sc.nextLine();
+		} while (orderID <= 0);
+		Order order = OrderController.retrieveInstance().retrieveOrder(orderID);
+		if (order != null)
+			order.viewInvoice();
+		else
+			System.out.println("Order does not exist!");
+	}
+
+	public void printOrderInvoice() {
+		sc = new Scanner(System.in);
+		int orderID = -1;
+		do {
+			try {
+				System.out.print("Enter Order ID:");
+				orderID = sc.nextInt();
+				if (orderID <= 0)
+					System.out.printf("Invalid input! ");
+			} catch (InputMismatchException e) {
+				System.out.printf("Invalid input! ");
+			}
+			sc.nextLine();
+		} while (orderID <= 0);
+		Order order = OrderController.retrieveInstance().retrieveOrder(orderID);
+		if (order != null)	{
+			order.setIsPrintedInvoice(true);
+			OrderController.retrieveInstance().updateOrder(order);
+			OrderController.retrieveInstance().savetoDB();
+		}
+		else
+			System.out.println("Order does not exist!");
+	}
+	
+	
+	
     
 }

@@ -3,6 +3,7 @@ package Controller;
 import java.io.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import Entity.Order;
@@ -132,5 +133,33 @@ public class OrderController{
 		
     }
     
+    
+    @SuppressWarnings("deprecation")
+	public void printSalesReport(int month, int year)	{
+    	double totalSales = 0; 
+    	
+    	
+    	
+    	for(Order order : this.orderList)	{
+    		Calendar orderDateCalendar = Calendar.getInstance();
+    		orderDateCalendar.setTime(order.getDateObject());
+    		
+    		/*
+    		if (order.getIsPrintedInvoice() == true
+    				&& order.getDateObject().getMonth() == month 
+    				&& order.getDateObject().getYear() == year)	{
+    		*/
+    		
+    		// why we have -1 in that month, because the Calendar class starts with 0 for january.
+    		if (order.getIsPrintedInvoice() == true
+    				&& orderDateCalendar.get(Calendar.MONTH) == month-1 
+    				&& orderDateCalendar.get(Calendar.YEAR) == year)	{
+    			
+    			totalSales += order.totalPrice();
+    		}
+    	}
+    	
+    	System.out.println(String.format("\nTotal Sales for the period of %d/%d is %.2f SGD.\n\n", month, year, totalSales));    
+    }
 
 }

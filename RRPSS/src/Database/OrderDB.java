@@ -27,6 +27,7 @@ public class OrderDB implements DB {
 		    String employeeId = star.nextToken().trim();
 		    String membership = star.nextToken().trim();
 		    String reservationNum = star.nextToken().trim();
+		    boolean isPrintedInvoice = Boolean.valueOf(star.nextToken().trim());
 		    String date = star.nextToken().trim();
 
 			
@@ -40,7 +41,8 @@ public class OrderDB implements DB {
 		    	items.add(item);
 		    }
 		    
-		    Order order = new Order(orderId, tableId, employeeId, membership, reservationNum, items, date);
+		    Order order = new Order(orderId, tableId, employeeId, membership, reservationNum, isPrintedInvoice, items, date);		    
+		    
 		    orderList.add(order);
 		}
 		System.out.println(stringArray.size() + " Order(s) Loaded.");
@@ -62,6 +64,8 @@ public class OrderDB implements DB {
 			st.append(order.getMembership());
 			st.append(SEPARATOR);
 			st.append(order.getReservationNum());
+			st.append(SEPARATOR);
+			st.append(Boolean.toString(order.getIsPrintedInvoice()));
 			st.append(SEPARATOR);
 			st.append(order.getDate());
 			st.append(SEPARATOR);
