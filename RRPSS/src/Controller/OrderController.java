@@ -144,13 +144,8 @@ public class OrderController{
     		Calendar orderDateCalendar = Calendar.getInstance();
     		orderDateCalendar.setTime(order.getDateObject());
     		
-    		/*
-    		if (order.getIsPrintedInvoice() == true
-    				&& order.getDateObject().getMonth() == month 
-    				&& order.getDateObject().getYear() == year)	{
-    		*/
     		
-    		// why we have -1 in that month, because the Calendar class starts with 0 for january.
+    		
     		if (order.getIsPrintedInvoice() == true
     				&& orderDateCalendar.get(Calendar.MONTH) == month-1 
     				&& orderDateCalendar.get(Calendar.YEAR) == year)	{
