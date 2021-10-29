@@ -68,7 +68,7 @@ public class OrderUI {
                     break;
                 case 5:
                 	printOrderInvoice();
-                	System.out.println("\nPrinted order invoice. Order is considered paid.\n\n");
+                	
                     break; 
                     
                 case 6:
@@ -98,7 +98,7 @@ public class OrderUI {
 
         updateOrder(order);
         System.out.println("Order created for table " + tableId);
-        OrderController.retrieveInstance().savetoDB();
+        //OrderController.retrieveInstance().savetoDB();
     }
 
     public void updateOrder(Order order) {
@@ -160,7 +160,7 @@ public class OrderUI {
             OrderController.retrieveInstance().updateOrder(order);
             order.viewInvoice();
         } while (input < 3);
-        OrderController.retrieveInstance().savetoDB();
+        //OrderController.retrieveInstance().savetoDB();
     }
     
 
@@ -225,6 +225,8 @@ public class OrderUI {
 			order.setIsPrintedInvoice(true);
 			OrderController.retrieveInstance().updateOrder(order);
 			OrderController.retrieveInstance().savetoDB();
+			order.viewInvoice();
+			System.out.println("\nPrinted order invoice. Order is considered paid.\n\n");
 		}
 		else
 			System.out.println("Order does not exist!");
