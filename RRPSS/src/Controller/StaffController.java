@@ -16,7 +16,7 @@ public class StaffController {
     }
      
     //Retrieval of all staffs from DB
-    public void loadFromDB() {
+    public void loadinDB() {
     	StaffDB staffDB = new StaffDB();
         try {
 			this.staffList = staffDB.read(filename);
@@ -104,13 +104,15 @@ public class StaffController {
 			return;
 		}
 		else {
-			System.out.println("=================================================="
-								+ "\n Employee List"
-								+ "==================================================");
+			System.out.println("============================================================="
+								+ "\n Employee List:"
+								+ "\n=============================================================");
+
 			for(Staff staff: staffList) {
-				System.out.println(staff);
-				System.out.println("");
+				System.out.println("\n" + staff);		
 			}
+			System.out.println("\nInformation of "+ staffList.size() + " employees displayed!");
+			
 		}		
 	}
 }

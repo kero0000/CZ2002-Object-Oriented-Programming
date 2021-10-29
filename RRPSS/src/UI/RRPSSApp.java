@@ -39,13 +39,13 @@ public class RRPSSApp {
 		Scanner sc = new Scanner(System.in);
 		do {
 
-			System.out.println("==================================================");
+			System.out.println("=============================================================");
 			System.out.println(" RESTAURANT RESERVATION AND POINT OF SALE SYSTEM APPLICATION ");
-			System.out.println("==================================================");
+			System.out.println("=============================================================");
 
-			System.out.println("==================================================");
-			System.out.println(" Please select one of the following functions: ");
-			System.out.println("==================================================");
+			System.out.println("=============================================================");
+			System.out.println(" Please select one of the following functions:");
+			System.out.println("=============================================================");
 			System.out.println("(1) Reservation");
 			System.out.println("(2) Table");
 			System.out.println("(3) Menu");
@@ -63,9 +63,9 @@ public class RRPSSApp {
 				case 1:
 					int reservation_choice;
 					do {
-						System.out.println("\n==================================================");
-						System.out.println(" Restaurant");
-						System.out.println("==================================================");
+						System.out.println("\n=============================================================");
+						System.out.println(" Reservation: ");
+						System.out.println("=============================================================");
 						System.out.println("(1) Create Reservations");
 						System.out.println("(2) Check Reservations");
 						System.out.println("(3) Remove Reservations");
@@ -99,9 +99,9 @@ public class RRPSSApp {
 				case 2:
 					int table_choice;
 					do {
-						System.out.println("\n==================================================");
+						System.out.println("\n=============================================================");
 						System.out.println(" Table: ");
-						System.out.println("==================================================");
+						System.out.println("=============================================================");
 						System.out.println("(1) Update Table");
 						System.out.println("(2) Check All Table Availability");
 						System.out.println("(3) Back");
@@ -142,9 +142,9 @@ public class RRPSSApp {
 					// GENERATE SALES REVENUE REPORT HERE
 					int report_choice;
 					do {
-						System.out.println("\n==================================================");
+						System.out.println("\n=============================================================");
 						System.out.println(" Sales Report: ");
-						System.out.println("==================================================");
+						System.out.println("=============================================================");
 						System.out.println("(1) Monthly Report");						
 						System.out.println("(2) Back");
 						report_choice = sc.nextInt();
@@ -173,20 +173,19 @@ public class RRPSSApp {
 				case 7:
 					int staff_management_choice;
 					StaffController staffManager = new StaffController();
-					staffManager.loadFromDB();
+					staffManager.loadinDB();
 					do{	
-						System.out.println("\n=================================================="
-								+"\n Staff Management" 
-								+"\n=================================================="
-								+"\n (1) Display All Employees"
-								+"\n (2) Add a new Hire"
-								+"\n (3) Remove an employee"
-								+"\n (4) Check employee's information"
-								+"\n (5) Update employee's job"
-								+"\n (6) Back");
+						System.out.println("\n============================================================="
+								+"\n Staff Management: " 
+								+"\n============================================================="
+								+"\n(1) Display all employees"
+								+"\n(2) Add a new hire"
+								+"\n(3) Remove an employee"
+								+"\n(4) Check employee's information"
+								+"\n(5) Update employee's information"
+								+"\n(6) Back");
 						staff_management_choice = Integer.valueOf(sc.nextLine());
 						switch (staff_management_choice) {
-	
 	
 							case 1:
 								staffManager.displayStaff();
@@ -217,14 +216,53 @@ public class RRPSSApp {
 								break;								 
 								
 							case 5:
-								System.out.println("Enter the ID of the employee to be updated:");
-								String updateInfoID = sc.nextLine();
-								System.out.println("Enter the new job the employee will be holding:");
-								String newEmployeeJob = sc.nextLine();
-								Staff updateEmployee = staffManager.getStaff(updateInfoID);
-								updateEmployee.setJobTitle(newEmployeeJob);
-								break;
-								 
+								int update_employee_choice;
+								do{	
+									System.out.println("\n============================================================="
+											+"\n Update Staff Information: " 
+											+"\n============================================================="
+											+"\n (1) Name"
+											+"\n (2) Gender"
+											+"\n (3) Job Title"
+											+"\n (4) Back");
+									update_employee_choice = Integer.valueOf(sc.nextLine());
+									switch (update_employee_choice) {
+										case 1:
+											System.out.println("Enter the ID of the employee to be updated:");
+											String updateInfoID1 = sc.nextLine();
+											System.out.println("Enter the name to be updated");
+											String newEmployeeName = sc.nextLine();
+											Staff updateEmployee1 = staffManager.getStaff(updateInfoID1);
+											updateEmployee1.setJobTitle(newEmployeeName);
+											break;
+											
+										case 2:
+											System.out.println("Enter the ID of the employee to be updated:");
+											String updateInfoID2 = sc.nextLine();
+											System.out.println("Enter the gender to be updated");
+											String newEmployeeGender = sc.nextLine();
+											Staff updateEmployee2 = staffManager.getStaff(updateInfoID2);
+											updateEmployee2.setJobTitle(newEmployeeGender);
+											break;
+											
+										case 3:
+											System.out.println("Enter the ID of the employee to be updated:");
+											String updateInfoID3 = sc.nextLine();
+											System.out.println("Enter the job to be updated:");
+											String newEmployeeJob = sc.nextLine();
+											Staff updateEmployee3 = staffManager.getStaff(updateInfoID3);
+											updateEmployee3.setJobTitle(newEmployeeJob);
+											break;
+											
+										case 4:
+											break;
+										
+										default:
+											System.out.println("Please enter a valid option.");
+											update_employee_choice = 0;
+									}					
+								}while(update_employee_choice < 4);
+																		 
 							case 6:
 								break;
 								

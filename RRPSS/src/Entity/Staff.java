@@ -31,14 +31,17 @@ public class Staff {
 	
 	public void setName(String name) {
 		this.name = name;
+		System.out.println("Name set!");
 	}
 	
 	public void setGender(String gender) {
 		this.gender = gender;
+		System.out.println("Gender set!");
 	}
 	
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
+		System.out.println("Job set!");
 	}
 	
 	public void setEmployeeId(String employeeId) {
@@ -46,6 +49,6 @@ public class Staff {
 	}
 	@Override
 	public String toString() {
-		return employeeId + ":" + name + "| " + gender + "| " + jobTitle + "| " ; 
+		return employeeId + " : " + name + ", " + gender + ", " + jobTitle; 
 	}
 }
