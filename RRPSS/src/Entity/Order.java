@@ -121,7 +121,6 @@ public class Order {
         try {
 			return sdf.parse(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -199,7 +198,7 @@ public class Order {
         System.out.println("Order Status: " + (isPrintedInvoice ? "PAID" : "NOT YET PAID"));
         System.out.println("Table: " + tableId);
         System.out.println("Reservation No: + reservationNum");
-        System.out.println("Attended By:"+ employeeId + " "+ StaffController.retrieveInstance().getStaff(employeeId).getName());
+        System.out.println("Served By:"+ employeeId + " "+ StaffController.retrieveInstance().getStaff(employeeId).getName());
         System.out.println("ID                                 Description                          Price(S$)");
         System.out.println("=================================================================================");
         for (Item item : items) {
@@ -208,7 +207,7 @@ public class Order {
         System.out.println("=================================================================================");
         if(membership.equalsIgnoreCase("yes"))
         System.out.println("Discount:														        "+ toCurrency(discount()));
-        System.out.println("Subtotal:						"+ toCurrency(subTotal()));
+        System.out.println("Subtotal:																"+ toCurrency(subTotal()));
        
         System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));
        
