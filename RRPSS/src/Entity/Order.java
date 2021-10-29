@@ -190,7 +190,7 @@ public class Order {
     }
     
     public void viewInvoice() {
-    	StaffController.retrieveInstance().loadFromDB();
+    	StaffController.retrieveInstance().loadinDB();
         System.out.println("                                      RRPSS                                      ");
         //System.out.println(toString());
         System.out.println("=================================================================================");
