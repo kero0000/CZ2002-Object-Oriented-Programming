@@ -1,11 +1,11 @@
 package Database;
-
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import Entity.Item;
 import Entity.Order;
+import Entity.Item;
 
 public class OrderDB implements DB {
 	
@@ -27,9 +27,9 @@ public class OrderDB implements DB {
 		    String employeeId = star.nextToken().trim();
 		    String membership = star.nextToken().trim();
 		    String reservationNum = star.nextToken().trim();
+		    boolean isPrintedInvoice = Boolean.valueOf(star.nextToken().trim());
 		    String date = star.nextToken().trim();
-		    String status = star.nextToken().trim();
-		    String remarks = star.nextToken().trim();
+
 			
 		    while(star.hasMoreTokens()) {
 		    	int itemID = Integer.valueOf(star.nextToken().trim());
@@ -41,7 +41,8 @@ public class OrderDB implements DB {
 		    	items.add(item);
 		    }
 		    
-		    Order order = new Order(orderId, tableId, employeeId, membership, reservationNum, items, date, status, remarks);
+		    Order order = new Order(orderId, tableId, employeeId, membership, reservationNum, isPrintedInvoice, items, date);		    
+		    
 		    orderList.add(order);
 		}
 		System.out.println(stringArray.size() + " Order(s) Loaded.");
@@ -64,11 +65,9 @@ public class OrderDB implements DB {
 			st.append(SEPARATOR);
 			st.append(order.getReservationNum());
 			st.append(SEPARATOR);
+			st.append(Boolean.toString(order.getIsPrintedInvoice()));
+			st.append(SEPARATOR);
 			st.append(order.getDate());
-			st.append(SEPARATOR);
-			st.append(order.getStatus());
-			st.append(SEPARATOR);
-			st.append(order.getRemarks());
 			st.append(SEPARATOR);
 			
 			

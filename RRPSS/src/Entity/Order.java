@@ -1,17 +1,21 @@
 package Entity;
 
 import java.text.DecimalFormat;
+
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import Controller.StaffController;
 
+
 public class Order {
-	private static final double GST = 1.07;
-	private static final double SC = 1.10;
+	private static final double GST = 0.07;
+	private static final double SC = 0.10;
 	private static final double DISCOUNT = 0.1;
 	private static int idCount = 1;
     private int orderId;
@@ -20,38 +24,36 @@ public class Order {
 	private String membership;
     private String reservationNum;
     private ArrayList<Item> items = new ArrayList<Item>();
-    private ArrayList<Promotion> promotions = new ArrayList<Promotion>();
+
     private String date;
-    private String status = "Ordering";
-    private String remarks = "";
     private double totalprice;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
 	StaffController staffs = new StaffController();
 
-	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items, String status, String remarks){
+	// new field
+	private boolean isPrintedInvoice = false;
+		
+	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items){
         this.orderId = idCount;
         this.items = items;
         Calendar c = Calendar.getInstance();
         String d = sdf.format(c.getTime());
         this.date = d;
-        this.status = status;
-        this.remarks = remarks;
         this.tableId = tableId;
         this.employeeId = employeeId;
         this.membership = membership;
         idCount++;
     }
     
-    public Order(int orderId, String tableID, String employeeId, String membership, String reservationNum, ArrayList<Item> items, String date, String status, String remarks){
+    public Order(int orderId, String tableID, String employeeId, String membership, String reservationNum, boolean isPrintedInvoice, ArrayList<Item> items, String date){
         this.orderId = orderId;
         this.tableId = tableID;
         this.employeeId = employeeId;
         this.membership = membership;
         this.reservationNum = reservationNum;
+        this.isPrintedInvoice = isPrintedInvoice;
         this.items = items;
         this.date = date;
-        this.status = status;
-        this.remarks = remarks;
         idCount = orderId+1;//ADDED TO CHECK //removed on left
     }
     
@@ -101,30 +103,35 @@ public class Order {
 	public void setReservationNum(String reservationNum) {
 		this.reservationNum = reservationNum;
 	}
-
+	
+	public boolean getIsPrintedInvoice() {
+        return isPrintedInvoice;
+    }
+    
+    public void setIsPrintedInvoice(boolean isPrintedInvoice) {
+        this.isPrintedInvoice = isPrintedInvoice;
+    }
+        
 	public String getDate() {
         return date;
     }
+	
+	// converts the date string to an actual date object.
+	public Date getDateObject() {
+        try {
+			return sdf.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return null;
+    }	
     
     public void setDate(String date) {
         this.date = date;
     }
 
-    public String getStatus() {
-        return status;
-    }
-    
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-    
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
     
     public String getStaffId() {
     	return employeeId;
@@ -161,7 +168,7 @@ public class Order {
     		currentTotal += item.getPrice();	
     	}
     	if(membership.equalsIgnoreCase("yes"))
-    		return currentTotal - discount();
+    		return currentTotal - DISCOUNT;
     	else
     		return currentTotal;
     }
@@ -184,10 +191,12 @@ public class Order {
     }
     
     public void viewInvoice() {
+    	StaffController.retrieveInstance().loadFromDB();
         System.out.println("                                      RRPSS                                      ");
         //System.out.println(toString());
         System.out.println("=================================================================================");
         System.out.println("Date: " + date);
+        System.out.println("Order Status: " + (isPrintedInvoice ? "PAID" : "NOT YET PAID"));
         System.out.println("Table: " + tableId);
         System.out.println("Reservation No: + reservationNum");
         System.out.println("Attended By:"+ employeeId + " "+ StaffController.retrieveInstance().getStaff(employeeId).getName());
@@ -199,7 +208,7 @@ public class Order {
         System.out.println("=================================================================================");
         if(membership.equalsIgnoreCase("yes"))
         System.out.println("Discount:														        "+ toCurrency(discount()));
-        System.out.println("Subtotal:														        "+ toCurrency(subTotal()));
+        System.out.println("Subtotal:						"+ toCurrency(subTotal()));
        
         System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));
        
@@ -212,7 +221,7 @@ public class Order {
     
     public String toString() {
 
-        return (String.format("%-5d%-30s%-10s", orderId, remarks, status));
+        return (String.format("%-5d%-30s%-10s", orderId));
     }
     private String toCurrency(double amt) {
     	Locale locale = new Locale("en-SG", "SG");      
