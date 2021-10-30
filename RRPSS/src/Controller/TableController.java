@@ -21,7 +21,7 @@ import Entity.Table;
 public class TableController {
 	
 	public static final String SEPARATOR = "|";
-	private static String fileName = "Table.txt";
+	private static final String FILENAME = "Table.txt";
 
 	public static void updateTable() throws IOException {
 		Scanner sc = new Scanner(System.in);
@@ -180,7 +180,7 @@ public class TableController {
 			}
 			// Write Table records to file
 			TableDB tableDB = new TableDB();
-			tableDB.save(fileName, alr);
+			tableDB.save(FILENAME, alr);
 
 			System.out.println("Table details has been successfully updated!");
 		} catch (
@@ -253,7 +253,7 @@ public class TableController {
 			}
 			// Write table records to file
 			TableDB tableDB = tableDB = new TableDB();
-			tableDB.save(fileName, alr);
+			tableDB.save(FILENAME, alr);
 
 			System.out.println("Table Status has been successfully updated!");
 		} catch (
@@ -297,7 +297,7 @@ public class TableController {
 			}
 			// Write table records to file
 			TableDB tableDB = new TableDB();
-			tableDB.save(fileName, alr);
+			tableDB.save(FILENAME, alr);
 			checker = true;
 			System.out.println("Table Status has been successfully updated!");
 		} catch (
@@ -314,7 +314,7 @@ public class TableController {
 	 */
 	public static void retrieveAllTable() throws IOException {
 
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 
 		System.out.println("\n==================================================");
 		System.out.println(" Table Details ");
@@ -366,7 +366,7 @@ public class TableController {
 		try {
 			// read file containing Table records
 			TableDB tableDB = new TableDB();
-			alr = tableDB.read(fileName);
+			alr = tableDB.read(FILENAME);
 
 		} catch (IOException e) {
 			System.out.println("IOException > " + e.getMessage());
@@ -410,7 +410,7 @@ public class TableController {
 	 * @throws IOException
 	 */
 	public static void retrieveOneTable() throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 		Scanner sc = new Scanner(System.in);
 		String checkTableId;
 		System.out.print("Enter the Table Id: ");
@@ -446,7 +446,7 @@ public class TableController {
 	 */
 	public static String retrieveTableType(String id) throws IOException {
 		String type = null;
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
@@ -472,7 +472,7 @@ public class TableController {
 	 */
 	public static void retrieveOneTable(String checkTableId) throws IOException {
 
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 		
 		System.out.println("\n==================================================");
 		System.out.println(" Table Details ");
@@ -505,7 +505,7 @@ public class TableController {
 	 * 
 	 */
 	public static void retrieveTableStatus() throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 		String vacantString = "";
 		String occupiedString = "";
 		String reservedString = "";
@@ -579,7 +579,7 @@ public class TableController {
 
 
 	public static ArrayList<Table> retrieveTableIdByType(String inputTableType) throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 		ArrayList<Table> tableIdList = new ArrayList<Table>();
 
 		for (int i = 0; i < stringArray.size(); i++) {
@@ -612,7 +612,7 @@ public class TableController {
 	 * 					
 	 */
 	public static ArrayList<Table> retrieveTableIdByTableType(String inputTableType) throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 		ArrayList<Table> tableIdList = new ArrayList<Table>();
 
 		for (int i = 0; i < stringArray.size(); i++) {
@@ -665,7 +665,7 @@ public class TableController {
 	 * @return An ArrayList of string
 	 */
 	public static ArrayList<String> retrieveAllAvailableTableTypes() throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
 		ArrayList<Table> tableList = new ArrayList<Table>();
 		ArrayList<String> vacantList = new ArrayList<String>();
 		

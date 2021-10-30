@@ -6,9 +6,9 @@ import Database.MenuDB;
 
 public class MenuController {
 
-    private static final String filename = "Menu.txt";
+    private static final String FILENAME = "Menu.txt";
     private static MenuController instance = null;
-    ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<Item> items = new ArrayList<Item>();
 
     public MenuController() {
 
@@ -123,7 +123,7 @@ public class MenuController {
     public void loadinDB() {
     	MenuDB menudb = new MenuDB();
         try {
-			this.items = menudb.read(filename);
+			this.items = menudb.read(FILENAME);
 			checkID();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -133,7 +133,7 @@ public class MenuController {
     public void savetoDB() {
     	MenuDB menudb = new MenuDB();
         try {
-			menudb.save(filename, items);
+			menudb.save(FILENAME, items);
 			checkID(); //ADDED TO CHECK
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

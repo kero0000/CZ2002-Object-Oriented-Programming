@@ -13,9 +13,9 @@ import Database.OrderDB;
 
 public class OrderController{
     
-	private static final String filename = "Order.txt";
+	private static final String FILENAME = "Order.txt";
     private static OrderController instance = null;
-    ArrayList<Order> orderList = new ArrayList<Order>();
+    private ArrayList<Order> orderList = new ArrayList<Order>();
     
     public OrderController() {
     	orderList = new ArrayList<Order>();
@@ -118,7 +118,7 @@ public class OrderController{
     public void loadinDB() {
     	OrderDB orderdb = new OrderDB();
         try {
-			this.orderList = orderdb.read(filename);
+			this.orderList = orderdb.read(FILENAME);
 			checkID(); //ADDED TO CHECK
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class OrderController{
     public void savetoDB() {
     	OrderDB orderdb = new OrderDB();
         try {
-        	orderdb.save(filename, orderList);
+        	orderdb.save(FILENAME, orderList);
         	checkID(); 
 		} catch (IOException e) {
 			e.printStackTrace();

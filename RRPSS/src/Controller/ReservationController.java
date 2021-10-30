@@ -17,7 +17,7 @@ import Entity.Reservation;
 public class ReservationController {
     
     public static final String SEPARATOR = "|";
-	private static String fileName = "Reservation.txt";
+	private static String FILENAME = "Reservation.txt";
     ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
 
     // Creating a new reservation

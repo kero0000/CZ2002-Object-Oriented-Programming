@@ -6,7 +6,7 @@ import Entity.Staff;
 import Database.StaffDB;
 
 public class StaffController {
-	private static final String filename = "Staff.txt";
+	private static final String FILENAME = "Staff.txt";
     private static StaffController instance = null;
     ArrayList<Staff> staffList = new ArrayList<Staff>();
     
@@ -19,7 +19,7 @@ public class StaffController {
     public void loadinDB() {
     	StaffDB staffDB = new StaffDB();
         try {
-			this.staffList = staffDB.read(filename);
+			this.staffList = staffDB.read(FILENAME);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,7 +29,7 @@ public class StaffController {
     public void saveToDB() {
     	StaffDB staffdb = new StaffDB();
         try {
-			staffdb.save(filename, staffList);
+			staffdb.save(FILENAME, staffList);
 		} catch (Exception e) {
 
 			e.printStackTrace();

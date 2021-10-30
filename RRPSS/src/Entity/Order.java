@@ -24,14 +24,11 @@ public class Order {
 	private String membership;
     private String reservationNum;
     private ArrayList<Item> items = new ArrayList<Item>();
-
     private String date;
     private double totalprice;
 	private boolean isPrintedInvoice = false; //new field
-
-
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
-	StaffController staffs = new StaffController();	
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
+	private StaffController staffs = new StaffController();	
 	
 	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items){
         this.orderId = idCount;
@@ -190,15 +187,14 @@ public class Order {
     }
     
     public void viewInvoice() {
-    	StaffController.retrieveInstance().loadinDB();
+    	staffs.loadinDB();
         System.out.println("                                      RRPSS                                      ");
-        //System.out.println(toString());
         System.out.println("=================================================================================");
         System.out.println("Date: " + date);
         System.out.println("Order Status: " + (isPrintedInvoice ? "PAID" : "NOT YET PAID"));
         System.out.println("Table: " + tableId);
         System.out.println("Reservation No: + reservationNum");
-        System.out.println("Served By:"+ employeeId + " "+ StaffController.retrieveInstance().getStaff(employeeId).getName());
+        System.out.println("Served By:"+ employeeId + " "+ staffs.getStaff(employeeId).getName());
         System.out.println("ID                                 Description                          Price(S$)");
         System.out.println("=================================================================================");
         for (Item item : items) {
@@ -207,11 +203,9 @@ public class Order {
         System.out.println("=================================================================================");
         if(membership.equalsIgnoreCase("yes"))
         System.out.println("Discount:														        "+ toCurrency(discount()));
-        System.out.println("Subtotal:																"+ toCurrency(subTotal()));
-       
-        System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));
-       
-        System.out.println("=================================================================================");
+        System.out.println("Subtotal:																"+ toCurrency(subTotal()));  
+        System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));    
+        System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Total:                                                                 	"+ toCurrency(totalPrice()));
         System.out.println("=================================================================================");
         System.out.println("*                         Thank you for dining with us!                         *");
