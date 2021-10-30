@@ -17,7 +17,6 @@ public class Reservation {
 	public Reservation(String reservationNum, String guestFirstName, String guestLastName, String tableId, String status, int numOfPax, Date reservationDate, String reservationTime) {
 		super();
 		this.reservationNum = reservationNum;
-		//this.customerId = customerId;
 		this.guestFirstName = guestFirstName;
 		this.guestLastName = guestLastName;
 		this.tableId = tableId;
