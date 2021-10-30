@@ -729,5 +729,8 @@ public class TableController {
 		vacantList.add(String.valueOf(vacant10pax));
 		return vacantList;
 	}
+	checkTableAvailable(int pax){
+		
+	}
 	
 }
