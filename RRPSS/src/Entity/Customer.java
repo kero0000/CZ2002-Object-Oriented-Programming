@@ -2,7 +2,7 @@ package Entity;//hello world
 
 public class Customer {
 	private String customerId;
-	private String Name;
+	private String name;
 	private String phoneNumber;
 	private boolean isMember;
 
@@ -11,9 +11,9 @@ public class Customer {
 		
 	}
 	
-	public Customer(String customerId,String Name,String phoneNumber, boolean isMember) {
+	public Customer(String customerId,String name,String phoneNumber, boolean isMember) {
 		this.customerId = customerId;
-		this.Name = Name;
+		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.isMember = isMember;
 	}
@@ -27,11 +27,11 @@ public class Customer {
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		this.Name = name;
+		this.name = name;
 	}
 
 
