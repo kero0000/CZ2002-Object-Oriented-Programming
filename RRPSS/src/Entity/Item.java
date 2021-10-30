@@ -71,7 +71,7 @@ public class Item {
 
     public String toString() {
 
-        return (String.format("%-5d%-15s%-52s%.2f", itemId, name, desc, price));
+        return (String.format("%-6d%-25s%-41s%.2f", itemId, name, desc, price));
     }
 
 }

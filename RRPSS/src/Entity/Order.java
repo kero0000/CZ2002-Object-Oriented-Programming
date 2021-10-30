@@ -191,31 +191,28 @@ public class Order {
         System.out.println("                                      RRPSS                                      ");
         System.out.println("=================================================================================");
         System.out.println("Date: " + date);
+        System.out.println("OrderId: " + orderId);
         System.out.println("Order Status: " + (isPrintedInvoice ? "PAID" : "NOT YET PAID"));
         System.out.println("Table: " + tableId);
-        System.out.println("Reservation No: + reservationNum");
-        System.out.println("Served By:"+ employeeId + " "+ staffs.getStaff(employeeId).getName());
-        System.out.println("ID                                 Description                          Price(S$)");
+        System.out.println("Reservation No: " + reservationNum);
+        System.out.println("Served By: "+ employeeId + " "+ staffs.getStaff(employeeId).getName());
+        System.out.println("ID    Name                     Description                              Price(S$)");
         System.out.println("=================================================================================");
         for (Item item : items) {
         	System.out.println(item.toString());
         }
         System.out.println("=================================================================================");
         if(membership.equalsIgnoreCase("yes"))
-        System.out.println("Discount:														        "+ toCurrency(discount()));
-        System.out.println("Subtotal:																"+ toCurrency(subTotal()));  
-        System.out.println("Taxes:                                                                 	"+ toCurrency(taxes()));    
-        System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("Total:                                                                 	"+ toCurrency(totalPrice()));
-        System.out.println("=================================================================================");
+        System.out.printf("%-71s" + toCurrency(discount()), "Discount:");														     
+        System.out.printf("\n%-71s" + toCurrency(subTotal()), "SubTotal:");	
+        System.out.printf("\n%-71s" + toCurrency(taxes()), "Taxes:");	 
+        System.out.println("\n---------------------------------------------------------------------------------");
+        System.out.printf("\n%-71s" + toCurrency(totalPrice()), "Total:");   
+        System.out.println("\n=================================================================================");
         System.out.println("*                         Thank you for dining with us!                         *");
         System.out.println("=================================================================================");
     }
     
-    public String toString() {
-
-        return (String.format("%-5d%-30s%-10s", orderId));
-    }
     private String toCurrency(double amt) {
     	Locale locale = new Locale("en-SG", "SG");      
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
