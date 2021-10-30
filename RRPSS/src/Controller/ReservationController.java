@@ -18,6 +18,7 @@ public class ReservationController {
     
     public static final String SEPARATOR = "|";
 	private static String fileName = "Reservation.txt";
+    ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
 
     // Creating a new reservation
     public static void createReservation() throws IOException {
@@ -66,7 +67,7 @@ public class ReservationController {
         
         System.out.println("Please choose a Reservation Time: ");
 
-        System.out.println("----------Lunch service----------");
+        System.out.println("---------- Lunch service ----------");
         System.out.println("(1)  11:00");
         System.out.println("(2)  11:30");
         System.out.println("(3)  12:00");
@@ -75,7 +76,7 @@ public class ReservationController {
         System.out.println("(6)  13:30");
         System.out.println("(7)  14:00");
         System.out.println("(8)  14:30");
-        System.out.println("----------Dinner serice----------");
+        System.out.println("---------- Dinner service ----------");
         System.out.println("(9)  18:00");
         System.out.println("(10) 18:30");
         System.out.println("(11) 19:00");
@@ -197,6 +198,12 @@ public class ReservationController {
         // considering table availability, and assigned, assign reservation number and save the reservation to database
 
     }
+
+    // Checking an existing reservation
+    public static void checkReservation() {
+
+    }
+
     // Updating an existing reservation
     public static void updateReservation() {
     
