@@ -729,8 +729,26 @@ public class TableController {
 		vacantList.add(String.valueOf(vacant10pax));
 		return vacantList;
 	}
-	checkTableAvailable(int pax){
-		//test
-	}
 	
+	public static String checkTableAvailableForPax(int pax) {
+		ArrayList alr = null;
+		alr = retrieveTable();
+		int i;
+		for(i=0;i<alr.size();i++) {
+			Table tempTable = (Table) alr.get(i);
+			try{
+	            int tablepax = Integer.parseInt(tempTable.gettableType());
+	            if(tablepax == pax && tempTable.gettableStatus().contentEquals("VACANT")) {
+	            	String tableid = tempTable.gettableId();
+					return tableid;
+				}
+	        }
+	        catch (NumberFormatException ex){
+	            ex.printStackTrace();
+	        }
+			
+		}
+		return("No table available");
+
+	}
 }
