@@ -21,7 +21,7 @@ import Entity.Table;
 public class TableController {
 	
 	public static final String SEPARATOR = "|";
-	private static String FILENAME = "Table.txt";
+	private static final String FILENAME = "Table.txt";
 
 	public static void updateTable() throws IOException {
 		Scanner sc = new Scanner(System.in);
