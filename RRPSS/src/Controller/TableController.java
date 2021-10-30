@@ -730,7 +730,7 @@ public class TableController {
 		return vacantList;
 	}
 	checkTableAvailable(int pax){
-		
+		//test
 	}
 	
 }
