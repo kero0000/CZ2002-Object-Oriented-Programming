@@ -31,7 +31,7 @@ public class RRPSSApp {
 		calendar.set(Calendar.MINUTE, 30);
 		calendar.set(Calendar.SECOND, 00);
 		Date time = calendar.getTime();
-		timer.schedule(new checkExpired(), time);
+		//timer.schedule(new checkExpired(), time);
 		MenuController.retrieveInstance().loadinDB();
 		OrderController.retrieveInstance().loadinDB();
 
@@ -48,12 +48,11 @@ public class RRPSSApp {
 			System.out.println("=============================================================");
 			System.out.println("(1) Reservation");
 			System.out.println("(2) Table");
-			System.out.println("(3) Menu");
+			System.out.println("(3) Menu and Promotions");
 			System.out.println("(4) Order"); 
-			System.out.println("(5) Promotion Deals"); 
-			System.out.println("(6) Generate Sales Report");
-			System.out.println("(7) Staff");
-			System.out.println("(8) Save and exit");
+			System.out.println("(5) Generate Sales Report");
+			System.out.println("(6) Staff");
+			System.out.println("(7) Save and exit");
 
 			System.out.println("\nEnter your choice:");
 			main_menu_choice = sc.nextInt();
@@ -133,12 +132,9 @@ public class RRPSSApp {
 					//ORDER STUFF HERE
 					OrderUI.getInstance().displayOptions();
 					break;
+
 	
-				case 5 :
-					//PROMOTION STUFF HERE
-					break;
-	
-				case 6:
+				case 5:
 					// GENERATE SALES REVENUE REPORT HERE
 					int report_choice;
 					do {
@@ -170,7 +166,7 @@ public class RRPSSApp {
 					
 					break;
 	
-				case 7:
+				case 6:
 					int staff_management_choice;
 					StaffController staffManager = new StaffController();
 					staffManager.loadinDB();
@@ -273,7 +269,7 @@ public class RRPSSApp {
 					} while(staff_management_choice < 6);
 					break;
 	
-				case 8:
+				case 7:
 					System.out.println("Saving all data... Program terminating ..."); // Save "database into file"
 					main_menu_choice = 9;
 					break;
@@ -283,7 +279,7 @@ public class RRPSSApp {
 					main_menu_choice = 0;
 			}
 	
-		} while (main_menu_choice < 9);
+		} while (main_menu_choice < 8);
 	
 		MenuController.retrieveInstance().savetoDB();
 		OrderController.retrieveInstance().savetoDB();
@@ -291,7 +287,7 @@ public class RRPSSApp {
 	
 	}
 		
-		
+	/**	
 	// this is to remove reservation after a certain period of time has passed
 	static class checkExpired extends TimerTask {
         public void run() {
@@ -319,7 +315,7 @@ public class RRPSSApp {
     			System.out.println("IOException > " + e.getMessage());
     		}
         }
-	}
+	}*/
 		 
 
 	}

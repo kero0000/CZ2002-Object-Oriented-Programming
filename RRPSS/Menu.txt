@@ -1,0 +1,2 @@
+2|rice|nice|4.0|0|
+3|cola|refreshing|1.0|1|

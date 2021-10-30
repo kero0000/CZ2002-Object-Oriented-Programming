@@ -8,6 +8,7 @@ import Entity.Order;
 import Entity.Item;
 import Controller.MenuController;
 import Controller.OrderController;
+import Controller.TableController;
 
 
 public class OrderUI {
@@ -98,7 +99,7 @@ public class OrderUI {
 
         updateOrder(order);
         System.out.println("Order created for table " + tableId);
-        //OrderController.retrieveInstance().savetoDB();
+        OrderController.retrieveInstance().savetoDB();
     }
 
     public void updateOrder(Order order) {
@@ -226,6 +227,7 @@ public class OrderUI {
 			OrderController.retrieveInstance().updateOrder(order);
 			OrderController.retrieveInstance().savetoDB();
 			order.viewInvoice();
+			TableController.updateTableStatus(order.gettableId(), "VACANT");
 			System.out.println("\nPrinted order invoice. Order is considered paid.\n\n");
 		}
 		else

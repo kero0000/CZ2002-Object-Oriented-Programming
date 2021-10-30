@@ -30,7 +30,9 @@ public class OrderController{
     
     public void createOrderItem(Order order, int itemId) {
         Item item = MenuController.retrieveInstance().retrieveItem(itemId);
-        if (item != null) order.addItem(item);
+        if (item != null) { 
+        	order.addItem(item);
+        	this.savetoDB();}
         else System.out.println("This item does not exist");
     }
 
@@ -38,6 +40,7 @@ public class OrderController{
         orderList.remove(order);
         checkID(); 
         orderList.add(order);
+        this.savetoDB();
     }
 
 
@@ -46,6 +49,7 @@ public class OrderController{
     	if(id == (Order.getIdCount()-1))	
     		Order.setIdCount(id); 
         orderList.remove(order);
+        this.savetoDB();
         checkID(); 
     }
     

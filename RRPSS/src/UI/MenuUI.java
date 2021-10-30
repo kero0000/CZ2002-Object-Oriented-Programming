@@ -116,6 +116,7 @@ public class MenuUI {
         if (item != null) {
             MenuController.retrieveInstance().printItem(item);
             doUpdate(itemId);
+            MenuController.retrieveInstance().savetoDB();
         } else {
             System.out.println("Item does not exist!");
         }

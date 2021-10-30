@@ -83,6 +83,7 @@ public class MenuController {
         else System.out.println("Item type must be either 0, 1, 2 or 3! Original type was kept.");
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is updated.");
         //OrderController.getInstance().updateItemInOrders(item);
+        this.savetoDB();
     }
     //Formatting to print menu
     public void displayMenu() {
