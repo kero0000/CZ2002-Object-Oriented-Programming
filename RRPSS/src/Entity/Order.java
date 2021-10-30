@@ -27,12 +27,12 @@ public class Order {
 
     private String date;
     private double totalprice;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
-	StaffController staffs = new StaffController();
+	private boolean isPrintedInvoice = false; //new field
 
-	// new field
-	private boolean isPrintedInvoice = false;
-		
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");    
+	StaffController staffs = new StaffController();	
+	
 	public Order(String tableId, String employeeId, String memebership, ArrayList<Item> items){
         this.orderId = idCount;
         this.items = items;
