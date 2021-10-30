@@ -194,7 +194,11 @@ public class ReservationController {
         guestFirstName = sc.nextLine();
         System.out.println("Please enter the guest's last name: ");
         guestLastName = sc.nextLine();
-
+        
+        Reservation r = new Reservation(//input parameters);
+        		reservationList.add(r);
+        		// ReservationDB rdb = new ReservationDB
+        		//rdb.save('Reservation.txt', reservationList);
         // considering table availability, and assigned, assign reservation number and save the reservation to database
 
     }

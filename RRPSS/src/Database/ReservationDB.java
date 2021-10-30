@@ -46,11 +46,7 @@ public class ReservationDB implements DB {
 			int pax = Integer.valueOf(pax_string);
 			
 			// create  object from file data
-<<<<<<< HEAD
-			Reservation r = new Reservation(reservationNum, guestId, tableId,  status, pax_string, Date,  time);
-=======
-			Reservation r = new Reservation(reservationNum, customerId, tableId, status, pax);
->>>>>>> branch 'master' of https://github.com/kero0000/RRPSS.git
+
 			alr.add(r);
 		}
 		return alr;
