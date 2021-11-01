@@ -154,6 +154,28 @@ public class MenuUI {
         MenuController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
     
+    public void dopromoUpdate(int itemID) {
+    	String itemName = "";
+        String itemDesc = "";
+        double price = 0.0;
+        int itemType = 3;
+        System.out.println("Enter item name:");
+        itemName = sc.nextLine();
+        System.out.println("Enter item description:");
+        itemDesc = sc.nextLine();
+        do {
+		    try {
+		    	System.out.println("Enter item price:");
+		        price = sc.nextDouble();
+		    	if(price <= 0.0) System.out.printf("Invalid input! ");
+		    } catch (InputMismatchException e) {
+		    	System.out.printf("Invalid input! ");
+		    }
+		    sc.nextLine();
+		} while (price <= 0.0);
+        MenuController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
+    }
+    
     public void removeMenuItem() {
         int itemId = -1;
         do {
@@ -215,7 +237,7 @@ public class MenuUI {
         Item item = MenuController.retrieveInstance().retrieveItem(itemId);
         if (item != null) {
             MenuController.retrieveInstance().printItem(item);
-            doUpdate(itemId);
+            dopromoUpdate(itemId);
         } else {
             System.out.println("Item does not exist!");
         }
