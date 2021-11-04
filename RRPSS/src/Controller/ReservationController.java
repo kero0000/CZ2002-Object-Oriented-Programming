@@ -64,7 +64,7 @@ public class ReservationController {
         } while (!checker1 || !resDate.matches(dateValidation));
 
         // entry of reservation time (should I change this to a switch implementation where the user just chooses an option and then based on that a time is selected? Will mean no need to check for invalid time since only valid times will be options?)
-        
+        /*
         System.out.println("Please choose a Reservation Time: ");
 
         System.out.println("---------- Lunch service ----------");
@@ -154,9 +154,9 @@ public class ReservationController {
                 reservationTime = "21:30";
                 break;
         }
+        */
 
-
-        /*
+        
         SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
 
         do {
@@ -176,7 +176,7 @@ public class ReservationController {
                 System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
             }
         } while (!checker2);
-        */
+        
 
         // entry of table pax
         System.out.println("Please enter the number of pax: ");
@@ -195,9 +195,9 @@ public class ReservationController {
         System.out.println("Please enter the guest's last name: ");
         guestLastName = sc.nextLine();
         
-        Reservation r = new Reservation(//input parameters);
-        		reservationList.add(r);
-        		// ReservationDB rdb = new ReservationDB
+        Reservation newReservation = new Reservation(String reservationNum, Date reservationDate, Date reservationTime, String guestFirstName, String guestLastName, String tableId, String status, int pax);
+        reservationList.add(newReservation);
+        ReservationDB reservationDB = new ReservationDB();
         		//rdb.save('Reservation.txt', reservationList);
         // considering table availability, and assigned, assign reservation number and save the reservation to database
 

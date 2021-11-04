@@ -16,8 +16,8 @@ public class ReservationDB implements DB {
 	public static final String SEPARATOR = "|";
 
 	@Override
-	public ArrayList read(String fileName) throws IOException {
-		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
+	public ArrayList<Reservation> read(String fileName) throws IOException {
+		ArrayList stringArray = (ArrayList<String>) ReadinFile.read(fileName);
 		ArrayList alr = new ArrayList();// to store Reservation data
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		

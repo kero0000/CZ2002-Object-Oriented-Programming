@@ -5,7 +5,8 @@ import java.util.Date;
 public class Reservation {
 	private String reservationNum;
 	private Date reservationDate;
-	private String reservationTime;
+	//private String reservationTime;
+	private Date reservationTime;
 	private String guestFirstName;
 	private String guestLastName;
 	private String tableId;
@@ -14,8 +15,8 @@ public class Reservation {
 
 	
 	
-	public Reservation(String reservationNum, String guestFirstName, String guestLastName, String tableId, String status, int numOfPax, Date reservationDate, String reservationTime) {
-		super();
+	public Reservation(String reservationNum, String guestFirstName, String guestLastName, String tableId, String status, int numOfPax, Date reservationDate, Date reservationTime) {
+		//super();
 		this.reservationNum = reservationNum;
 		this.guestFirstName = guestFirstName;
 		this.guestLastName = guestLastName;
