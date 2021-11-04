@@ -86,10 +86,10 @@ public class Reservation {
 	public void setReservationDate(Date reservationDate) {
 		this.reservationDate = reservationDate;
 	}
-	public String getReservationTime() {
+	public Date getReservationTime() {
 		return this.reservationTime;
 	}
-	public void setTime(String reservationTime) {
+	public void setReservationTime(Date reservationTime) {
 		this.reservationTime = reservationTime;
 	}
 
