@@ -33,7 +33,7 @@ public class RRPSSApp {
 		Date time = calendar.getTime();
 		//timer.schedule(new checkExpired(), time);
 		MenuPromotionController.retrieveInstance().loadInDB();
-		OrderController.retrieveInstance().loadinDB();
+		OrderController.retrieveInstance().loadInDB();
 
 		int main_menu_choice;
 		Scanner sc = new Scanner(System.in);

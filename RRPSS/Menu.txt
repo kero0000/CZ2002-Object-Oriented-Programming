@@ -1,2 +1,11 @@
-2|rice|nice|4.0|0|
-3|cola|refreshing|1.0|1|
+2|Nasi Lemak|fragrant nasi lemak|4.5|0|
+3|Chicken Rice|Hainanese Chicken Rice|3.6|0|
+4|Teriyaki Beef Burger|Juicy Tender beef burger|5.0|0|
+5|Mee Goreng|stir fried mee goreng|3.0|0|
+6|Fish N Chips|Classis fried fish N chips|7.0|0|
+7|Cola|fizzy cola drink|1.5|1|
+8|Grape Juice|fresh grapes used|1.5|1|
+9|Orange Juice|freshly squeezed oranges|2.0|1|
+10|Vanilla Ice cream|sweet dessert|0.7|2|
+11|chocolate cake|sweet chocolate cake|2.0|2|
+12|mango pudding|mango pudding dessert|3.0|2|

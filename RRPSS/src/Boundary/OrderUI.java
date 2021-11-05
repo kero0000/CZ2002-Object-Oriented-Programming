@@ -99,13 +99,13 @@ public class OrderUI {
 
         updateOrder(order);
         System.out.println("Order created for table " + tableId);
-        OrderController.retrieveInstance().savetoDB();
+        OrderController.retrieveInstance().saveToDB();
     }
 
     public void updateOrder(Order order) {
     	sc = new Scanner(System.in);
     	int input;
-    	MenuPromotionController.retrieveInstance().loadinDB();// get menu data from menu.txt at the start of the function
+    	MenuPromotionController.retrieveInstance().loadInDB();// get menu data from menu.txt at the start of the function
         int id;
         do {
         	System.out.println("Please Choose a option to Continue:");
@@ -225,7 +225,7 @@ public class OrderUI {
 		if (order != null)	{
 			order.setIsPrintedInvoice(true);
 			OrderController.retrieveInstance().updateOrder(order);
-			OrderController.retrieveInstance().savetoDB();
+			OrderController.retrieveInstance().saveToDB();
 			order.viewInvoice();
 			TableController.updateTableStatus(order.gettableId(), "VACANT");
 			System.out.println("\nPrinted order invoice. Order is considered paid.\n\n");
