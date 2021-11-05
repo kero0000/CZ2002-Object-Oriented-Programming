@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Order;
 import Entity.Item;
-import Controller.MenuController;
+import Controller.MenuPromotionController;
 import Controller.OrderController;
 import Controller.TableController;
 
@@ -105,7 +105,7 @@ public class OrderUI {
     public void updateOrder(Order order) {
     	sc = new Scanner(System.in);
     	int input;
-    	MenuController.retrieveInstance().loadinDB();// get menu data from menu.txt at the start of the function
+    	MenuPromotionController.retrieveInstance().loadinDB();// get menu data from menu.txt at the start of the function
         int id;
         do {
         	System.out.println("Please Choose a option to Continue:");
@@ -116,7 +116,7 @@ public class OrderUI {
             input = sc.nextInt();
             switch (input) {
                 case 1: // add item to current order
-                    MenuController.retrieveInstance().displayMenu();// display menu options
+                    MenuPromotionController.retrieveInstance().displayMenu();// display menu options
                     System.out.println("");
                     id = -1;
                     do {
@@ -145,7 +145,7 @@ public class OrderUI {
         					    }
         					    sc.nextLine();
         					} while (id <= 0);
-                            Item it = MenuController.retrieveInstance().retrieveItem(id);
+                            Item it = MenuPromotionController.retrieveInstance().retrieveItem(id);
                             if (it == null)
                                 System.out.println("Item does not exist!");
                             else if (!order.removeItem(it))

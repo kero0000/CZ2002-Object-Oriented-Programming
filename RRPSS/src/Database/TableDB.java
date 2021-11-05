@@ -19,21 +19,19 @@ public class TableDB implements DB{
 	public ArrayList read(String fileName) throws IOException {
 
 		ArrayList stringArray = (ArrayList) ReadinFile.read(fileName);
-		ArrayList alr = new ArrayList();// to store customer data
-
+		ArrayList alr = new ArrayList();
 		for (int i = 0; i < stringArray.size(); i++) {
 
 			String st = (String) stringArray.get(i);
-			// get individual 'fields' of the string separated by SEPARATOR
-			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
-																		// using delimiter ","
+	
+			StringTokenizer star = new StringTokenizer(st, SEPARATOR); 
 			String tableId = star.nextToken().trim();
 			String tableType = star.nextToken().trim();
 			String tableStatus = star.nextToken().trim();
 
-			// create Guest object from file data
+
 			Table t = new Table(tableId, tableType,tableStatus);
-			// add to Guest list
+
 			alr.add(t);
 		}
 		return alr;
@@ -41,8 +39,7 @@ public class TableDB implements DB{
 
 	@Override
 	public void save(String filename, List al) throws IOException {
-		// ArrayList<String> alw = new ArrayList<String>();
-		List alw = new ArrayList();// to store Guest data
+		List alw = new ArrayList();
 
 		for (int i = 0; i < al.size(); i++) {
 			Table t = (Table) al.get(i);

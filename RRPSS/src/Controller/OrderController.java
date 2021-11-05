@@ -29,10 +29,10 @@ public class OrderController{
     }
     
     public void createOrderItem(Order order, int itemId) {
-        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        Item item = MenuPromotionController.retrieveInstance().retrieveItem(itemId);
         if (item != null) { 
         	order.addItem(item);
-        	this.savetoDB();}
+        	this.saveToDB();}
         else System.out.println("This item does not exist");
     }
 
@@ -40,7 +40,7 @@ public class OrderController{
         orderList.remove(order);
         checkID(); 
         orderList.add(order);
-        this.savetoDB();
+        this.saveToDB();
     }
 
 
@@ -49,7 +49,7 @@ public class OrderController{
     	if(id == (Order.getIdCount()-1))	
     		Order.setIdCount(id); 
         orderList.remove(order);
-        this.savetoDB();
+        this.saveToDB();
         checkID(); 
     }
     
@@ -97,7 +97,7 @@ public class OrderController{
                 }
             }
         }
-        this.savetoDB();
+        this.saveToDB();
     }
     
     /**
@@ -115,7 +115,7 @@ public class OrderController{
     }
 
 
-    public void loadinDB() {
+    public void loadInDB() {
     	OrderDB orderdb = new OrderDB();
         try {
 			this.orderList = orderdb.read(FILENAME);
@@ -126,7 +126,7 @@ public class OrderController{
     }
     
 
-    public void savetoDB() {
+    public void saveToDB() {
     	OrderDB orderdb = new OrderDB();
         try {
         	orderdb.save(FILENAME, orderList);

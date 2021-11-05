@@ -11,7 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Controller.StaffController;
-import Controller.MenuController;
+import Controller.MenuPromotionController;
 import Controller.OrderController;
 import Controller.ReservationController;
 import Controller.TableController;
@@ -32,7 +32,7 @@ public class RRPSSApp {
 		calendar.set(Calendar.SECOND, 00);
 		Date time = calendar.getTime();
 		//timer.schedule(new checkExpired(), time);
-		MenuController.retrieveInstance().loadinDB();
+		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadinDB();
 
 		int main_menu_choice;
@@ -281,8 +281,8 @@ public class RRPSSApp {
 	
 		} while (main_menu_choice < 8);
 	
-		MenuController.retrieveInstance().savetoDB();
-		OrderController.retrieveInstance().savetoDB();
+		MenuPromotionController.retrieveInstance().saveToDB();
+		OrderController.retrieveInstance().saveToDB();
 		sc.close();
 	
 	}

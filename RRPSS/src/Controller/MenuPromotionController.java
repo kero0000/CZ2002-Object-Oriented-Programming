@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import Entity.Item;
 import Database.MenuPromotionDB;
 
-public class MenuController {
+public class MenuPromotionController {
 
     private static final String FILENAME = "Menu.txt";
-    private static MenuController instance = null;
+    private static MenuPromotionController instance = null;
     private ArrayList<Item> items = new ArrayList<Item>();
 
-    public MenuController() {
+    public MenuPromotionController() {
 
         items = new ArrayList<Item>();
     }
 
 	//Creating new instance of menu controller
-    public static MenuController retrieveInstance() {
+    public static MenuPromotionController retrieveInstance() {
         if (instance == null) {
-            instance = new MenuController();
+            instance = new MenuPromotionController();
         }
         return instance;
     }
@@ -41,7 +41,7 @@ public class MenuController {
     public void createItem(Item item) {
         items.add(item);
         checkID();
-        this.savetoDB();
+        this.saveToDB();
     }
 
     /**
@@ -51,7 +51,7 @@ public class MenuController {
     public void deleteItem(Item item) {
         items.remove(item);
         checkID();
-        this.savetoDB();
+        this.saveToDB();
     }
 
     /**
@@ -83,7 +83,7 @@ public class MenuController {
         else System.out.println("Item type must be either 0, 1, 2 or 3! Original type was kept.");
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is updated.");
         //OrderController.getInstance().updateItemInOrders(item);
-        this.savetoDB();
+        this.saveToDB();
     }
     //Formatting to print menu
     public void displayMenu() {
@@ -120,7 +120,7 @@ public class MenuController {
 		Item.setIdCount(id+1);
     }
     //Retrieval of all items
-    public void loadinDB() {
+    public void loadInDB() {
     	MenuPromotionDB menudb = new MenuPromotionDB();
         try {
 			this.items = menudb.read(FILENAME);
@@ -130,7 +130,7 @@ public class MenuController {
 		}
     }
     //Saving of all items
-    public void savetoDB() {
+    public void saveToDB() {
     	MenuPromotionDB menudb = new MenuPromotionDB();
         try {
 			menudb.save(FILENAME, items);

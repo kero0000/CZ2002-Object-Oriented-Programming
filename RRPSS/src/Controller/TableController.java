@@ -253,7 +253,6 @@ public class TableController {
 	public static ArrayList retrieveTableArrayList() {
 		ArrayList alr = null;
 		try {
-			// read file containing Table records
 			TableDB tableDB = new TableDB();
 			alr = tableDB.read(FILENAME);
 

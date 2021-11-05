@@ -5,7 +5,7 @@ package Boundary;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Item;
-import Controller.MenuController;
+import Controller.MenuPromotionController;
 
 public class MenuPromotionUI {
 
@@ -24,7 +24,7 @@ public class MenuPromotionUI {
     public void displayOptions() {
     	int choice;
     	do {
-            MenuController.retrieveInstance().displayMenu();
+            MenuPromotionController.retrieveInstance().displayMenu();
             System.out.println("\n==================================================");
 			System.out.println(" Menu item Management: ");
 			System.out.println("==================================================");
@@ -94,9 +94,9 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (itemType != 0 && itemType != 1 && itemType != 2);
-        MenuController.retrieveInstance().checkID();
+        MenuPromotionController.retrieveInstance().checkID();
         Item item = new Item(itemName, itemDesc, price, itemType);
-        MenuController.retrieveInstance().createItem(item);
+        MenuPromotionController.retrieveInstance().createItem(item);
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
     
@@ -112,11 +112,11 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (itemId <= 0);
-        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        Item item = MenuPromotionController.retrieveInstance().retrieveItem(itemId);
         if (item != null) {
-            MenuController.retrieveInstance().printItem(item);
+            MenuPromotionController.retrieveInstance().printItem(item);
             doUpdate(itemId);
-            MenuController.retrieveInstance().savetoDB();
+            MenuPromotionController.retrieveInstance().saveToDB();
         } else {
             System.out.println("Item does not exist!");
         }
@@ -151,7 +151,7 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (itemType != 0 && itemType != 1 && itemType != 2);
-        MenuController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
+        MenuPromotionController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
     
     public void doPromoUpdate(int itemID) {
@@ -173,7 +173,7 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (price <= 0.0);
-        MenuController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
+        MenuPromotionController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
     
     public void removeMenuItem() {
@@ -188,9 +188,9 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (itemId <= 0);
-        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        Item item = MenuPromotionController.retrieveInstance().retrieveItem(itemId);
         if (item != null) {
-            MenuController.retrieveInstance().deleteItem(item);
+            MenuPromotionController.retrieveInstance().deleteItem(item);
             System.out.println("Item has been removed.");
         } else {
             System.out.println("Item does not exist!");
@@ -217,9 +217,9 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (price <= 0.0);
-        MenuController.retrieveInstance().checkID();
+        MenuPromotionController.retrieveInstance().checkID();
         Item item = new Item(promoName, promoDesc, price, itemType);
-        MenuController.retrieveInstance().createItem(item);
+        MenuPromotionController.retrieveInstance().createItem(item);
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
     private void updatePromotion() {
@@ -234,9 +234,9 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (itemId <= 0);
-        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        Item item = MenuPromotionController.retrieveInstance().retrieveItem(itemId);
         if (item != null) {
-            MenuController.retrieveInstance().printItem(item);
+            MenuPromotionController.retrieveInstance().printItem(item);
             doPromoUpdate(itemId);
         } else {
             System.out.println("Item does not exist!");
@@ -254,9 +254,9 @@ public class MenuPromotionUI {
 		    }
 		    sc.nextLine();
 		} while (itemId <= 0);
-        Item item = MenuController.retrieveInstance().retrieveItem(itemId);
+        Item item = MenuPromotionController.retrieveInstance().retrieveItem(itemId);
         if (item != null) {
-            MenuController.retrieveInstance().deleteItem(item);
+            MenuPromotionController.retrieveInstance().deleteItem(item);
             System.out.println("Item has been removed.");
         } else {
             System.out.println("Item does not exist!");
