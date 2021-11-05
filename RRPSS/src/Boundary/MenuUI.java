@@ -1,4 +1,4 @@
-package UI;
+package Boundary;
 
 //TODO: create promotion changing functions 
 

@@ -1,4 +1,4 @@
-package UI;
+package Boundary;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -125,7 +125,7 @@ public class RRPSSApp {
 					break;
 	
 				case 3:
-					UI.MenuUI.getInstance().displayOptions();
+					Boundary.MenuUI.getInstance().displayOptions();
 					break;
 	
 				case 4:
