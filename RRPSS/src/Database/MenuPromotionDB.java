@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 import Entity.Item;
 
 
-public class MenuDB implements DB {
+public class MenuPromotionDB implements DB {
 	
 	public static final String SEPARATOR = "|";
 

@@ -125,7 +125,7 @@ public class RRPSSApp {
 					break;
 	
 				case 3:
-					Boundary.MenuUI.getInstance().displayOptions();
+					Boundary.MenuPromotionUI.getInstance().displayOptions();
 					break;
 	
 				case 4:

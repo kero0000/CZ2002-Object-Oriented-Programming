@@ -7,17 +7,17 @@ import java.util.Scanner;
 import Entity.Item;
 import Controller.MenuController;
 
-public class MenuUI {
+public class MenuPromotionUI {
 
-    private static MenuUI instance = null;
+    private static MenuPromotionUI instance = null;
     Scanner sc = new Scanner(System.in);
 
-    public MenuUI() {
+    public MenuPromotionUI() {
         sc = new Scanner(System.in);
     }
 
-    public static MenuUI getInstance() {
-        if (instance == null) instance = new MenuUI();
+    public static MenuPromotionUI getInstance() {
+        if (instance == null) instance = new MenuPromotionUI();
         return instance;
     }
 
@@ -154,7 +154,7 @@ public class MenuUI {
         MenuController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
     
-    public void dopromoUpdate(int itemID) {
+    public void doPromoUpdate(int itemID) {
     	String itemName = "";
         String itemDesc = "";
         double price = 0.0;
@@ -237,7 +237,7 @@ public class MenuUI {
         Item item = MenuController.retrieveInstance().retrieveItem(itemId);
         if (item != null) {
             MenuController.retrieveInstance().printItem(item);
-            dopromoUpdate(itemId);
+            doPromoUpdate(itemId);
         } else {
             System.out.println("Item does not exist!");
         }

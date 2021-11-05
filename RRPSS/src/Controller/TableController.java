@@ -74,7 +74,6 @@ public class TableController {
 				break;
 				
 			case 2:
-				// Room Status
 				do {
 					System.out.println("Please enter Table Status: ");
 					System.out.println("(1) Vacant");
@@ -100,7 +99,6 @@ public class TableController {
 				} while (!tableStatus.equals("1") && !tableStatus.equals("2") && !tableStatus.equals("3"));
 				break;
 			case 3:	
-				// Table Type
 				do {
 					System.out.println("Please enter a new Table Type:");
 					System.out.println("(1) 2 pax");
@@ -161,15 +159,15 @@ public class TableController {
 		}
 		
 		try{
-			ArrayList alr = retrieveTable(); // alr is the arraylist of all table records
+			ArrayList alr = retrieveTableArrayList(); 
 			for (int i = 0; i < alr.size(); i++) {
-				Table searchTable = (Table) alr.get(i); // searchTable is an instance of each table in record so can compare below
+				Table searchTable = (Table) alr.get(i); 
 
-				if(updateTable.gettableId().equals(searchTable.gettableId())) {// replace the desired table record with the updateTable 
+				if(updateTable.gettableId().equals(searchTable.gettableId())) {
 					alr.set(i, updateTable);
 				}
 			}
-			// Write Table records to file
+
 			TableDB tableDB = new TableDB();
 			tableDB.save(FILENAME, alr);
 
@@ -181,7 +179,6 @@ public class TableController {
 		}
 	}
 	
-
 	public static Boolean updateTableStatus(String tableId, String status) {
 		Table table = new Table();
 		Table checkTableId = new Table();
@@ -189,7 +186,7 @@ public class TableController {
 		
 		do {
 			table.settableId(tableId);
-			checkTableId = retrieveTable(table);
+			checkTableId = retrieveTableInstance(table);
 			if(checkTableId == null) {
 				System.out.println("Table ID does not exist.");
 			}
@@ -198,7 +195,7 @@ public class TableController {
 		
 		
 		try{
-			ArrayList alr = retrieveTable();
+			ArrayList alr = retrieveTableArrayList();
 			for (int i = 0; i < alr.size(); i++) {
 				Table searchTable = (Table) alr.get(i);
 				if(checkTableId.gettableId().equals(searchTable.gettableId())) {
@@ -240,8 +237,8 @@ public class TableController {
 		}
 	}
 	
-	public static Table retrieveTable(Table table) {
-		ArrayList alr = retrieveTable();
+	public static Table retrieveTableInstance(Table table) {
+		ArrayList alr = retrieveTableArrayList();
 		for (int i = 0; i < alr.size(); i++) {
 			Table searchTable = (Table) alr.get(i);
 
@@ -253,7 +250,7 @@ public class TableController {
 		return null;
 	}
 
-	public static ArrayList retrieveTable() {
+	public static ArrayList retrieveTableArrayList() {
 		ArrayList alr = null;
 		try {
 			// read file containing Table records
@@ -269,7 +266,7 @@ public class TableController {
     public static Table retrieveTableDetails() {
         String tableId;
         Scanner sc = new Scanner(System.in);
-        ArrayList alr = retrieveTable();
+        ArrayList alr = retrieveTableArrayList();
         Table table = null;
         do {
             System.out.println("Please enter Table Id (E.g 01-05): ");
@@ -311,9 +308,7 @@ public class TableController {
 
 		for (int i = 0; i < stringArray.size(); i++) {
 			String st = (String) stringArray.get(i);
-			// get individual 'fields' of the string separated by SEPARATOR
-			StringTokenizer star = new StringTokenizer(st, SEPARATOR); // pass in the string to the string tokenizer
-																		// using delimiter ","
+			StringTokenizer star = new StringTokenizer(st, SEPARATOR); 
 			Table table = new Table();
 			table.settableId(star.nextToken().trim());
 			table.settableType(star.nextToken().trim());
@@ -360,7 +355,7 @@ public class TableController {
 	
 	public static String checkTableAvailableForPax(int pax) {
 		ArrayList alr = null;
-		alr = retrieveTable();
+		alr = retrieveTableArrayList();
 		int i;
 		for(i=0;i<alr.size();i++) {
 			Table tempTable = (Table) alr.get(i);

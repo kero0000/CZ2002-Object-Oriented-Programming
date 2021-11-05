@@ -2,7 +2,7 @@ package Controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import Entity.Item;
-import Database.MenuDB;
+import Database.MenuPromotionDB;
 
 public class MenuController {
 
@@ -121,7 +121,7 @@ public class MenuController {
     }
     //Retrieval of all items
     public void loadinDB() {
-    	MenuDB menudb = new MenuDB();
+    	MenuPromotionDB menudb = new MenuPromotionDB();
         try {
 			this.items = menudb.read(FILENAME);
 			checkID();
@@ -131,7 +131,7 @@ public class MenuController {
     }
     //Saving of all items
     public void savetoDB() {
-    	MenuDB menudb = new MenuDB();
+    	MenuPromotionDB menudb = new MenuPromotionDB();
         try {
 			menudb.save(FILENAME, items);
 			checkID(); //ADDED TO CHECK
