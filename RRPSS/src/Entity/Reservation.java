@@ -11,18 +11,18 @@ public class Reservation {
 	private String guestLastName;
 	private String tableId;
 	private String status;
-	private int pax;
+	private int numOfPax;
 
 	
 	
-	public Reservation(String reservationNum, String guestFirstName, String guestLastName, String tableId, String status, int numOfPax, Date reservationDate, Date reservationTime) {
+	public Reservation(String reservationNum, Date reservationDate, Date reservationTime, int numOfPax, String guestFirstName, String guestLastName, String tableId, String status) {
 		//super();
 		this.reservationNum = reservationNum;
 		this.guestFirstName = guestFirstName;
 		this.guestLastName = guestLastName;
 		this.tableId = tableId;
 		this.status = status;
-		this.pax = numOfPax;
+		this.numOfPax = numOfPax;
 		this.reservationDate = reservationDate;
 		this.reservationTime = reservationTime;
 	}
@@ -73,11 +73,11 @@ public class Reservation {
 	}
 
 	public int getNumOfPax() {
-		return this.pax;
+		return this.numOfPax;
 	}
 
-	public void setNumOfPax(int pax) {
-		this.pax = pax;
+	public void setNumOfPax(int numOfPax) {
+		this.numOfPax = numOfPax;
 	}
 	
 	public Date getReservationDate() {

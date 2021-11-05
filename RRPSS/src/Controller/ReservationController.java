@@ -13,12 +13,14 @@ import java.util.regex.Pattern;
 import Database.ReadinFile;
 import Database.ReservationDB;
 import Entity.Reservation;
+import Controller.TableController;
 
 public class ReservationController {
     
     public static final String SEPARATOR = "|";
 	private static String FILENAME = "Reservation.txt";
-    ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+    private static ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+    private static int idCount = 1;
 
     // Creating a new reservation
     public static void createReservation() throws IOException {
@@ -27,13 +29,17 @@ public class ReservationController {
         String guestFirstName;
         String guestLastName;
         String tableId; // or should this be table number? speak with i.c. of table class to see how we're tracking individual tables
-        String reservationTime;
+        String resTime = "";
+        //Date reservationTime;
+        Date reservationTime = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
         String resDate = "";
-        Date reservationDate;
-        int pax;
+        //Date reservationDate;
+        Date reservationDate = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
+        int numOfPax;
+        String status;
 
         boolean checker1 = false;
-        boolean checker2 = false; //don't need this, this would only be required if a secondary date requires checking. Only concerned w/ 1 date for restaurant table reservation. Can delete before committing.
+        boolean checker2 = false;
 
         String tableRegExp = "[0][2-7][-][0][1-8]";
 		Pattern tableIdPattern = Pattern.compile(tableRegExp);
@@ -163,11 +169,11 @@ public class ReservationController {
             System.out.println("Enter Reservation Time (hh:mm): ");
 
             try {
-                reservationTime = sc.nextLine();
-                reservationTime = reservationTime + ":00";
-                Date resTime = sdf2.parse(reservationTime);
+                resTime = sc.nextLine();
+                resTime = resTime + ":00";
+                reservationTime = sdf2.parse(resTime);
 
-                if (resTime.before(todaysdate)) {
+                if (reservationTime.before(todaysdate)) {
                     System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
                 } else {
                     checker2 = true;
@@ -180,13 +186,15 @@ public class ReservationController {
 
         // entry of table pax
         System.out.println("Please enter the number of pax: ");
-        pax = sc.nextInt();
+        numOfPax = sc.nextInt();
 
-        // check whether a table for the requested number of pax is available for the particular date and time and assign accordingly. If not available, print error message informing no tables available.
-        boolean tableAvailable = true;
+        // check whether a table for the requested number of pax is available for the particular date and time and assign accordingly. If not available, print error message informing no tables available. If available, get tableId value
+        //boolean tableAvailable = true;
         System.out.println("Checking table availability, please wait...");
-        if (tableAvailable == false) {
-            System.out.println("No table available for " + pax + " pax on " + reservationDate + "at " + reservationTime + ".");
+        tableId = TableController.checkTableAvailableForPax(numOfPax);
+        if (tableId == "No table available") {
+            System.out.println("No table available");
+            return;
         }
 
         // entry of guest particulars
@@ -195,11 +203,18 @@ public class ReservationController {
         System.out.println("Please enter the guest's last name: ");
         guestLastName = sc.nextLine();
         
-        Reservation newReservation = new Reservation(String reservationNum, Date reservationDate, Date reservationTime, String guestFirstName, String guestLastName, String tableId, String status, int pax);
+        //assigning value to status variable
+        status = "Confirmed";
+
+        // assign reservation number (I hope this works in assigning unique id's to each new reservation object)
+        reservationNum = String.valueOf(idCount);
+        idCount++;
+
+        //save the newly created reservation to the database
+        Reservation newReservation = new Reservation(reservationNum, reservationDate, reservationTime, numOfPax, guestFirstName, guestLastName, tableId, status);
         reservationList.add(newReservation);
         ReservationDB reservationDB = new ReservationDB();
-        		//rdb.save('Reservation.txt', reservationList);
-        // considering table availability, and assigned, assign reservation number and save the reservation to database
+        reservationDB.save("Reservation.txt", reservationList);
 
     }
 

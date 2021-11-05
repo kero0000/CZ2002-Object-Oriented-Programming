@@ -18,8 +18,9 @@ public class ReservationDB implements DB {
 	@Override
 	public ArrayList<Reservation> read(String fileName) throws IOException {
 		ArrayList stringArray = (ArrayList<String>) ReadinFile.read(fileName);
-		ArrayList alr = new ArrayList();// to store Reservation data
+		ArrayList<Reservation> reservationList = new ArrayList();// to store Reservation data
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
 		
 		for (int i = 0; i < stringArray.size(); i++) {
 
@@ -29,52 +30,69 @@ public class ReservationDB implements DB {
 			
 
 			String reservationNum = star.nextToken().trim();
-			String customerId = star.nextToken().trim();
+			String resDate = star.nextToken().trim();
+			String resTime = star.nextToken().trim();
+			String pax = star.nextToken().trim();
+			String guestFirstName = star.nextToken().trim();
+			String guestLastName = star.nextToken().trim();
 			String tableId = star.nextToken().trim();
-			String date = star.nextToken().trim();
 			String status = star.nextToken().trim();
-			String pax_string = star.nextToken().trim();
 			
-			Date Date = null;
+			Date reservationDate = null;
 			try {
-				Date = sdf.parse(date);
+				reservationDate = sdf.parse(resDate);
 			} catch (ParseException e) {
 
 				e.printStackTrace();
 			}// using delimiter ","
 
-			int pax = Integer.valueOf(pax_string);
+			Date reservationTime = null;
+			try {
+				reservationTime = sdf2.parse(resTime);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			int numOfPax = Integer.valueOf(pax);
 			
 			// create  object from file data
-
-			alr.add(r);
+			Reservation reservationEntry = new Reservation(reservationNum, reservationDate, reservationTime, numOfPax, guestFirstName, guestLastName, tableId, status);
+			reservationList.add(reservationEntry);
 		}
-		return alr;
+
+		return reservationList;
 		
 	}
 	
 	@Override
-	public void save(String filename, List al) throws IOException {
-		List alw = new ArrayList();
+	public void save(String filename, List reservationList) throws IOException {
+		ArrayList<String> reservationsw = new ArrayList<String>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		for (int i = 0; i < al.size(); i++) {
-			Reservation r = (Reservation) al.get(i);
+		SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
+
+		for (int i = 0; i < reservationList.size(); i++) {
+			Reservation reservation = (Reservation) reservationList.get(i);
 			StringBuilder st = new StringBuilder();
-			st.append(r.getReservationNum().trim());
+			st.append(reservation.getReservationNum().trim());
 			st.append(SEPARATOR);
-			st.append(r.getCustomerId().trim());
+			st.append(sdf.format(reservation.getReservationDate()).trim());
 			st.append(SEPARATOR);
-			st.append(sdf.format(r.getDate()).trim());
+			st.append(sdf2.format(reservation.getReservationTime()).trim());
 			st.append(SEPARATOR);
-			st.append(r.gettableId().trim());
+			st.append(String.valueOf(reservation.getNumOfPax()).trim());
 			st.append(SEPARATOR);
-			st.append(r.getStatus().trim());
+			st.append(reservation.getGuestFirstName().trim());
 			st.append(SEPARATOR);
-			st.append(String.valueOf(r.getNumOfPax()).trim());
+			st.append(reservation.getGuestLastName().trim());
 			st.append(SEPARATOR);
-			alw.add(st.toString());
+			st.append(reservation.getTableId());
+			st.append(SEPARATOR);
+			st.append(reservation.getStatus());
+			st.append(SEPARATOR);
+
+			reservationsw.add(st.toString());
 		}
 		
-		ReadinFile.write(filename, alw);
+		ReadinFile.write(filename, reservationsw);
 	}
 }
