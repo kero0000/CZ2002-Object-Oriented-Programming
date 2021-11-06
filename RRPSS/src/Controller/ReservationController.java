@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.*;
 
 import Database.ReadinFile;
 import Database.ReservationDB;
@@ -31,7 +32,8 @@ public class ReservationController {
         String tableId; // or should this be table number? speak with i.c. of table class to see how we're tracking individual tables
         String resTime = "";
         //Date reservationTime;
-        Date reservationTime = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
+        //Date reservationTime = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
+        LocalTime reservationTime = null;
         String resDate = "";
         //Date reservationDate;
         Date reservationDate = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
@@ -52,6 +54,7 @@ public class ReservationController {
         Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date todaysdate = new Date();
+        LocalTime currentTime = LocalTime.now();
 
         do {
             System.out.println("Enter Reservation Date (dd/mm/yyyy):");
@@ -171,10 +174,15 @@ public class ReservationController {
             try {
                 resTime = sc.nextLine();
                 resTime = resTime + ":00";
+
                 reservationTime = sdf2.parse(resTime);
                 System.out.println(reservationTime);
 
-                if (reservationTime.before(todaysdate)) {
+                //reservationTime = sdf2.parse(resTime);
+                reservationTime = LocalTime.parse(resTime);
+
+
+                if (reservationTime.isBefore(currentTime)) {
                     System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
                 } else {
                     checker2 = true;
