@@ -163,7 +163,7 @@ public class ReservationController {
         */
 
         
-        SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
 
         do {
             System.out.println("Enter Reservation Time (hh:mm): ");
@@ -172,6 +172,7 @@ public class ReservationController {
                 resTime = sc.nextLine();
                 resTime = resTime + ":00";
                 reservationTime = sdf2.parse(resTime);
+                System.out.println(reservationTime);
 
                 if (reservationTime.before(todaysdate)) {
                     System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
@@ -331,7 +332,7 @@ public class ReservationController {
             case 4:
                 String newResTime = "";
                 Date newReservationTime = null;
-                SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
                 //Date todaysdate = new Date();
                 boolean checker2 = false;
 

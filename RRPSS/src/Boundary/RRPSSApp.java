@@ -84,7 +84,9 @@ public class RRPSSApp {
 							System.out.println("Please enter last name");
 							String guestLastName = sc.nextLine();
 							sc.nextLine();
-							reservationManager.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
+							Reservation r = reservationManager.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
+							System.out.println("Reservation Found.");
+							System.out.printf(r.getGuestFirstName(), r.getGuestLastName(), r.getReservationDate(),r.getReservationTime());
 							break;
 						case 3:
 							System.out.println("Please enter first name");
