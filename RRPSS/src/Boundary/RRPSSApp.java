@@ -34,7 +34,8 @@ public class RRPSSApp {
 		//timer.schedule(new checkExpired(), time);
 		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadInDB();
-
+		ReservationController reservationManager = new ReservationController();
+		
 		int main_menu_choice;
 		Scanner sc = new Scanner(System.in);
 		do {
@@ -57,7 +58,7 @@ public class RRPSSApp {
 			System.out.println("\nEnter your choice:");
 			main_menu_choice = sc.nextInt();
 			sc.nextLine();
-
+			reservationManager.loadInDB();
 			switch (main_menu_choice) {
 				case 1:
 					int reservation_choice;
@@ -74,7 +75,7 @@ public class RRPSSApp {
 						switch (reservation_choice) {
 	
 						case 1:
-							ReservationController.createReservation(); // create Reservation
+							reservationManager.createReservation(); // create Reservation
 							break;
 						case 2:
 							System.out.println("Please enter first name");
@@ -83,7 +84,7 @@ public class RRPSSApp {
 							System.out.println("Please enter last name");
 							String guestLastName = sc.nextLine();
 							sc.nextLine();
-							ReservationController.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
+							reservationManager.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
 							break;
 						case 3:
 							System.out.println("Please enter first name");
@@ -92,7 +93,7 @@ public class RRPSSApp {
 							System.out.println("Please enter last name");
 							String guestLastName1 = sc.nextLine();
 							sc.nextLine();
-							ReservationController.deleteCancelledReservation(guestFirstName1,guestLastName1);//remove reservation
+							reservationManager.deleteCancelledReservation(guestFirstName1,guestLastName1);//remove reservation
 							break;
 						case 4:
 							System.out.println("Please enter first name");
@@ -101,7 +102,7 @@ public class RRPSSApp {
 							System.out.println("Please enter last name");
 							String guestLastName2 = sc.nextLine();
 							sc.nextLine();
-							ReservationController.updateReservation(guestFirstName2, guestLastName2);
+							reservationManager.updateReservation(guestFirstName2, guestLastName2);
 							break;
 						case 5:
 							reservation_choice = 5;
