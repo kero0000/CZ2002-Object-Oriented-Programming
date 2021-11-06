@@ -58,7 +58,7 @@ public class RRPSSApp {
 			System.out.println("\nEnter your choice:");
 			main_menu_choice = sc.nextInt();
 			sc.nextLine();
-			//reservationManager.loadInDB();
+			reservationManager.loadInDB();
 			switch (main_menu_choice) {
 				case 1:
 					int reservation_choice;

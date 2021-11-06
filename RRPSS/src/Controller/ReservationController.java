@@ -251,10 +251,15 @@ public class ReservationController {
 
     // I've included this third function in case the former 2 functions dont give the correct reservation entry since there is a possibility that someone shares a first name, or a last name, but the odds of them sharing both are VERY slim (could make the above 2 functions redundant?)
     public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
-
+    	try {
+			this.reservationList = (ArrayList<Reservation>) ReadinFile.read(FILENAME);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         for (Reservation reservation : reservationList) {
 
-            if ((reservation.getGuestFirstName() == guestFirstName) && (reservation.getGuestLastName() == guestLastName)) {
+            if ((reservation.getGuestFirstName().contentEquals(guestFirstName)) && (reservation.getGuestLastName().contentEquals(guestLastName))) {
                 return reservation;
             }
         }

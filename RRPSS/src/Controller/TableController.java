@@ -354,23 +354,17 @@ public class TableController {
 	
 	public static String checkTableAvailableForPax(int pax) {
 		ArrayList alr = null;
-		int tablepax;
 		alr = retrieveTableArrayList();
 		int i;
 		for(i=0;i<alr.size();i++) {
 			Table tempTable = (Table) alr.get(i);
 			try{
-                if(tempTable.gettableType().compareTo("9") > 0) {
-                     tablepax = Integer.parseInt(tempTable.gettableType().substring(0,2));
-                	  System.out.println("here");
-                }
-                else
-                    tablepax = Integer.parseInt(tempTable.gettableType().substring(0,1));
-                if(tablepax == pax && tempTable.gettableStatus().contentEquals("VACANT")) {
-                    String tableid = tempTable.gettableId();
-                    return tableid;
-                }
-            }
+	            int tablepax = Integer.parseInt(tempTable.gettableType().substring(0, 2).trim());
+	            if(tablepax == pax && tempTable.gettableStatus().contentEquals("VACANT")) {
+	            	String tableid = tempTable.gettableId();
+					return tableid;
+				}}
+	        
 	        catch (NumberFormatException ex){
 	            ex.printStackTrace();
 	        }
