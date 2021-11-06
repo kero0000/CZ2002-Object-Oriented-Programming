@@ -19,11 +19,11 @@ public class ReservationController {
     
     public static final String SEPARATOR = "|";
 	private static String FILENAME = "Reservation.txt";
-    private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+    private static ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
 
     // Creating a new reservation
-    public void createReservation() throws IOException {
+    public static void createReservation() throws IOException {
 
         String reservationNum;
         String guestFirstName;
@@ -248,7 +248,7 @@ public class ReservationController {
     }
 
     // I've included this third function in case the former 2 functions dont give the correct reservation entry since there is a possibility that someone shares a first name, or a last name, but the odds of them sharing both are VERY slim (could make the above 2 functions redundant?)
-    public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
+    public static Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
 
         for (Reservation reservation : reservationList) {
 
@@ -262,7 +262,7 @@ public class ReservationController {
     }
 
     // Updating an existing reservation
-    public void updateReservation(String guestFirstName, String guestLastName) {
+    public static void updateReservation(String guestFirstName, String guestLastName) {
 
         Reservation toBeUpdated = retrieveReservationByName(guestFirstName, guestLastName);
 
@@ -380,7 +380,7 @@ public class ReservationController {
     }
 
     //delete a cancelled reservation
-    public void deleteCancelledReservation(String guestFirstName, String guestLastName) {
+    public static void deleteCancelledReservation(String guestFirstName, String guestLastName) {
 
         Reservation toBeCancelled = retrieveReservationByName(guestFirstName, guestLastName);
 

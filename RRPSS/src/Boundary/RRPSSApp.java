@@ -77,13 +77,31 @@ public class RRPSSApp {
 							ReservationController.createReservation(); // create Reservation
 							break;
 						case 2:
-							//check Reservation
+							System.out.println("Please enter first name");
+							String guestFirstName = sc.nextLine();
+							sc.nextLine();
+							System.out.println("Please enter last name");
+							String guestLastName = sc.nextLine();
+							sc.nextLine();
+							ReservationController.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
 							break;
 						case 3:
-							//remove reservation
+							System.out.println("Please enter first name");
+							String guestFirstName1 = sc.nextLine();
+							sc.nextLine();
+							System.out.println("Please enter last name");
+							String guestLastName1 = sc.nextLine();
+							sc.nextLine();
+							ReservationController.deleteCancelledReservation(guestFirstName1,guestLastName1);//remove reservation
 							break;
 						case 4:
-							//  update reservation
+							System.out.println("Please enter first name");
+							String guestFirstName2 = sc.nextLine();
+							sc.nextLine();
+							System.out.println("Please enter last name");
+							String guestLastName2 = sc.nextLine();
+							sc.nextLine();
+							ReservationController.updateReservation(guestFirstName2, guestLastName2);
 							break;
 						case 5:
 							reservation_choice = 5;
