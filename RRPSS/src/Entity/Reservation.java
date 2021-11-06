@@ -1,12 +1,14 @@
 package Entity;
 
 import java.util.Date;
+import java.time.*;
 
 public class Reservation {
 	private String reservationNum;
 	private Date reservationDate;
 	//private String reservationTime;
-	private Date reservationTime;
+	//private Date reservationTime;
+	private LocalTime reservationTime;
 	private String guestFirstName;
 	private String guestLastName;
 	private String tableId;
@@ -15,7 +17,7 @@ public class Reservation {
 
 	
 	
-	public Reservation(String reservationNum, Date reservationDate, Date reservationTime, int numOfPax, String guestFirstName, String guestLastName, String tableId, String status) {
+	public Reservation(String reservationNum, Date reservationDate, LocalTime reservationTime, int numOfPax, String guestFirstName, String guestLastName, String tableId, String status) {
 		//super();
 		this.reservationNum = reservationNum;
 		this.guestFirstName = guestFirstName;
@@ -86,10 +88,10 @@ public class Reservation {
 	public void setReservationDate(Date reservationDate) {
 		this.reservationDate = reservationDate;
 	}
-	public Date getReservationTime() {
+	public LocalTime getReservationTime() {
 		return this.reservationTime;
 	}
-	public void setReservationTime(Date reservationTime) {
+	public void setReservationTime(LocalTime reservationTime) {
 		this.reservationTime = reservationTime;
 	}
 

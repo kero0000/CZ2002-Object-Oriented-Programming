@@ -174,14 +174,10 @@ public class ReservationController {
             try {
                 resTime = sc.nextLine();
                 resTime = resTime + ":00";
-
-                reservationTime = sdf2.parse(resTime);
-                System.out.println(reservationTime);
-
                 //reservationTime = sdf2.parse(resTime);
                 reservationTime = LocalTime.parse(resTime);
-
-
+                System.out.println(reservationTime);
+                
                 if (reservationTime.isBefore(currentTime)) {
                     System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
                 } else {

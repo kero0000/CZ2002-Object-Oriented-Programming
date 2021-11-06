@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.time.*;
 
 import Entity.Reservation;
 
@@ -46,12 +47,15 @@ public class ReservationDB implements DB {
 				e.printStackTrace();
 			}// using delimiter ","
 
-			Date reservationTime = null;
-			try {
-				reservationTime = sdf2.parse(resTime);
+			//Date reservationTime = null;
+			LocalTime reservationTime = null;
+			/*try {
+				//reservationTime = sdf2.parse(resTime);
 			} catch (ParseException e) {
 				e.printStackTrace();
-			}
+			}*/
+
+			reservationTime = LocalTime.parse(resTime);
 
 			int numOfPax = Integer.valueOf(pax);
 			
@@ -77,7 +81,8 @@ public class ReservationDB implements DB {
 			st.append(SEPARATOR);
 			st.append(sdf.format(reservation.getReservationDate()).trim());
 			st.append(SEPARATOR);
-			st.append(sdf2.format(reservation.getReservationTime()).trim());
+			//st.append(LocalTime.parse(reservation.getReservationTime()).trim());
+			st.append(reservation.getReservationTime().toString().trim());
 			st.append(SEPARATOR);
 			st.append(String.valueOf(reservation.getNumOfPax()).trim());
 			st.append(SEPARATOR);
