@@ -19,11 +19,11 @@ public class ReservationController {
     
     public static final String SEPARATOR = "|";
 	private static String FILENAME = "Reservation.txt";
-    private static ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+    private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
 
     // Creating a new reservation
-    public static void createReservation() throws IOException {
+    public void createReservation() throws IOException {
 
         String reservationNum;
         String guestFirstName;
@@ -194,6 +194,7 @@ public class ReservationController {
         tableId = TableController.checkTableAvailableForPax(numOfPax);
         if (tableId == "No table available") {
             System.out.println("No table available");
+            sc.close();
             return;
         }
 
@@ -214,22 +215,207 @@ public class ReservationController {
         Reservation newReservation = new Reservation(reservationNum, reservationDate, reservationTime, numOfPax, guestFirstName, guestLastName, tableId, status);
         reservationList.add(newReservation);
         ReservationDB reservationDB = new ReservationDB();
-        reservationDB.save("Reservation.txt", reservationList);
+        reservationDB.save(FILENAME, reservationList);
+
+        sc.close();
 
     }
 
-    // Checking an existing reservation
-    public static void checkReservation() {
+    // Retrieve reservation by either guest's first name or guest's last name
+    public Reservation retrieveReservationByGuestFirstName(String guestFirstName) {
 
+        for (Reservation reservation : reservationList) {
+
+            if (reservation.getGuestFirstName() == guestFirstName) {
+                return reservation;
+            }
+        }
+
+        return null;
+
+    }
+
+    public Reservation retrieveReservationByGuestLastName(String guestLastName) {
+
+        for (Reservation reservation : reservationList) {
+
+            if (reservation.getGuestLastName() == guestLastName) {
+                return reservation;
+            }
+        }
+
+        return null;
+    }
+
+    // I've included this third function in case the former 2 functions dont give the correct reservation entry since there is a possibility that someone shares a first name, or a last name, but the odds of them sharing both are VERY slim (could make the above 2 functions redundant?)
+    public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
+
+        for (Reservation reservation : reservationList) {
+
+            if ((reservation.getGuestFirstName() == guestFirstName) && (reservation.getGuestLastName() == guestLastName)) {
+                return reservation;
+            }
+        }
+
+        System.out.println("No reservation exists for the given customer");
+        return null;
     }
 
     // Updating an existing reservation
-    public static void updateReservation() {
+    public void updateReservation(String guestFirstName, String guestLastName) {
+
+        Reservation toBeUpdated = retrieveReservationByName(guestFirstName, guestLastName);
+
+        int option;
+        Date todaysdate = new Date();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("What would you like to update?");
+        System.out.println("(1) Guest First Name");
+        System.out.println("(2) Guest Last Name");
+        System.out.println("(3) Reservation Date");
+        System.out.println("(4) Reservation Time");
+        System.out.println("(5) Number of Pax");
+        
+        option = sc.nextInt();
+
+        switch(option) {
+
+            case 1:
+                String newFirstName;
+                System.out.println("Please enter the new first name: ");
+                newFirstName = sc.next();
+                toBeUpdated.setGuestFirstName(newFirstName);
+                this.saveToDB();
+                System.out.println("Guest First Name updated!");
+                break;
+
+            case 2:
+                String newLastName;
+                System.out.println("Please enter the new last name: ");
+                newLastName = sc.next();
+                toBeUpdated.setGuestLastName(newLastName);
+                this.saveToDB();
+                System.out.println("Guest Last Name updated!");
+                break;
+
+            case 3:
+                String newResDate = "";
+                Date newReservationDate = null;
+                //Date todaysdate = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String dateValidation = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
+                boolean checker1 = false;
+
+                do {
+                    System.out.println("Please enter New Reservation Date (dd/mm/yyyy):");
+                    try {
+                        newResDate = sc.nextLine();
+                        newReservationDate = sdf.parse(newResDate);
+        
+                        if (newReservationDate.before(todaysdate) || !newResDate.matches(dateValidation)) {
+                            System.out.println("Invalid date entered! Please enter a future date and please use the correct format, E.g. (24/12/2021)");
+                        } else {
+                            checker1 = true;
+                        }
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date entered! Please enter a future date and please use the correct format, E.g. (24/12/2021)");
+                    }
+                } while (!checker1 || !newResDate.matches(dateValidation));
+
+                toBeUpdated.setReservationDate(newReservationDate);
+                this.saveToDB();
+                System.out.println("Reservation Date updated!");
+                break;
+
+            case 4:
+                String newResTime = "";
+                Date newReservationTime = null;
+                SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
+                //Date todaysdate = new Date();
+                boolean checker2 = false;
+
+
+                do {
+                    System.out.println("Please enter New Reservation Time (hh:mm): ");
+        
+                    try {
+                        newResTime = sc.nextLine();
+                        newResTime = newResTime + ":00";
+                        newReservationTime = sdf2.parse(newResTime);
+        
+                        if (newReservationTime.before(todaysdate)) {
+                            System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
+                        } else {
+                            checker2 = true;
+                        }
+                    } catch (ParseException e) {
+                        System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
+                    }
+                } while (!checker2);
+
+                toBeUpdated.setReservationTime(newReservationTime);
+                this.saveToDB();
+                System.out.println("Reservation Time updated!");
+                break;
+
+            case 5:
+                int newNumOfPax;
+                String tableId;
+
+                System.out.println("Please enter the new number of pax for your reservation: ");
+                newNumOfPax = sc.nextInt();
+
+                System.out.println("Checking table availability, please wait...");
+                tableId = TableController.checkTableAvailableForPax(newNumOfPax);
+                if (tableId == "No table available") {
+                    System.out.println("No table available");
+                    break;
+                }
+                System.out.println("Number of pax updated for your reservation!");
+                break;
+
+        }
     
     }
 
-    //delete reservation
-    public static void deleteReservation() {
+    //delete a cancelled reservation
+    public void deleteCancelledReservation(String guestFirstName, String guestLastName) {
 
+        Reservation toBeCancelled = retrieveReservationByName(guestFirstName, guestLastName);
+
+        for (Reservation reservation : reservationList) { // is all of this necessary to delete a reservation, like must I loop through the reservationList or can I straight away call .remove?
+
+            if (reservation == toBeCancelled) {
+                reservationList.remove(toBeCancelled);
+                System.out.println("The reservation under " + guestFirstName + " " + guestLastName + " has been cancelled.");
+            } else {
+                System.out.println("The reservation could not be cancelled.");
+            }
+        }
+    }
+
+    public void deleteExpiredReservations() {
+
+    }
+
+    public void loadInDB() {
+        ReservationDB reservationDB = new ReservationDB();
+
+        try {
+            this.reservationList = reservationDB.read(FILENAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveToDB() {
+        ReservationDB reservationDB = new ReservationDB();
+
+        try {
+            reservationDB.save(FILENAME, reservationList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
