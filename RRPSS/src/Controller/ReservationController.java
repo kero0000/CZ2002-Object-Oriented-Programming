@@ -171,27 +171,24 @@ public class ReservationController {
         do {
             System.out.println("Enter Reservation Time (hh:mm): ");
 
-            try {
-                resTime = sc.nextLine();
-                resTime = resTime + ":00";
-                //reservationTime = sdf2.parse(resTime);
-                reservationTime = LocalTime.parse(resTime);
-                System.out.println(reservationTime);
-                
-                if (reservationTime.isBefore(currentTime)) {
-                    System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
-                } else {
-                    checker2 = true;
-                }
-            } catch (ParseException e) {
-                System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
-            }
+            resTime = sc.nextLine();
+			resTime = resTime + ":00";
+			//reservationTime = sdf2.parse(resTime);
+			reservationTime = LocalTime.parse(resTime);
+			System.out.println(reservationTime);
+			
+			if (reservationTime.isBefore(currentTime)) {
+			    System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
+			} else {
+			    checker2 = true;
+			}
         } while (!checker2);
         
 
         // entry of table pax
         System.out.println("Please enter the number of pax: ");
         numOfPax = sc.nextInt();
+        sc.nextLine();
 
         // check whether a table for the requested number of pax is available for the particular date and time and assign accordingly. If not available, print error message informing no tables available. If available, get tableId value
         //boolean tableAvailable = true;
@@ -199,10 +196,10 @@ public class ReservationController {
         tableId = TableController.checkTableAvailableForPax(numOfPax);
         if (tableId == "No table available") {
             System.out.println("No table available");
-            sc.close();
+
             return;
         }
-
+        TableController.updateTableStatus(tableId, "RESERVED");
         // entry of guest particulars
         System.out.println("Please enter the guest's first name: ");
         guestFirstName = sc.nextLine();
@@ -222,7 +219,7 @@ public class ReservationController {
         ReservationDB reservationDB = new ReservationDB();
         reservationDB.save(FILENAME, reservationList);
 
-        sc.close();
+        //sc.close();
 
     }
 
@@ -359,7 +356,7 @@ public class ReservationController {
                     }
                 } while (!checker2);
 
-                toBeUpdated.setReservationTime(newReservationTime);
+                //toBeUpdated.setReservationTime(newReservationTime);
                 this.saveToDB();
                 System.out.println("Reservation Time updated!");
                 break;

@@ -58,7 +58,7 @@ public class RRPSSApp {
 			System.out.println("\nEnter your choice:");
 			main_menu_choice = sc.nextInt();
 			sc.nextLine();
-			reservationManager.loadInDB();
+			//reservationManager.loadInDB();
 			switch (main_menu_choice) {
 				case 1:
 					int reservation_choice;
@@ -73,7 +73,7 @@ public class RRPSSApp {
 						System.out.println("(5) Back");
 						reservation_choice = sc.nextInt();
 						switch (reservation_choice) {
-	
+
 						case 1:
 							reservationManager.createReservation(); // create Reservation
 							break;
@@ -83,10 +83,9 @@ public class RRPSSApp {
 							sc.nextLine();
 							System.out.println("Please enter last name");
 							String guestLastName = sc.nextLine();
-							sc.nextLine();
 							Reservation r = reservationManager.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
 							System.out.println("Reservation Found.");
-							System.out.printf(r.getGuestFirstName(), r.getGuestLastName(), r.getReservationDate(),r.getReservationTime());
+
 							break;
 						case 3:
 							System.out.println("Please enter first name");
