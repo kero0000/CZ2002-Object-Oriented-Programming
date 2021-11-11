@@ -28,12 +28,7 @@ public class RRPSSApp {
 		Date d = new Date();
 		System.out.println(d);
 		Timer timer = new Timer();
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 23);
-		calendar.set(Calendar.MINUTE, 30);
-		calendar.set(Calendar.SECOND, 00);
-		Date time = calendar.getTime();
-		//timer.schedule(new checkExpired(), time);
+		timer.schedule(new expiredReservations(), 100);
 		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadInDB();
 		ReservationController reservationManager = new ReservationController();
@@ -132,27 +127,22 @@ public class RRPSSApp {
 						System.out.println("\n=============================================================");
 						System.out.println(" Table: ");
 						System.out.println("=============================================================");
-						System.out.println("(1) Update Table");
-						System.out.println("(2) Check All Table Availability");
-						System.out.println("(3) Back");
+						System.out.println("(1) Check All Table Availability");
+						System.out.println("(2) Back");
 						table_choice = sc.nextInt();
 						switch (table_choice) {
 						case 1:
 							// Retrieve table and update by table id
-							TableController.updateTable();
-							break;
-						case 2:
-							// Retrieve and print all Table details
 							TableController.retrieveAllTable();
 							break;
-						case 3:
-							table_choice = 3;
+						case 2:
+							table_choice = 2;
 							break;
 						default:
 							System.out.println("Please enter a valid input");
 							table_choice = 0;
 						}
-					} while(table_choice<3);
+					} while(table_choice<2);
 					break;
 	
 				case 3:
@@ -318,35 +308,4 @@ public class RRPSSApp {
 	
 	}
 		
-	/**	
-	// this is to remove reservation after a certain period of time has passed
-	static class checkExpired extends TimerTask {
-        public void run() {
-
-        	String fileName = "Reservation.txt";
-        	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    		Date today = new Date();
-    		Date cid;
-    		ArrayList<Reservation> reservationList = ReservationController.retrieveReservation();
-    		for (int i = 0; i < reservationList.size(); i++) {
-    			cid = reservationList.get(i).getDate();
-    			if (cid.before(today) && reservationList.get(i).getStatus().equalsIgnoreCase("CONFIRMED")) {
-    				reservationList.get(i).setStatus("EXPIRED");
-    				// change table status to vacant
-    				String tableId = reservationList.get(i).gettableId();
-    				TableController.updateTableStatus(tableId, "VACANT");
-    			}
-    		}
-    		// Write Reservation records to file
-    		ReservationDB reservationDB = new ReservationDB();
-    		try {
-    			reservationDB.save(fileName, reservationList);
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			System.out.println("IOException > " + e.getMessage());
-    		}
-        }
-	}*/
-		 
-
 	}
