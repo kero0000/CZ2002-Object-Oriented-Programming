@@ -49,7 +49,7 @@ public class StaffController {
     }
     
     /**
-	 * @parameter employeeID Specifies the employeeId to 
+	 * @param employeeID Specifies the employeeId to 
 	 * get staff's info
 	 */
 	public Staff getStaff(String employeeId) {

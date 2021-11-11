@@ -91,8 +91,8 @@ public class RRPSSApp {
 							if(r != null) {
 								System.out.println("Reservation details are as follow: \n");
 								String dateWithoutTime = sdf.format(r.getReservationDate());
-								System.out.printf("Reservatio Date is %-71s\n", dateWithoutTime);
-								System.out.printf("Reservatio Time is %-71s\n",r.getReservationTime().toString());
+								System.out.printf("Reservation Date is %-71s\n", dateWithoutTime);
+								System.out.printf("Reservation Time is %-71s\n",r.getReservationTime().toString());
 								System.out.printf("Status:  %-71s\n", r.getStatus());
 								System.out.printf("Table reserved is %-71s\n", r.getTableId());
 							}

@@ -360,7 +360,7 @@ public class TableController {
 			Table tempTable = (Table) alr.get(i);
 			try{
 	            int tablepax = Integer.parseInt(tempTable.gettableType().substring(0, 2).trim());
-	            if(tablepax == pax && tempTable.gettableStatus().contentEquals("VACANT")) {
+	            if(pax <= tablepax && tempTable.gettableStatus().contentEquals("VACANT")) {
 	            	String tableid = tempTable.gettableId();
 					return tableid;
 				}}

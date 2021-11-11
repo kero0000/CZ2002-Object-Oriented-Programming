@@ -20,8 +20,10 @@ public class ReservationController {
     
     public static final String SEPARATOR = "|";
 	private static String FILENAME = "Reservation.txt";
-    private static ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+    private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
+    private final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
+	private final LocalTime CLOSING_TIME = LocalTime.parse("23:00:00");
 
     // Creating a new reservation
     public void createReservation() throws IOException {
@@ -54,7 +56,7 @@ public class ReservationController {
         Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date todaysdate = new Date();
-        LocalTime currentTime = LocalTime.now();
+        //LocalTime currentTime = LocalTime.now();
 
         do {
             System.out.println("Enter Reservation Date (dd/mm/yyyy):");
@@ -81,9 +83,9 @@ public class ReservationController {
 			resTime = resTime + ":00";
 			//reservationTime = sdf2.parse(resTime);
 			reservationTime = LocalTime.parse(resTime);
-			System.out.println(reservationTime);
+			//System.out.println(reservationTime);
 			
-			if (reservationTime.isBefore(currentTime)) {
+			if (!reservationTime.isBefore(CLOSING_TIME) || !reservationTime.isAfter(OPENING_TIME)) {
 			    System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
 			} else {
 			    checker2 = true;
@@ -122,8 +124,9 @@ public class ReservationController {
         //save the newly created reservation to the database
         Reservation newReservation = new Reservation(reservationNum, reservationDate, reservationTime, numOfPax, guestFirstName, guestLastName, tableId, status);
         reservationList.add(newReservation);
-        ReservationDB reservationDB = new ReservationDB();
-        reservationDB.save(FILENAME, reservationList);
+        this.saveToDB();
+        /*ReservationDB reservationDB = new ReservationDB();
+        reservationDB.save(FILENAME, reservationList);*/
 
     }
 
@@ -147,7 +150,7 @@ public class ReservationController {
     }
 
     // Updating an existing reservation
-    public void updateReservation(String guestFirstName, String guestLastName) {
+    public void updateReservation(String guestFirstName, String guestLastName) throws IOException {
 
         Reservation toBeUpdated = retrieveReservationByName(guestFirstName, guestLastName);
         
@@ -219,9 +222,10 @@ public class ReservationController {
                 break;
 
             case 4:
+            	sc.nextLine();
                 String newResTime = "";
-                Date newReservationTime = null;
-                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+                LocalTime newReservationTime = null;
+                //SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
                 //Date todaysdate = new Date();
                 boolean checker2 = false;
 
@@ -229,39 +233,42 @@ public class ReservationController {
                 do {
                     System.out.println("Please enter New Reservation Time (hh:mm): ");
         
-                    try {
-                        newResTime = sc.nextLine();
-                        newResTime = newResTime + ":00";
-                        newReservationTime = sdf2.parse(newResTime);
-        
-                        if (newReservationTime.before(todaysdate)) {
-                            System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
-                        } else {
-                            checker2 = true;
-                        }
-                    } catch (ParseException e) {
-                        System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
-                    }
+                    newResTime = sc.nextLine();
+					newResTime = newResTime + ":00";
+					newReservationTime = LocalTime.parse(newResTime);
+
+					if (!newReservationTime.isBefore(CLOSING_TIME) || !newReservationTime.isAfter(OPENING_TIME)) {
+					    System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
+					} else {
+					    checker2 = true;
+					}
                 } while (!checker2);
 
-                //toBeUpdated.setReservationTime(newReservationTime);
+                toBeUpdated.setReservationTime(newReservationTime);
                 this.saveToDB();
                 System.out.println("Reservation Time updated!");
                 break;
 
             case 5:
                 int newNumOfPax;
-                String tableId;
-
+                String tableId,tableIdOld;
+                
                 System.out.println("Please enter the new number of pax for your reservation: ");
                 newNumOfPax = sc.nextInt();
-
+                
                 System.out.println("Checking table availability, please wait...");
                 tableId = TableController.checkTableAvailableForPax(newNumOfPax);
                 if (tableId == "No table available") {
                     System.out.println("No table available");
                     break;
                 }
+                tableIdOld = toBeUpdated.getTableId();
+                TableController.updateTableStatus(tableIdOld, "VACANT");
+                TableController.updateTableStatus(tableId, "RESERVED");
+                toBeUpdated.setTableId(tableId);
+                toBeUpdated.setNumOfPax(newNumOfPax);              
+                this.saveToDB();
+                
                 System.out.println("Number of pax updated for your reservation!");
                 break;
 
@@ -310,6 +317,8 @@ public class ReservationController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(reservationList.size()>=1)
+        	idCount = Integer.valueOf(reservationList.get(reservationList.size()-1).getReservationNum())+1;
     }
 
     public void saveToDB() {
