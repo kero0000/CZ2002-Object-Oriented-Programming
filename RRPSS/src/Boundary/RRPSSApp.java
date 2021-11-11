@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +25,6 @@ public class RRPSSApp {
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException, ParseException {
-
 		Date d = new Date();
 		System.out.println(d);
 		Timer timer = new Timer();
@@ -32,7 +32,6 @@ public class RRPSSApp {
 		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadInDB();
 		ReservationController reservationManager = new ReservationController();
-		
 		int main_menu_choice;
 		Scanner sc = new Scanner(System.in);
 		do {
