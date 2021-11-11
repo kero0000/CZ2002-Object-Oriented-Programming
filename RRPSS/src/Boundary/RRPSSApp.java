@@ -1,6 +1,7 @@
 package Boundary;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import Entity.Staff;
 
 public class RRPSSApp {
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException, ParseException {
 
 		Date d = new Date();
@@ -78,31 +80,40 @@ public class RRPSSApp {
 							reservationManager.createReservation(); // create Reservation
 							break;
 						case 2:
+
+							sc = new Scanner(System.in);
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 							System.out.println("Please enter first name");
 							String guestFirstName = sc.nextLine();
-							sc.nextLine();
 							System.out.println("Please enter last name");
 							String guestLastName = sc.nextLine();
 							Reservation r = reservationManager.retrieveReservationByName(guestFirstName, guestLastName);//check Reservation
-							System.out.println("Reservation Found.");
-
+							if(r != null) {
+								System.out.println("Reservation details are as follow: \n");
+								String dateWithoutTime = sdf.format(r.getReservationDate());
+								System.out.printf("Reservatio Date is %-71s\n", dateWithoutTime);
+								System.out.printf("Reservatio Time is %-71s\n",r.getReservationTime().toString());
+								System.out.printf("Status:  %-71s\n", r.getStatus());
+								System.out.printf("Table reserved is %-71s\n", r.getTableId());
+							}
+							else{
+								System.out.println("No such reservation found!");
+							}
 							break;
 						case 3:
+							sc = new Scanner(System.in);
 							System.out.println("Please enter first name");
 							String guestFirstName1 = sc.nextLine();
-							sc.nextLine();
 							System.out.println("Please enter last name");
 							String guestLastName1 = sc.nextLine();
-							sc.nextLine();
 							reservationManager.deleteCancelledReservation(guestFirstName1,guestLastName1);//remove reservation
 							break;
 						case 4:
+							sc = new Scanner(System.in);
 							System.out.println("Please enter first name");
 							String guestFirstName2 = sc.nextLine();
-							sc.nextLine();
 							System.out.println("Please enter last name");
 							String guestLastName2 = sc.nextLine();
-							sc.nextLine();
 							reservationManager.updateReservation(guestFirstName2, guestLastName2);
 							break;
 						case 5:

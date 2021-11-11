@@ -71,100 +71,6 @@ public class ReservationController {
                 System.out.println("Invalid date entered! Please enter a future date and please use the correct format, E.g. (24/12/2021)");
             }
         } while (!checker1 || !resDate.matches(dateValidation));
-
-        // entry of reservation time (should I change this to a switch implementation where the user just chooses an option and then based on that a time is selected? Will mean no need to check for invalid time since only valid times will be options?)
-        /*
-        System.out.println("Please choose a Reservation Time: ");
-
-        System.out.println("---------- Lunch service ----------");
-        System.out.println("(1)  11:00");
-        System.out.println("(2)  11:30");
-        System.out.println("(3)  12:00");
-        System.out.println("(4)  12:30");
-        System.out.println("(5)  13:00");
-        System.out.println("(6)  13:30");
-        System.out.println("(7)  14:00");
-        System.out.println("(8)  14:30");
-        System.out.println("---------- Dinner service ----------");
-        System.out.println("(9)  18:00");
-        System.out.println("(10) 18:30");
-        System.out.println("(11) 19:00");
-        System.out.println("(12) 19:30");
-        System.out.println("(13) 20:00");
-        System.out.println("(14) 20:30");
-        System.out.println("(15) 21:00");
-        System.out.println("(16) 21:30");
-
-        int timeChoice = sc.nextInt();
-
-        switch(timeChoice) {
-
-            case 1:
-                reservationTime = "11:00";
-                break;
-
-            case 2:
-                reservationTime = "11:30";
-                break;
-
-            case 3:
-                reservationTime = "12:00";
-                break;
-
-            case 4:
-                reservationTime = "12:30";
-                break;
-
-            case 5:
-                reservationTime = "13:00";
-                break;
-
-            case 6:
-                reservationTime = "13:30";
-                break;
-
-            case 7:
-                reservationTime = "14:00";
-                break;
-            
-            case 8:
-                reservationTime = "14:30";
-                break;
-
-            case 9:
-                reservationTime = "18:00";
-                break;
-
-            case 10:
-                reservationTime = "18:30";
-                break;
-
-            case 11:
-                reservationTime = "19:00";
-                break;
-
-            case 12:
-                reservationTime = "19:30";
-                break;
-
-            case 13:
-                reservationTime = "20:00";
-                break;
-
-            case 14:
-                reservationTime = "20:30";
-                break;
-
-            case 15:
-                reservationTime = "21:00";
-                break;
-
-            case 16:
-                reservationTime = "21:30";
-                break;
-        }
-        */
-
         
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
 
@@ -219,40 +125,12 @@ public class ReservationController {
         ReservationDB reservationDB = new ReservationDB();
         reservationDB.save(FILENAME, reservationList);
 
-        //sc.close();
-
     }
 
-    // Retrieve reservation by either guest's first name or guest's last name
-    public Reservation retrieveReservationByGuestFirstName(String guestFirstName) {
-
-        for (Reservation reservation : reservationList) {
-
-            if (reservation.getGuestFirstName() == guestFirstName) {
-                return reservation;
-            }
-        }
-
-        return null;
-
-    }
-
-    public Reservation retrieveReservationByGuestLastName(String guestLastName) {
-
-        for (Reservation reservation : reservationList) {
-
-            if (reservation.getGuestLastName() == guestLastName) {
-                return reservation;
-            }
-        }
-
-        return null;
-    }
-
-    // I've included this third function in case the former 2 functions dont give the correct reservation entry since there is a possibility that someone shares a first name, or a last name, but the odds of them sharing both are VERY slim (could make the above 2 functions redundant?)
-    public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
+	public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
+		ReservationDB reservationDB = new ReservationDB();
     	try {
-			this.reservationList = (ArrayList<Reservation>) ReadinFile.read(FILENAME);
+			this.reservationList = (ArrayList<Reservation>) reservationDB.read(FILENAME);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -272,7 +150,11 @@ public class ReservationController {
     public void updateReservation(String guestFirstName, String guestLastName) {
 
         Reservation toBeUpdated = retrieveReservationByName(guestFirstName, guestLastName);
-
+        
+        if(toBeUpdated == null) {
+        	return;
+        }
+        
         int option;
         Date todaysdate = new Date();
         Scanner sc = new Scanner(System.in);
@@ -315,6 +197,7 @@ public class ReservationController {
                 boolean checker1 = false;
 
                 do {
+                	sc = new Scanner(System.in);
                     System.out.println("Please enter New Reservation Date (dd/mm/yyyy):");
                     try {
                         newResDate = sc.nextLine();
@@ -388,18 +271,31 @@ public class ReservationController {
 
     //delete a cancelled reservation
     public void deleteCancelledReservation(String guestFirstName, String guestLastName) {
+    	
+    	ReservationDB reservationDB = new ReservationDB();
+    	try {
+			this.reservationList = (ArrayList<Reservation>) reservationDB.read(FILENAME);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         Reservation toBeCancelled = retrieveReservationByName(guestFirstName, guestLastName);
-
-        for (Reservation reservation : reservationList) { // is all of this necessary to delete a reservation, like must I loop through the reservationList or can I straight away call .remove?
-
-            if (reservation == toBeCancelled) {
-                reservationList.remove(toBeCancelled);
-                System.out.println("The reservation under " + guestFirstName + " " + guestLastName + " has been cancelled.");
-            } else {
-                System.out.println("The reservation could not be cancelled.");
-            }
+        
+        if(toBeCancelled == null) {
+        	return;
         }
+
+        reservationList.remove(toBeCancelled);
+        try {
+			reservationDB.save(FILENAME, reservationList);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        TableController.updateTableStatus(toBeCancelled.getTableId(), "VACANT");
+        
+        System.out.println("Removed reservation");
     }
 
     public void deleteExpiredReservations() {
