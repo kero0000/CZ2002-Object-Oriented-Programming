@@ -71,7 +71,7 @@ public class ReservationController {
             }
         } while (!checker1 || !resDate.matches(dateValidation));
         
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+        //SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss"); don't think this is needed anymore since sdf isn't used for time formatting, localTime.parse used instead
 
         do {
             System.out.println("Enter Reservation Time (hh:mm): ");
