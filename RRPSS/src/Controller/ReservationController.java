@@ -22,8 +22,8 @@ public class ReservationController {
 	private static String FILENAME = "Reservation.txt";
     private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
-    private final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
-	private final LocalTime CLOSING_TIME = LocalTime.parse("23:00:00");
+    private static final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
+	private static final LocalTime CLOSING_TIME = LocalTime.parse("23:00:00");
 
     // Creating a new reservation
     public void createReservation() throws IOException {
@@ -31,13 +31,10 @@ public class ReservationController {
         String reservationNum;
         String guestFirstName;
         String guestLastName;
-        String tableId; // or should this be table number? speak with i.c. of table class to see how we're tracking individual tables
+        String tableId;
         String resTime = "";
-        //Date reservationTime;
-        //Date reservationTime = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
         LocalTime reservationTime = null;
         String resDate = "";
-        //Date reservationDate;
         Date reservationDate = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
         int numOfPax;
         String status;
@@ -74,16 +71,14 @@ public class ReservationController {
             }
         } while (!checker1 || !resDate.matches(dateValidation));
         
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+        //SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss"); don't think this is needed anymore since sdf isn't used for time formatting, localTime.parse used instead
 
         do {
             System.out.println("Enter Reservation Time (hh:mm): ");
 
             resTime = sc.nextLine();
 			resTime = resTime + ":00";
-			//reservationTime = sdf2.parse(resTime);
 			reservationTime = LocalTime.parse(resTime);
-			//System.out.println(reservationTime);
 			
 			if (!reservationTime.isBefore(CLOSING_TIME) || !reservationTime.isAfter(OPENING_TIME)) {
 			    System.out.println("Invalid time entered! Please enter a future time and please use the correct format, E.g. (20:00)");
@@ -225,8 +220,6 @@ public class ReservationController {
             	sc.nextLine();
                 String newResTime = "";
                 LocalTime newReservationTime = null;
-                //SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
-                //Date todaysdate = new Date();
                 boolean checker2 = false;
 
 
