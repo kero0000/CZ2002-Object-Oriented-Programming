@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.Locale;
 import Controller.StaffController;
 
-
 public class Order {
 	private static final double GST = 0.07;
 	private static final double SC = 0.10;

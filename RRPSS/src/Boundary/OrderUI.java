@@ -1,7 +1,5 @@
 package Boundary;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Order;
@@ -9,7 +7,6 @@ import Entity.Item;
 import Controller.MenuPromotionController;
 import Controller.OrderController;
 import Controller.TableController;
-
 
 public class OrderUI {
     public static OrderUI instance = null;
