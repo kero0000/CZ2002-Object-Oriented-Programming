@@ -22,8 +22,8 @@ public class ReservationController {
 	private static String FILENAME = "Reservation.txt";
     private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
-    private final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
-	private final LocalTime CLOSING_TIME = LocalTime.parse("23:00:00");
+    private static final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
+	private static final LocalTime CLOSING_TIME = LocalTime.parse("23:00:00");
 
     // Creating a new reservation
     public void createReservation() throws IOException {
