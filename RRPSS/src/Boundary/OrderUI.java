@@ -86,7 +86,7 @@ public class OrderUI {
     	String tableId;
         String employeeId;
         String membership;
-        System.out.println("Enter table number:");
+        System.out.println("Enter table ID:");
         tableId = sc.nextLine();
         System.out.println("Enter staff identification number:");
         employeeId = sc.nextLine();

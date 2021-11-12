@@ -8,4 +8,3 @@
 9|Orange Juice|freshly squeezed oranges|2.0|1|
 10|Vanilla Ice cream|sweet dessert|0.7|2|
 11|chocolate cake|sweet chocolate cake|2.0|2|
-12|mango pudding|mango pudding dessert|3.0|2|
