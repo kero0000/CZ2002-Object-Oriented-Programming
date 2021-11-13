@@ -7,10 +7,20 @@ import java.util.StringTokenizer;
 import Entity.Order;
 import Entity.Item;
 
+/**
+ * Contains the methods to read and save data into and from the Order text file.
+ */
 public class OrderDB implements DB {
-	
+	/**
+	 * Divides the variables and data in the txt file
+	 */
 	public static final String SEPARATOR = "|";
 
+	/**
+	 * Read the whole Order.txt file.
+	 * @param filename Order.txt file to be read.
+	 * @return orderList arraylist of all the Order in the Order.txt file
+	 */
 	@Override
 	public ArrayList<Order> read(String fileName) throws IOException {
 		ArrayList<String> stringArray = (ArrayList<String>) ReadinFile.read(fileName);
@@ -49,6 +59,11 @@ public class OrderDB implements DB {
 		return orderList;
 	}
 	
+	/**
+	 * save a list of order objects into Order.txt file.
+	 * @param filename  Order.txt file to be read.
+	 * @param orderList  the list of orders to be saved in the order.txt file.
+	 */
 	@Override
 	public void save(String filename, List orderList) throws IOException {
 		ArrayList<String> ordersw = new ArrayList<String>();

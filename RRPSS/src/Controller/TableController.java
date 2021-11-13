@@ -7,11 +7,25 @@ import Database.ReadinFile;
 import Database.TableDB;
 import Entity.Table;
 
+/**
+ * The class which contains all the methods required to implement functionalities related to tables.
+ */
 public class TableController {
 	
+	/**
+	 * seperator to divide each data variable.
+	 */
 	public static final String SEPARATOR = "|";
+	/**
+	 * filename to be accessed.
+	 */
 	private static final String FILENAME = "Table.txt";
-	
+	/**
+	 * updates specific table's status.
+	 * @param tableId the tableId of table that needs to be updated
+	 * @param status the status to be updated (VACANT/RESERVED/OCCUPIED)
+	 * @return checker
+	 */
 	public static Boolean updateTableStatus(String tableId, String status) {
 		Table table = new Table();
 		Table checkTableId = new Table();
@@ -46,7 +60,10 @@ public class TableController {
 		}
 		return checker;
 	}
-
+	
+	/**
+	 * retrieves all the tables in the table txt file
+	 */
 	public static void retrieveAllTable() throws IOException {
 
 		ArrayList stringArray = (ArrayList) ReadinFile.read(FILENAME);
@@ -67,7 +84,11 @@ public class TableController {
 			System.out.println("");
 		}
 	}
-	
+	/**
+	 * retrieve a specific table instance.
+	 * @param table is the table object to retrieve.
+	 * @return table to be found
+	 */
 	public static Table retrieveTableInstance(Table table) {
 		ArrayList alr = retrieveTableArrayList();
 		for (int i = 0; i < alr.size(); i++) {
@@ -80,7 +101,11 @@ public class TableController {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * retrieve an array of table objects from table txt.
+	 * @return arraylist of all the tables
+	 */
 	public static ArrayList retrieveTableArrayList() {
 		ArrayList alr = null;
 		try {
@@ -92,7 +117,12 @@ public class TableController {
 		}
 		return alr;
 	}
-
+	
+	/**
+	 * checks whether any table available for a specific number of people
+	 * @param pax is number of people who wants to reserve the table
+	 * @return string of tableId that is vacant and can accomodate the number of people.
+	 */
 	public static String checkTableAvailableForPax(int pax) {
 		ArrayList alr = null;
 		alr = retrieveTableArrayList();

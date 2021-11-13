@@ -12,9 +12,20 @@ import java.util.List;
 import java.util.Scanner;
 import Entity.Table;
 
-public class TableDB implements DB{
-	public static final String SEPARATOR = "|";
 
+/**
+ * Contains the methods to read and save data into and from the Table text file.
+ */
+public class TableDB implements DB{
+	/**
+	 * To divide the variables in the text file.
+	 */
+	public static final String SEPARATOR = "|";
+	/**
+	 * Read the whole Table.txt file.
+	 * @param filename Table.txt file to be read.
+	 * @return arraylist of all the tables in the table.txt file
+	 */
 	@Override
 	public ArrayList read(String fileName) throws IOException {
 
@@ -36,7 +47,12 @@ public class TableDB implements DB{
 		}
 		return alr;
 	}
-
+	
+	/**
+	 * save a list of table objects into Table.txt file.
+	 * @param filename Table.txt file to be read.
+	 * @param al the list of tables to be saved in the Table.txt file.
+	 */
 	@Override
 	public void save(String filename, List al) throws IOException {
 		List alw = new ArrayList();

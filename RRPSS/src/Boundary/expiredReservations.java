@@ -11,6 +11,9 @@ import Controller.TableController;
 import Database.ReservationDB;
 import Entity.Reservation;
 
+/**
+ * checks whether a reservation in Reservation.txt has expired( past 10 mins of booked time)
+ */
 public class expiredReservations extends TimerTask{
 	@Override
 	public void run() {
