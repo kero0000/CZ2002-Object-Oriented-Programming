@@ -98,6 +98,7 @@ public class StaffController {
 			return;
 		}
 		else if(!(getStaff(employeeId) instanceof Staff)){
+			System.out.println("Employee doesn't exist!");
 			return;
 		}
 			
