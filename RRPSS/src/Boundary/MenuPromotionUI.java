@@ -15,12 +15,16 @@ public class MenuPromotionUI {
     public MenuPromotionUI() {
         sc = new Scanner(System.in);
     }
-
+    /**
+     Get instance of MenuPromotionUI
+     */
     public static MenuPromotionUI getInstance() {
         if (instance == null) instance = new MenuPromotionUI();
         return instance;
     }
-
+    /**
+     Prints all options onto console
+     */
     public void displayOptions() {
     	int choice;
     	do {
@@ -63,13 +67,14 @@ public class MenuPromotionUI {
             }
         } while (choice < 7);
     }
-    
+    /**
+     Creates menu item
+     */
     public void createMenuItem() {
         String itemName = "";
         String itemDesc = "";
         double price = 0.0;
         int itemType = -1;
-        //sc.nextLine();
         System.out.println("Enter item name:");							//Input itemName
         itemName = sc.nextLine();
         System.out.println("Enter item description:");					//Input itemDesc
@@ -99,7 +104,9 @@ public class MenuPromotionUI {
         MenuPromotionController.retrieveInstance().createItem(item);
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
-    
+    /**
+     Retrieves menu item from MenuDatabase
+     */
     private void updateMenuItem() {
         int itemId = -1;
         do {
@@ -121,7 +128,10 @@ public class MenuPromotionUI {
             System.out.println("Item does not exist!");
         }
     }
-    
+    /**
+     * Updates name, description, price and type of menu item
+     * @param itemID ID of menu item
+     */
     public void doUpdate(int itemID) {
     	String itemName = "";
         String itemDesc = "";
@@ -153,7 +163,10 @@ public class MenuPromotionUI {
 		} while (itemType != 0 && itemType != 1 && itemType != 2);
         MenuPromotionController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
-    
+    /**
+     * Updates name, description, price and type of promotion item
+     * @param itemID ID of menu item
+     */
     public void doPromoUpdate(int itemID) {
     	String itemName = "";
         String itemDesc = "";
@@ -175,7 +188,9 @@ public class MenuPromotionUI {
 		} while (price <= 0.0);
         MenuPromotionController.retrieveInstance().updateItem(itemID, itemName, itemDesc, price, itemType);
     }
-    
+    /**
+     * Removes menu item from MenuDatabase
+     */
     public void removeMenuItem() {
         int itemId = -1;
         do {
@@ -196,13 +211,14 @@ public class MenuPromotionUI {
             System.out.println("Item does not exist!");
         }
     }
-    
+    /**
+     * Creates menu item
+     */
     public void createPromotion() {
         String promoName = "";
         String promoDesc = "";
         double price = 0.0;
         int itemType = 3;
-        //sc.nextLine();
         System.out.println("Enter promo name:");						//Input itemName
         promoName = sc.nextLine();
         System.out.println("Enter promo description:");					//Input itemDesc
@@ -222,6 +238,9 @@ public class MenuPromotionUI {
         MenuPromotionController.retrieveInstance().createItem(item);
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
+    /**
+     * Retrieves promotion item from MenuDatabase
+     */
     private void updatePromotion() {
         int itemId = 3;
         do {
@@ -242,6 +261,9 @@ public class MenuPromotionUI {
             System.out.println("Item does not exist!");
         }
     }
+    /**
+     * Removes promotion item from MenuDatabase
+     */
     public void removePromotion() {
         int itemId = 3;
         do {

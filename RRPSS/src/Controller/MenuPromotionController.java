@@ -85,7 +85,9 @@ public class MenuPromotionController {
         //OrderController.getInstance().updateItemInOrders(item);
         this.saveToDB();
     }
-    //Formatting to print menu
+    /**
+	 * Formatting of menu/promotion item type
+	 */
     public void displayMenu() {
         System.out.println("ID   Name                          Description                          Price(S$)");
 		System.out.println("===================================Main Course===================================");	
@@ -109,7 +111,9 @@ public class MenuPromotionController {
                 System.out.println(item.toString());
         }
     }
-    //Checking of food item ID
+    /**
+	 * Get menu item ID
+	 */
     public void checkID() {
     	int id = 1;
 		if(items!=null) {
@@ -119,7 +123,9 @@ public class MenuPromotionController {
 		}
 		Item.setIdCount(id+1);
     }
-    //Retrieval of all items
+    /**
+	 * Retrieve menu items from MenuDatabase
+	 */
     public void loadInDB() {
     	MenuPromotionDB menudb = new MenuPromotionDB();
         try {
@@ -129,7 +135,9 @@ public class MenuPromotionController {
 			e.printStackTrace();
 		}
     }
-    //Saving of all items
+    /**
+	 * Save menu items to MenuDatabase
+	 */
     public void saveToDB() {
     	MenuPromotionDB menudb = new MenuPromotionDB();
         try {
