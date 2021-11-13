@@ -12,7 +12,7 @@ import Database.ReservationDB;
 import Entity.Reservation;
 
 /**
- * checks whether a reservation in Reservation.txt has expired( past 10 mins of booked time)
+ * Checks whether a reservation in Reservation.txt has expired (10 minutes after reservation time)
  */
 public class expiredReservations extends TimerTask{
 	@Override

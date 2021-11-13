@@ -11,17 +11,26 @@ import java.time.*;
 
 import Entity.Reservation;
 
-
+/**
+ * Contains the functionality to save data into and read data from the Reservation.txt file
+ */
 public class ReservationDB implements DB {
 	
+	/**
+	 * Separates the data variables in the txt file
+	 */
 	public static final String SEPARATOR = "|";
 
+	/**
+	 * Read the Reservation.txt file
+	 * @param fileName Reservation.txt file to be read
+	 * @return reservationList arraylist of the reservations read from Reservation.txt
+	 */
 	@Override
 	public ArrayList<Reservation> read(String fileName) throws IOException {
 		ArrayList stringArray = (ArrayList<String>) ReadinFile.read(fileName);
 		ArrayList<Reservation> reservationList = new ArrayList();// to store Reservation data
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
 		
 		for (int i = 0; i < stringArray.size(); i++) {
 
@@ -47,14 +56,7 @@ public class ReservationDB implements DB {
 				e.printStackTrace();
 			}// using delimiter ","
 
-			//Date reservationTime = null;
 			LocalTime reservationTime = null;
-			/*try {
-				//reservationTime = sdf2.parse(resTime);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}*/
-
 			reservationTime = LocalTime.parse(resTime);
 
 			int numOfPax = Integer.valueOf(pax);
@@ -68,11 +70,15 @@ public class ReservationDB implements DB {
 		
 	}
 	
+	/**
+	 * Save an arraylist of reservation objects into Reservation.txt
+	 * @param filename Reservation.txt file to save to
+	 * @param reservationList arraylist of reservation objects to be saved into Reservation.txt file
+	 */
 	@Override
 	public void save(String filename, List reservationList) throws IOException {
 		ArrayList<String> reservationsw = new ArrayList<String>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss");
 
 		for (int i = 0; i < reservationList.size(); i++) {
 			Reservation reservation = (Reservation) reservationList.get(i);
@@ -81,7 +87,6 @@ public class ReservationDB implements DB {
 			st.append(SEPARATOR);
 			st.append(sdf.format(reservation.getReservationDate()).trim());
 			st.append(SEPARATOR);
-			//st.append(LocalTime.parse(reservation.getReservationTime()).trim());
 			st.append(reservation.getReservationTime().toString().trim());
 			st.append(SEPARATOR);
 			st.append(String.valueOf(reservation.getNumOfPax()).trim());
