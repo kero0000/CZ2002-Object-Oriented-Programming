@@ -1,4 +1,4 @@
-01|Leslie Tan|F|Manager|
+01|Peter Tan|M|Cook|
 05|Pe Jones|M|Cleaner|
 06|Un Jones|M|Server|
 07|Mea Jones|F|Sous Chef|
