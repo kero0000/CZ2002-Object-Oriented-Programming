@@ -1,7 +1,5 @@
 package Boundary;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Order;
@@ -10,7 +8,9 @@ import Controller.MenuPromotionController;
 import Controller.OrderController;
 import Controller.TableController;
 
-
+/**
+ * the order user interface
+ */
 public class OrderUI {
     public static OrderUI instance = null;
     Scanner sc = new Scanner(System.in);
@@ -19,12 +19,17 @@ public class OrderUI {
     private OrderUI() {
         sc = new Scanner(System.in);
     }
-
+	/**
+	 * create instance of order UI
+	 * @return instance of orderUI
+	 */
     public static OrderUI getInstance() {
         if (instance == null) instance = new OrderUI();
         return instance;
     }
-    
+	/**
+	 * display the options of what the user wants to do
+	 */
     public void displayOptions() {
         int choice;
     	do {
@@ -80,20 +85,22 @@ public class OrderUI {
             }
         } while (choice < 5);
     }
-
+	/**
+	 * create order
+	 */
     public void createOrder() {
     	sc = new Scanner(System.in);
     	String tableId;
         String employeeId;
         String membership;
-        System.out.println("Enter table number:");
+        System.out.println("Enter table ID:");
         tableId = sc.nextLine();
         System.out.println("Enter staff identification number:");
         employeeId = sc.nextLine();
         System.out.println("Enter membership status:");
         membership = sc.nextLine().toLowerCase();
         System.out.println("");
-        
+        TableController.updateTableStatus(tableId, "OCCUPIED");
         OrderController.retrieveInstance().checkID();
         Order order = new Order(tableId,employeeId, membership);
 
@@ -101,7 +108,10 @@ public class OrderUI {
         System.out.println("Order created for table " + tableId);
         OrderController.retrieveInstance().saveToDB();
     }
-
+	/**
+	 * update a specific order
+	 * @param order that is in text file
+	 */
     public void updateOrder(Order order) {
     	sc = new Scanner(System.in);
     	int input;
@@ -164,7 +174,9 @@ public class OrderUI {
         //OrderController.retrieveInstance().savetoDB();
     }
     
-
+	/**
+	 * remove an order
+	 */
     public void runRemoveOrder() {
     	sc = new Scanner(System.in);
     	int orderID = -1;
@@ -185,7 +197,9 @@ public class OrderUI {
         }
         else System.out.println("Order does not exist!");
     }
-
+	/**
+	 * view an order 
+	 */
 	public void viewOrder() {
 		sc = new Scanner(System.in);
 		int orderID = -1;
@@ -206,7 +220,9 @@ public class OrderUI {
 		else
 			System.out.println("Order does not exist!");
 	}
-
+	/**
+	 * make payment and print order invoice and vacate table
+	 */
 	public void printOrderInvoice() {
 		sc = new Scanner(System.in);
 		int orderID = -1;

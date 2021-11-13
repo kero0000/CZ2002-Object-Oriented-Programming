@@ -1,23 +1,17 @@
 package Boundary;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import Controller.StaffController;
 import Controller.MenuPromotionController;
 import Controller.OrderController;
 import Controller.ReservationController;
 import Controller.TableController;
-import Database.ReservationDB;
 import Entity.Reservation;
 import Entity.Staff;
 
@@ -28,7 +22,7 @@ public class RRPSSApp {
 		Date d = new Date();
 		System.out.println(d);
 		Timer timer = new Timer();
-		timer.schedule(new expiredReservations(), 100);
+		timer.scheduleAtFixedRate(new expiredReservations(), new Date(), 1000*60);
 		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadInDB();
 		ReservationController reservationManager = new ReservationController();
@@ -249,7 +243,8 @@ public class RRPSSApp {
 											System.out.println("Enter the name to be updated");
 											String newEmployeeName = sc.nextLine();
 											Staff updateEmployee1 = staffManager.getStaff(updateInfoID1);
-											updateEmployee1.setJobTitle(newEmployeeName);
+											updateEmployee1.setName(newEmployeeName);
+											staffManager.saveToDB();
 											break;
 											
 										case 2:
@@ -258,7 +253,8 @@ public class RRPSSApp {
 											System.out.println("Enter the gender to be updated");
 											String newEmployeeGender = sc.nextLine();
 											Staff updateEmployee2 = staffManager.getStaff(updateInfoID2);
-											updateEmployee2.setJobTitle(newEmployeeGender);
+											updateEmployee2.setGender(newEmployeeGender);
+											staffManager.saveToDB();
 											break;
 											
 										case 3:
@@ -268,6 +264,7 @@ public class RRPSSApp {
 											String newEmployeeJob = sc.nextLine();
 											Staff updateEmployee3 = staffManager.getStaff(updateInfoID3);
 											updateEmployee3.setJobTitle(newEmployeeJob);
+											staffManager.saveToDB();
 											break;
 											
 										case 4:

@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
+/**
+ * a class to read in the text files 
+ */
 public class ReadinFile {
 
 	/**

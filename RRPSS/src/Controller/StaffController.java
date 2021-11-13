@@ -1,6 +1,5 @@
 package Controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import Entity.Staff;
 import Database.StaffDB;
@@ -15,27 +14,6 @@ public class StaffController {
     	staffList = new ArrayList<Staff>();
     }
      
-    //Retrieval of all staffs from DB
-    public void loadinDB() {
-    	StaffDB staffDB = new StaffDB();
-        try {
-			this.staffList = staffDB.read(FILENAME);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
-    
-   //Save all staffs to DB
-    public void saveToDB() {
-    	StaffDB staffdb = new StaffDB();
-        try {
-			staffdb.save(FILENAME, staffList);
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}		
-    }
-    
     /**
 	 * Creating new instance of staff controller
 	 * 
@@ -113,6 +91,27 @@ public class StaffController {
 			}
 			System.out.println("\nInformation of "+ staffList.size() + " employees displayed!");
 			
+		}		
+	}
+
+	//Retrieval of all staffs from DB
+	public void loadinDB() {
+		StaffDB staffDB = new StaffDB();
+	    try {
+			this.staffList = staffDB.read(FILENAME);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//Save all staffs to DB
+	public void saveToDB() {
+		StaffDB staffdb = new StaffDB();
+	    try {
+			staffdb.save(FILENAME, staffList);
+		} catch (Exception e) {
+	
+			e.printStackTrace();
 		}		
 	}
 }

@@ -1,7 +1,5 @@
 package Boundary;
 
-//TODO: create promotion changing functions 
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Item;
