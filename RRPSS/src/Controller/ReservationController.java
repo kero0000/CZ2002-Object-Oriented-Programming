@@ -336,37 +336,6 @@ public class ReservationController {
     }
 
     /**
-     * Removes reservations from the system that have expired a set amount of time after the reservation time
-     * @throws IOException
-     */
-    public void deleteExpiredReservations() throws IOException {
-    	
-    	ReservationDB reservationDB = new ReservationDB();
-    	String fileName = "Reservation.txt";
-    	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date today = new Date();
-		Date cid;
-		ArrayList<Reservation> reservationList = reservationDB.read(fileName);
-		for (int i = 0; i < reservationList.size(); i++) {
-			cid = reservationList.get(i).getReservationDate();
-			if (cid.before(today) && reservationList.get(i).getStatus().equalsIgnoreCase("CONFIRMED")) {
-				reservationList.get(i).setStatus("EXPIRED");
-				TableController.updateTableStatus(reservationList.get(i).getTableId(), "VACANT");
-			}
-		}
-
-		// Write Reservation records to file
-		
-		try {
-			reservationDB.save(fileName, reservationList);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("IOException > " + e.getMessage());
-		}
-
-    }
-
-    /**
      * Load in database that stores reservation information
      */
     public void loadInDB() {
