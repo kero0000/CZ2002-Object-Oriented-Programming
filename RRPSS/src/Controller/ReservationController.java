@@ -12,16 +12,35 @@ import java.time.*;
 import Database.ReservationDB;
 import Entity.Reservation;
 
+/**
+ * Class containing the methods required to implement the functionalities related to reservations
+ */
+
 public class ReservationController {
     
+    /**
+     * Separator to divide each data variable
+     */
     public static final String SEPARATOR = "|";
+
+    /**
+     * Filename to be accessed to store all Reservation data
+     */
 	private static String FILENAME = "Reservation.txt";
+
     private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
+    
+    /**
+     * Restaurant opening time and closing time
+     */
     private static final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
 	private static final LocalTime CLOSING_TIME = LocalTime.parse("22:00:00");
 
-    // Creating a new reservation
+    /**
+     * Creating a new reservation
+     * @throws IOException
+     */
     public void createReservation() throws IOException {
 
         String reservationNum;
@@ -31,7 +50,7 @@ public class ReservationController {
         String resTime = "";
         LocalTime reservationTime = null;
         String resDate = "";
-        Date reservationDate = null; // trying this to avoid the error of "this variable hasn't been initialized" when creating Reservation object at the bottom of function
+        Date reservationDate = null; 
         int numOfPax;
         String status;
 
@@ -45,11 +64,10 @@ public class ReservationController {
 		String digit = "\\d+";
 		String dateValidation = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
 
-		// dealing with entry of reservation date
+		// Entry of reservation date
         Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date todaysdate = new Date();
-        //LocalTime currentTime = LocalTime.now();
 
         do {
             System.out.println("Enter Reservation Date (dd/mm/yyyy):");
@@ -67,10 +85,9 @@ public class ReservationController {
             }
         } while (!checker1 || !resDate.matches(dateValidation));
         
-        //SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss"); don't think this is needed anymore since sdf isn't used for time formatting, localTime.parse used instead
-
+        // Entry of reservation time
         do {
-            System.out.println("Enter Reservation Time (Opening hours: 11:00-22:00): ");
+            System.out.println("Enter Reservation Time (Opening hours: 11:00 - 22:00): ");
 
             resTime = sc.nextLine();
 			resTime = resTime + ":00";
@@ -84,13 +101,16 @@ public class ReservationController {
         } while (!checker2);
         
 
-        // entry of table pax
+        // Entry of table pax
         System.out.println("Please enter the number of pax: ");
         numOfPax = sc.nextInt();
+        while (numOfPax <= 0) {
+            System.out.println("Invalid number of pax entered! ( Number of pax > 0)");
+            numOfPax = sc.nextInt();
+        }
         sc.nextLine();
 
-        // check whether a table for the requested number of pax is available for the particular date and time and assign accordingly. If not available, print error message informing no tables available. If available, get tableId value
-        //boolean tableAvailable = true;
+        // Check whether a table for the requested number of pax is available for the particular date and time and assign accordingly. Update tables accordingly.
         System.out.println("Checking table availability, please wait...");
         tableId = TableController.checkTableAvailableForPax(numOfPax);
         if (tableId == "No table available") {
@@ -99,36 +119,45 @@ public class ReservationController {
             return;
         }
         TableController.updateTableStatus(tableId, "RESERVED");
-        // entry of guest particulars
+
+        // Entry of guest particulars
         System.out.println("Please enter the guest's first name: ");
         guestFirstName = sc.nextLine();
         System.out.println("Please enter the guest's last name: ");
         guestLastName = sc.nextLine();
         
-        //assigning value to status variable
+        // Assigning value to status variable
         status = "Confirmed";
 
-        // assign reservation number (I hope this works in assigning unique id's to each new reservation object)
+        // Assign reservation number
         reservationNum = String.valueOf(idCount);
         idCount++;
 
-        //save the newly created reservation to the database
+        // Save the newly created reservation to the database
         Reservation newReservation = new Reservation(reservationNum, reservationDate, reservationTime, numOfPax, guestFirstName, guestLastName, tableId, status);
         reservationList.add(newReservation);
         this.saveToDB();
-        /*ReservationDB reservationDB = new ReservationDB();
-        reservationDB.save(FILENAME, reservationList);*/
+        System.out.println("New reservation created!");
 
     }
 
-	public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
+	/**
+     * Retrieves a reservation stored in the database
+     * @param guestFirstName
+     * @param guestLastName
+     * @return Reservation
+     */
+    public Reservation retrieveReservationByName(String guestFirstName, String guestLastName) {
+
 		ReservationDB reservationDB = new ReservationDB();
+
     	try {
 			this.reservationList = (ArrayList<Reservation>) reservationDB.read(FILENAME);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
         for (Reservation reservation : reservationList) {
 
             if ((reservation.getGuestFirstName().contentEquals(guestFirstName)) && (reservation.getGuestLastName().contentEquals(guestLastName))) {
@@ -140,7 +169,12 @@ public class ReservationController {
         return null;
     }
 
-    // Updating an existing reservation
+    /**
+     * Updates an existing reservation
+     * @param guestFirstName
+     * @param guestLastName
+     * @throws IOException
+     */
     public void updateReservation(String guestFirstName, String guestLastName) throws IOException {
 
         Reservation toBeUpdated = retrieveReservationByName(guestFirstName, guestLastName);
@@ -265,11 +299,16 @@ public class ReservationController {
     
     }
 
-    //delete a cancelled reservation
+    /**
+     * Removes a reservation from the system that is cancelled
+     * @param guestFirstName
+     * @param guestLastName
+     */
     public void deleteCancelledReservation(String guestFirstName, String guestLastName) {
     	
     	ReservationDB reservationDB = new ReservationDB();
-    	try {
+    	
+        try {
 			this.reservationList = (ArrayList<Reservation>) reservationDB.read(FILENAME);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -283,17 +322,23 @@ public class ReservationController {
         }
 
         reservationList.remove(toBeCancelled);
+
         try {
 			reservationDB.save(FILENAME, reservationList);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
         TableController.updateTableStatus(toBeCancelled.getTableId(), "VACANT");
         
         System.out.println("Removed reservation");
     }
 
+    /**
+     * Removes reservations from the system that have expired a set amount of time after the reservation time
+     * @throws IOException
+     */
     public void deleteExpiredReservations() throws IOException {
     	
     	ReservationDB reservationDB = new ReservationDB();
@@ -309,6 +354,7 @@ public class ReservationController {
 				TableController.updateTableStatus(reservationList.get(i).getTableId(), "VACANT");
 			}
 		}
+
 		// Write Reservation records to file
 		
 		try {
@@ -320,6 +366,9 @@ public class ReservationController {
 
     }
 
+    /**
+     * Load in database that stores reservation information
+     */
     public void loadInDB() {
         ReservationDB reservationDB = new ReservationDB();
 
@@ -332,6 +381,9 @@ public class ReservationController {
         	idCount = Integer.valueOf(reservationList.get(reservationList.size()-1).getReservationNum())+1;
     }
 
+    /**
+     * Save to database that stores reservation information
+     */
     public void saveToDB() {
         ReservationDB reservationDB = new ReservationDB();
 
