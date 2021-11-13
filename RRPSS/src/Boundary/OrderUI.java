@@ -90,7 +90,7 @@ public class OrderUI {
         System.out.println("Enter membership status:");
         membership = sc.nextLine().toLowerCase();
         System.out.println("");
-        
+        TableController.updateTableStatus(tableId, "OCCUPIED");
         OrderController.retrieveInstance().checkID();
         Order order = new Order(tableId,employeeId, membership);
 
