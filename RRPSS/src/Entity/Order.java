@@ -13,8 +13,8 @@ import java.util.Locale;
 import Controller.StaffController;
 
 public class Order {
-	private static final double GST = 0.07;
-	private static final double SC = 0.10;
+	private static final double GST = 1.07;
+	private static final double SC = 1.10;
 	private static final double DISCOUNT = 0.1;
 	private static int idCount = 1;
     private int orderId;
@@ -163,20 +163,23 @@ public class Order {
     		currentTotal += item.getPrice();	
     	}
     	if(membership.equalsIgnoreCase("yes"))
-    		return currentTotal - DISCOUNT;
+    		return currentTotal - discount();
     	else
     		return currentTotal;
     }
     
     public double discount() {
-    	double currentTotal= subTotal();
+    	double currentTotal = 0;
+    	for(Item item : items) {
+    		currentTotal += item.getPrice();	
+    	}
     	
     	return currentTotal * DISCOUNT;
     }
       
     public double taxes(){
     	double tax = 0;	
-    	tax = subTotal() * GST * SC;
+    	tax = (subTotal() * GST * SC) - subTotal();
     	return tax;
     }
     public double totalPrice() {

@@ -22,7 +22,7 @@ public class expiredReservations extends TimerTask{
 	    c.set(Calendar.MINUTE, 0);
 	    c.set(Calendar.SECOND, 0);
 	    Date today = c.getTime(); //the midnight, that's the first second of the day.
-	    Date tomorrow = new Date(today.getTime() + 1000 * 60 * 60 * 24);
+	    Date tomorrow = new Date(today.getTime() + 1000 * 60 * 60 * 24 );
 		try {
 			reservationList = reservationDB.read(fileName);
 		}catch (IOException e) {

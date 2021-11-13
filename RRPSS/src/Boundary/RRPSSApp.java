@@ -22,7 +22,7 @@ public class RRPSSApp {
 		Date d = new Date();
 		System.out.println(d);
 		Timer timer = new Timer();
-		timer.schedule(new expiredReservations(), 100);
+		timer.scheduleAtFixedRate(new expiredReservations(), new Date(), 1000*60);
 		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadInDB();
 		ReservationController reservationManager = new ReservationController();

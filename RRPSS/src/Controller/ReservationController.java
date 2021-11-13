@@ -19,7 +19,7 @@ public class ReservationController {
     private ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     private static int idCount = 1;
     private static final LocalTime OPENING_TIME = LocalTime.parse("11:00:00");
-	private static final LocalTime CLOSING_TIME = LocalTime.parse("23:00:00");
+	private static final LocalTime CLOSING_TIME = LocalTime.parse("22:00:00");
 
     // Creating a new reservation
     public void createReservation() throws IOException {
@@ -70,7 +70,7 @@ public class ReservationController {
         //SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss"); don't think this is needed anymore since sdf isn't used for time formatting, localTime.parse used instead
 
         do {
-            System.out.println("Enter Reservation Time (hh:mm): ");
+            System.out.println("Enter Reservation Time (Opening hours: 11:00-22:00): ");
 
             resTime = sc.nextLine();
 			resTime = resTime + ":00";
