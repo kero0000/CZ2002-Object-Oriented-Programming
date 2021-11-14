@@ -27,14 +27,14 @@ public class Staff {
 	
 	
 	/**
-	* Creates a new Staff with the given name, job and ID.
-	* The name should include both first and
-	* last name.
-	* @param name This Staff's name.
-	* @param gender This Staff's age.
-	* @param jobTitle This Staff's job
-	* @param employeeId This Staff's ID
-	*/
+	 * Creates a new Staff with the given name, job and ID.
+	 * The name should include both first and
+	 * last name.
+	 * @param name This Staff's name.
+	 * @param gender This Staff's age.
+	 * @param jobTitle This Staff's job
+	 * @param employeeId This Staff's ID
+	 */
 	public Staff(String name, String gender, String jobTitle, String employeeId) {
 		this.name = name;
 		this.gender = gender;
