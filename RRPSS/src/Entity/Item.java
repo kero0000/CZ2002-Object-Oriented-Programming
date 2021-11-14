@@ -104,19 +104,20 @@ public class Item {
         this.price = price;
     }
     /**
-    Get type of item
+    * Get type of item
     */
     public int getType() {
         return type;
     }
     /**
-    Set type of item
+    * Set type of item
     */
     public void setType(int type) {
         this.type = type;
     }
     /**
-    Format item ID, name, description and price into string type
+    * Format item ID, name, description and price into string type
+    * @return String of item ID, name, description and price
     */
     public String toString() {
 

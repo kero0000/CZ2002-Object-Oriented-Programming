@@ -4,7 +4,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import Entity.Item;
 import Controller.MenuPromotionController;
-
+/**
+* Menu User Interface
+*/
 public class MenuPromotionUI {
 
     private static MenuPromotionUI instance = null;
@@ -14,14 +16,15 @@ public class MenuPromotionUI {
         sc = new Scanner(System.in);
     }
     /**
-     Get instance of MenuPromotionUI
+     * Get instance of MenuPromotionUI
+     * @return instance of MenuPromotionUI
      */
     public static MenuPromotionUI getInstance() {
         if (instance == null) instance = new MenuPromotionUI();
         return instance;
     }
     /**
-     Prints all options onto console
+     * Prints all options onto console
      */
     public void displayOptions() {
     	int choice;
@@ -66,7 +69,7 @@ public class MenuPromotionUI {
         } while (choice < 7);
     }
     /**
-     Creates menu item
+     * Creates menu item
      */
     public void createMenuItem() {
         String itemName = "";
@@ -103,7 +106,7 @@ public class MenuPromotionUI {
         System.out.println("Item " + item.getItemId() + ": " + item.getName() + " is created.");
     }
     /**
-     Retrieves menu item from MenuDatabase
+     * Retrieves menu item from MenuDatabase
      */
     private void updateMenuItem() {
         int itemId = -1;

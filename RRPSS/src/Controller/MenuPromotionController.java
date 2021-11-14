@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import Entity.Item;
 import Database.MenuPromotionDB;
-
+/**
+ * The class which contains most of the methods 
+ * required to implement functionalities related to
+ * management of items on the menu.
+ */
 public class MenuPromotionController {
 
     private static final String FILENAME = "Menu.txt";
@@ -16,7 +20,10 @@ public class MenuPromotionController {
         items = new ArrayList<Item>();
     }
 
-	//Creating new instance of menu controller
+    /**
+	 * Creates new instance of MenuPromotionController
+	 * @return instance of MenuPromotion Controller
+	 */
     public static MenuPromotionController retrieveInstance() {
         if (instance == null) {
             instance = new MenuPromotionController();
@@ -27,6 +34,7 @@ public class MenuPromotionController {
     /**
 	 * Retrieval of food menu item
 	 * @param itemId		Specifies the item id to retrieve item
+	 * @return item
 	 */
     public Item retrieveItem(int itemID) {
         for (Item item : items) {
