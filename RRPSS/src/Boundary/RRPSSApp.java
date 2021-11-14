@@ -22,10 +22,11 @@ public class RRPSSApp {
 		Date d = new Date();
 		System.out.println(d);
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new expiredReservations(), new Date(), 1000*60);
+		timer.schedule(new expiredReservations(), 1000, 1000*60);
 		MenuPromotionController.retrieveInstance().loadInDB();
 		OrderController.retrieveInstance().loadInDB();
 		ReservationController reservationManager = new ReservationController();
+		reservationManager.loadInDB();
 		int main_menu_choice;
 		Scanner sc = new Scanner(System.in);
 		do {
@@ -47,8 +48,7 @@ public class RRPSSApp {
 
 			System.out.println("\nEnter your choice:");
 			main_menu_choice = sc.nextInt();
-			sc.nextLine();
-			reservationManager.loadInDB();
+			sc.nextLine();	
 			switch (main_menu_choice) {
 				case 1:
 					int reservation_choice;
@@ -184,6 +184,9 @@ public class RRPSSApp {
 					int staff_management_choice;
 					StaffController staffManager = new StaffController();
 					staffManager.loadinDB();
+					String regex = "\\d+";
+					String genderFM = "[FM]";
+					String genderOthers = "Others";
 					do{	
 						System.out.println("\n============================================================="
 								+"\n Staff Management: " 
@@ -202,30 +205,69 @@ public class RRPSSApp {
 								break;
 		
 							case 2:
+								String employeeName;
+								String employeeGender;
+								String employeeJob;
 								System.out.println("Enter employee's name:");
-								String employeeName = sc.nextLine();
+								do {
+									employeeName = sc.nextLine();
+									if(employeeName.matches(regex)) 
+										System.out.println("Invalid input. Please try again!");
+									else
+										break;
+								}while(true);
 								System.out.println("Enter employee's gender:");
-								String employeeGender = sc.nextLine();
+								do {
+									employeeGender = sc.nextLine();
+									if(!employeeGender.matches(genderFM) && !employeeGender.matches(genderOthers))
+										System.out.println("Invalid input. Please try again!");
+									else
+										break;
+								}while(true);
 								System.out.println("Enter employee's Job:");
-								String employeeJob = sc.nextLine();
+								do {
+									employeeJob = sc.nextLine();
+									if(employeeJob.matches(regex))
+										System.out.println("Invalid input. Please try again!");
+									else
+										break;
+								}while(true);
 								staffManager.addStaff(employeeName, employeeGender, employeeJob);
 								break;
 		
 							case 3:
 								System.out.println("Enter the ID of the employee to be removed:");
-								String employeeId = sc.nextLine();
+								String employeeId;
+								do {
+									employeeId = sc.nextLine();
+									if(!employeeId.matches(regex)) 
+										System.out.println("Invalid input. Please try again!");	
+									else {
+										break;
+									}
+								}while(true);
 								staffManager.removeStaff(employeeId);
 								break;
 		
 								
 							case 4:
 								System.out.println("Enter the ID of the employee to be checked:");
-								String checkInfoID = sc.nextLine();
+								String checkInfoID;
+								do {
+									checkInfoID = sc.nextLine();
+									if(!checkInfoID.matches(regex)) 
+										System.out.println("Invalid input. Please try again!");	
+									else {
+										break;
+									}
+								}while(true);
 								Staff employee = staffManager.getStaff(checkInfoID);
-								System.out.println(employee);
+								if(employee != null)
+									System.out.println(employee);
 								break;								 
 								
 							case 5:
+								
 								int update_employee_choice;
 								do{	
 									System.out.println("\n============================================================="
@@ -238,31 +280,85 @@ public class RRPSSApp {
 									update_employee_choice = Integer.valueOf(sc.nextLine());
 									switch (update_employee_choice) {
 										case 1:
+											String updateInfoID1;
+											String newEmployeeName;
+											Staff updateEmployee1 = null;
 											System.out.println("Enter the ID of the employee to be updated:");
-											String updateInfoID1 = sc.nextLine();
+											do {
+												updateInfoID1 = sc.nextLine();
+												if(!updateInfoID1.matches(regex) ||staffManager.getStaff(updateInfoID1) == null) 
+													System.out.println("Invalid input. Please try again!");	
+												else {
+													updateEmployee1 = staffManager.getStaff(updateInfoID1);
+													break;
+												}
+											}while(true);
+											
 											System.out.println("Enter the name to be updated");
-											String newEmployeeName = sc.nextLine();
-											Staff updateEmployee1 = staffManager.getStaff(updateInfoID1);
+											do {
+												newEmployeeName = sc.nextLine();
+												if(newEmployeeName.matches(regex)) 
+													System.out.println("Invalid input. Please try again!");
+
+												else
+													break;
+											}while(true);
+											
 											updateEmployee1.setName(newEmployeeName);
 											staffManager.saveToDB();
 											break;
 											
 										case 2:
+											String updateInfoID2;
+											String newEmployeeGender;
+											Staff updateEmployee2 = null;
+											
 											System.out.println("Enter the ID of the employee to be updated:");
-											String updateInfoID2 = sc.nextLine();
-											System.out.println("Enter the gender to be updated");
-											String newEmployeeGender = sc.nextLine();
-											Staff updateEmployee2 = staffManager.getStaff(updateInfoID2);
+											do {
+												updateInfoID2 = sc.nextLine();
+												if(!updateInfoID2.matches(regex) ||staffManager.getStaff(updateInfoID2) == null) 
+													System.out.println("Invalid input. Please try again!");
+
+												else {
+													updateEmployee2 = staffManager.getStaff(updateInfoID2);
+													break;
+												}
+											}while(true);
+											System.out.println("Enter the gender to be updated (M/F/Others)");
+											do {
+												newEmployeeGender = sc.nextLine();
+												if(!newEmployeeGender.matches(genderFM) && !newEmployeeGender.matches(genderOthers))
+													System.out.println("Invalid input. Please try again!");
+												else
+													break;
+											}while(true);
 											updateEmployee2.setGender(newEmployeeGender);
 											staffManager.saveToDB();
 											break;
 											
 										case 3:
+											String updateInfoID3;
+											String newEmployeeJob;
+											Staff updateEmployee3 = null;
+											
 											System.out.println("Enter the ID of the employee to be updated:");
-											String updateInfoID3 = sc.nextLine();
+											do {
+												updateInfoID3 = sc.nextLine();
+												if(!updateInfoID3.matches(regex) ||staffManager.getStaff(updateInfoID3) == null)
+													System.out.println("Invalid input. Please try again!");
+												else {
+													updateEmployee3 = staffManager.getStaff(updateInfoID3);
+													break;
+												}
+											}while(true);
 											System.out.println("Enter the job to be updated:");
-											String newEmployeeJob = sc.nextLine();
-											Staff updateEmployee3 = staffManager.getStaff(updateInfoID3);
+											do {
+												newEmployeeJob = sc.nextLine();
+												if(newEmployeeJob.matches(regex))
+													System.out.println("Invalid input. Please try again!");
+												else
+													break;
+											}while(true);
 											updateEmployee3.setJobTitle(newEmployeeJob);
 											staffManager.saveToDB();
 											break;
@@ -300,6 +396,9 @@ public class RRPSSApp {
 	
 		MenuPromotionController.retrieveInstance().saveToDB();
 		OrderController.retrieveInstance().saveToDB();
+		StaffController.retrieveInstance().saveToDB();
+		reservationManager.saveToDB();
+		timer.cancel();
 		sc.close();
 	
 	}

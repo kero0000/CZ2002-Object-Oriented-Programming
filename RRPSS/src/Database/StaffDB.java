@@ -8,9 +8,22 @@ import java.util.StringTokenizer;
 import Entity.Item;
 import Entity.Staff;
 
+/**
+ * Contains the methods to read and save data into and from the Staff text file.
+ */
 public class StaffDB implements DB {
-	public static final String SEPARATOR = "|";
 	
+	/**
+	 * Symbol indicator to separate 
+	 * the attributes of the staffs
+	 */
+	public static final String SEPARATOR = "|";
+		
+	/**
+	 * Read the whole Staff.txt file.
+	 * @param filename Staff.txt file to be read.
+	 * @return orderList arraylist of all the Staffs in the Staff.txt file
+	 */
 	@Override
 	public ArrayList<Staff> read(String fileName) throws IOException {
 		ArrayList<String> stringArray = (ArrayList<String>) ReadinFile.read(fileName);
@@ -33,6 +46,11 @@ public class StaffDB implements DB {
 		return staffList;
 	}
 	
+	/**
+	 * save a list of staff objects into Staff.txt file.
+	 * @param filename Staff.txt file to be read.
+	 * @param orderList The list of Staffs to be saved in the Staff.txt file.
+	 */
 	@Override
 	public void save(String filename, List staffList) throws IOException {
 		ArrayList<String> tempList = new ArrayList<String>(); //temp store Staff info

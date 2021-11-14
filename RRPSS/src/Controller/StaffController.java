@@ -4,11 +4,35 @@ import java.util.ArrayList;
 import Entity.Staff;
 import Database.StaffDB;
 
+/**
+ * The class which contains most of the methods 
+ * required to implement functionalities related to
+ * management of staffs.
+ */
 public class StaffController {
+	
+    /**
+     * The text file that stores all staff's
+     * information
+	 */
 	private static final String FILENAME = "Staff.txt";
+	
+    /**
+     * The instance of the StaffController
+	 */
     private static StaffController instance = null;
+    
+    /**
+     * An arrayList to store instances of Staffs to
+     * use and modify the informations
+	 */
     ArrayList<Staff> staffList = new ArrayList<Staff>();
     
+    /**
+     * Creates a new StaffController
+     * with an instance of an arraylist 
+     * to store staffs information
+	 */
     public StaffController() {
     	
     	staffList = new ArrayList<Staff>();
@@ -16,7 +40,6 @@ public class StaffController {
      
     /**
 	 * Creating new instance of staff controller
-	 * 
 	 * @return staffController instance
 	 */
     public static StaffController retrieveInstance() {
@@ -27,8 +50,9 @@ public class StaffController {
     }
     
     /**
-	 * @param employeeID Specifies the employeeId to 
-	 * get staff's info
+	 * @param employeeId Staff's employeeId 
+	 * @return Staff instance with the same ID
+	 * as the @param
 	 */
 	public Staff getStaff(String employeeId) {
 		for(Staff staff :  staffList) {
@@ -40,7 +64,12 @@ public class StaffController {
 		return null;
 	}
 	
-	// add staff to database
+	/**
+	 * Add a new staff into the database
+	 * @param name new Staff's name
+	 * @param gender new Staff's gender
+	 * @param jobTitle new Staff's jobTitle
+	 */
 	public void addStaff(String name, String gender, String jobTitle) {
 		String employeeId;
 		if(staffList.isEmpty()) {
@@ -59,13 +88,17 @@ public class StaffController {
 		saveToDB();
 	}
 	
-	// remove staff from database
+	/**
+	 * Remove a Staff from the database
+	 * @param employeeId ID of the staff to be removed
+	 */
 	public void removeStaff(String employeeId) {
 		if(staffList.isEmpty()) {
 			System.out.println("There're no employees currently");
 			return;
 		}
 		else if(!(getStaff(employeeId) instanceof Staff)){
+			System.out.println("Employee doesn't exist!");
 			return;
 		}
 			
@@ -76,6 +109,10 @@ public class StaffController {
 		}
 	}
 	
+	/**
+	 * Display all the information of the staffs 
+	 * within the database
+	 */
 	public void displayStaff() {
 		if(staffList.isEmpty()) {
 			System.out.println("There're no employees currently");
@@ -94,7 +131,10 @@ public class StaffController {
 		}		
 	}
 
-	//Retrieval of all staffs from DB
+	/**
+	 * Retrieve all information of the staffs from 
+	 * the text file
+	 */
 	public void loadinDB() {
 		StaffDB staffDB = new StaffDB();
 	    try {
@@ -104,7 +144,10 @@ public class StaffController {
 		}
 	}
 
-	//Save all staffs to DB
+	/**
+	 * Save any modified/updated information 
+	 * of the staffs into the text file
+	 */
 	public void saveToDB() {
 		StaffDB staffdb = new StaffDB();
 	    try {
